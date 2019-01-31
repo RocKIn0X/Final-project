@@ -6,79 +6,113 @@ using UnityEngine;
 public class Crop
 {
     // get value from crop asset
-    private int bestWaterQuantityAtPlanted;
-    private int bestWaterQuantityAtGrowing;
+    private float bestWaterQuantityAtPlanted;
+    private float bestWaterQuantityAtGrowing;
     private float durationToDone;
     private float maximumCost;
     private float percentOfPenalty;
 
+    private float devalueTime = 5f;
+    private float maxWaterQuantity;
     private float realCost;
-    private int waterQuantity;
+    private float waterAmount;
 
     public CropAssets asset;
     public CropState state;
 
-    public enum CropState
+    public Crop ()
     {
-        Planted,
-        Growing,
-        Done
+        InitializeValue();
     }
-
-    public enum WaterState
-    {
-        Watered,
-        Dry
-    }
-
 
     public Crop (CropAssets a)
     {
-        asset = a;
-        GetDataFromAsset(a);
-        state = CropState.Planted;
+        if (a != null)
+        {
+            asset = a;
+            InitializeValue();
+            GetDataFromAsset(a);
+        }
+        else
+        {
+            InitializeValue();
+        }
+    }
+
+    void InitializeValue ()
+    {
+        state = CropState.Seed;
+        maxWaterQuantity = 0f;
         realCost = 0f;
-        waterQuantity = 0;
+        waterAmount = 0;
     }
 
     void GetDataFromAsset (CropAssets asset)
     {
         bestWaterQuantityAtPlanted = asset.bestWaterQuantityAtPlanted;
-        bestWaterQuantityAtPlanted = asset.bestWaterQuantityAtGrowing;
+        bestWaterQuantityAtGrowing = asset.bestWaterQuantityAtGrowing;
         durationToDone = asset.durationToDone;
         maximumCost = asset.maximumCost;
+        maxWaterQuantity = bestWaterQuantityAtPlanted + bestWaterQuantityAtGrowing;
         percentOfPenalty = asset.percentOfPenalty / 100f;
-    }
-
-    // transition state of the crop
-    void TransitionState ()
-    {
-        switch (state)
-        {
-            case CropState.Planted:
-                CalculateCost();
-                state = CropState.Growing;
-                waterQuantity = 0;
-                break;
-            case CropState.Growing:
-                CalculateCost();
-                waterQuantity = 0;
-                break;
-            default:
-                break;
-        }
     }
 
     // calculate cost of the crop
     void CalculateCost ()
     {
+        float perfectCostAtState = 0;
+
         switch (state)
         {
-            case CropState.Planted:
-                realCost += (waterQuantity / bestWaterQuantityAtPlanted) * percentOfPenalty * maximumCost;
+            case CropState.Seed:
+                perfectCostAtState = (bestWaterQuantityAtPlanted / maxWaterQuantity) * maximumCost;
+                realCost += (1 - (Mathf.Abs(waterAmount - bestWaterQuantityAtPlanted) / 5)) * perfectCostAtState;
+                Debug.Log("Real cost: " + realCost);
                 break;
             case CropState.Growing:
-                realCost += (waterQuantity / bestWaterQuantityAtGrowing) * percentOfPenalty * maximumCost;
+                perfectCostAtState = (bestWaterQuantityAtGrowing / maxWaterQuantity) * maximumCost;
+                realCost += (1 - (Mathf.Abs(waterAmount - bestWaterQuantityAtGrowing) / 5)) * perfectCostAtState;
+                Debug.Log("Real cost: " + realCost);
+                break;
+            default:
+                break;
+        }
+
+        if (realCost > maximumCost)
+        {
+            realCost = maximumCost;
+        }
+
+        Debug.Log(realCost + " / " + maximumCost);
+    }
+
+    // decrease cost after its state is done but monster doesn't harvest it.
+    public void Devalue (float time)
+    {
+        devalueTime -= time;
+
+        if (devalueTime < 0f)
+        {
+            Debug.Log("devalue crop cost!");
+            realCost -= 2f;
+            devalueTime = 5f;
+        }
+    }
+
+    // transition state of the crop
+    public void TransitionState ()
+    {
+        switch (state)
+        {
+            case CropState.Seed:
+                CalculateCost();
+                state = CropState.Growing;
+                waterAmount = 0;
+                break;
+            case CropState.Growing:
+                CalculateCost();
+                state = CropState.Done;
+                waterAmount = 0;
                 break;
             default:
                 break;
@@ -86,19 +120,26 @@ public class Crop
     }
 
     // increase water quantity
-    public void WaterCrop(int value)
+    public void WaterCrop (int amount)
     {
-        switch (state)
+        Debug.Log("Water quantity: " + amount);
+        waterAmount += amount;
+
+        if (waterAmount > 10)
         {
-            case CropState.Planted:
-                waterQuantity += value;
-                TransitionState();
-                break;
-            case CropState.Growing:
-                waterQuantity += value;
-                break;
-            default:
-                break;
+            waterAmount = 10;
+        }
+    }
+
+    public bool HasCrop ()
+    {
+        if (asset == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
         }
     }
 
@@ -111,26 +152,45 @@ public class Crop
 
         if (durationToDone <= 0f)
         {
-            state = CropState.Done;
             return true;
         }
 
         return false;
     }
 
-    public float GetCost()
+    public float GetCost ()
     {
+        if (realCost <= 2f)
+        {
+            return 2f;
+        }
+
         return realCost;
     }
 
-    public Sprite GetSprite()
+    public float GetTimeRemaining ()
+    {
+        return durationToDone;
+    }
+
+    public string GetName ()
+    {
+        if (asset == null)
+        {
+            return null;
+        }
+
+        return asset.name;
+    }
+
+    public Sprite GetSprite ()
     {
         if (asset == null)
             return null;
 
         switch (state)
         {
-            case CropState.Planted:
+            case CropState.Seed:
                 return asset.seedSprite;
             case CropState.Growing:
                 return asset.growingSprite;
@@ -141,9 +201,14 @@ public class Crop
         }
     }
 
-    public WaterState GetWaterState()
+    public CropState GetCropState ()
     {
-        if (waterQuantity <= 0)
+        return state;
+    }
+
+    public WaterState GetWaterState ()
+    {
+        if (waterAmount <= 0)
         {
             return WaterState.Dry;
         }
@@ -152,4 +217,17 @@ public class Crop
             return WaterState.Watered;
         }
     }
+}
+
+public enum CropState
+{
+    Seed,
+    Growing,
+    Done
+}
+
+public enum WaterState
+{
+    Watered,
+    Dry
 }

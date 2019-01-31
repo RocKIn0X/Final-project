@@ -6,8 +6,8 @@ using UnityEngine;
 public class CropAssets : ScriptableObject
 {
     [Header("Best water quantity at each state (1 - 5)")]
-    public int bestWaterQuantityAtPlanted;
-    public int bestWaterQuantityAtGrowing;
+    public float bestWaterQuantityAtPlanted;
+    public float bestWaterQuantityAtGrowing;
 
     [Header("Paremeters")]
     public float durationToDone;
