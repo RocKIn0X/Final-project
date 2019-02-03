@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class DirtTile : MonoBehaviour
 {
+    public bool isTestingCrop; // for testing crop logic by clicking
     public Crop crop;
     public SpriteRenderer overlay;
 
     // Start is called before the first frame update
     void Start()
     {
-        crop = new Crop(crop.asset);
-        overlay.sprite = crop.GetSprite();
+        if (isTestingCrop)
+        {
+            crop = new Crop(crop.asset);
+            overlay.sprite = crop.GetSprite();
+        }
     }
 
     // Update is called once per frame
@@ -107,17 +111,20 @@ public class DirtTile : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (crop.GetCropState() == CropState.Seed && crop.GetWaterState() == WaterState.Dry)
+        if (isTestingCrop)
         {
-            Water(Random.Range(1, 5));
-        }
-        else if (crop.GetCropState() == CropState.Growing && crop.GetWaterState() == WaterState.Dry)
-        {
-            Water(Random.Range(1, 5));
-        }
-        else if (crop.GetCropState() == CropState.Done)
-        {
-            float cost = HarvestCrop();
+            if (crop.GetCropState() == CropState.Seed && crop.GetWaterState() == WaterState.Dry)
+            {
+                Water(Random.Range(1, 5));
+            }
+            else if (crop.GetCropState() == CropState.Growing && crop.GetWaterState() == WaterState.Dry)
+            {
+                Water(Random.Range(1, 5));
+            }
+            else if (crop.GetCropState() == CropState.Done)
+            {
+                float cost = HarvestCrop();
+            }
         }
     }
 }
