@@ -18,12 +18,13 @@ public class MonsterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Vector3 movementDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
-        transform.position += movementDirection * speed * Time.deltaTime;
+        // Vector3 movementDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"), 0.0f);
+        // transform.position += movementDirection * speed * Time.deltaTime;
+        moveVelocity = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
     }
 
     void FixedUpdate()
     {
-        // rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);    
+        rb.MovePosition(rb.position + moveVelocity * speed * Time.fixedDeltaTime);    
     }
 }
