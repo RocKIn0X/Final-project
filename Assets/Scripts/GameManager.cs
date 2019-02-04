@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     private float dayTimer;
     private int weekCount;
+    [SerializeField] TextMeshProUGUI weekText;
 
     void Start()
     {
         dayTimer = 0f;
         weekCount = 0;
+        SetWeekText();
     }
 
     void Update()
@@ -19,7 +22,13 @@ public class GameManager : MonoBehaviour
         if ((dayTimer/10) > weekCount)
         {
             weekCount++;
-            Debug.Log(weekCount);
+            SetWeekText();
         }
     }
+
+    void SetWeekText()
+    {
+        weekText.text = "WEEK : " + weekCount.ToString();
+    }
+
 }
