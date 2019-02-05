@@ -19,6 +19,12 @@ public class Player : MonoBehaviour
         SetCointText();
     }
 
+    public void UseCoin(int amount)
+    {
+        if (coinAmount - amount >= 0) coinAmount -= amount;
+        SetCointText();
+    }
+
     private void SetCointText()
     {
         coinText.text = "coin : " + coinAmount.ToString();
