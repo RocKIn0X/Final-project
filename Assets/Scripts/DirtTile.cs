@@ -100,6 +100,7 @@ public class DirtTile : MonoBehaviour
 
         crop = new Crop(null);
         UpdateCropSprite();
+        Player.instance.AddCoin((int)cost);
 
         return cost;
     }

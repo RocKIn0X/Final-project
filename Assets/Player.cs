@@ -5,6 +5,24 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
+
+    public static Player instance = null;
+
+    void Awake()
+    {
+        //Singleton
+        if (instance != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
     [SerializeField] TextMeshProUGUI coinText;
     public int coinAmount = 0;
 
