@@ -5,46 +5,33 @@ using TMPro;
 
 public class Player : MonoBehaviour
 {
-
-    public static Player instance = null;
+    static Player instance;
+    public static Player Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = GameObject.FindObjectOfType<Player>();
+                if (instance == null)
+                {
+                    instance = new GameObject().AddComponent<Player>();
+                }
+            }
+            return instance;
+        }
+    }
 
     void Awake()
     {
-        //Singleton
-        if (instance != null)
+        if (instance == null)
         {
-            Destroy(gameObject);
-            return;
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
+            Destroy(this.gameObject);
         }
-    }
-
-    [SerializeField] TextMeshProUGUI coinText;
-    public int coinAmount = 0;
-
-    private void Start()
-    {
-        SetCointText();
-    }
-
-    public void AddCoin(int amount)
-    {
-        coinAmount += amount;
-        SetCointText();
-    }
-
-    public void UseCoin(int amount)
-    {
-        if (coinAmount - amount >= 0) coinAmount -= amount;
-        SetCointText();
-    }
-
-    private void SetCointText()
-    {
-        coinText.text = "coin : " + coinAmount.ToString();
     }
 }
