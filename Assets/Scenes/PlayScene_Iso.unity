@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 199382298}
   - component: {fileID: 36428932}
   - component: {fileID: 36428930}
+  - component: {fileID: 36428933}
   m_Layer: 9
   m_Name: T_F00_(-03,00)__iso-64x64-building_0
   m_TagString: Untagged
@@ -319,6 +320,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &36428933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 36428927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &40218947
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,6 +797,7 @@ GameObject:
   - component: {fileID: 147457700}
   - component: {fileID: 147457699}
   - component: {fileID: 147457698}
+  - component: {fileID: 147457703}
   m_Layer: 9
   m_Name: T_F00_(-01,03)__iso-64x64-building_0
   m_TagString: Untagged
@@ -900,6 +914,18 @@ MonoBehaviour:
   bSnapFree: 0
   _autoName: {fileID: 147457698}
   bChangedforEditor: 1
+--- !u!114 &147457703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 147457696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &158499873
 GameObject:
   m_ObjectHideFlags: 0
@@ -915,6 +941,7 @@ GameObject:
   - component: {fileID: 888421482}
   - component: {fileID: 158499878}
   - component: {fileID: 158499876}
+  - component: {fileID: 158499879}
   m_Layer: 9
   m_Name: T_F00_(-01,01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -1013,6 +1040,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &158499879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 158499873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &162137113
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,7 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1643621775}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 1339823309}
   _autoName: {fileID: 1643621774}
   _so: {fileID: 1643621773}
   _attachedList:
@@ -1648,6 +1687,7 @@ GameObject:
   - component: {fileID: 585666744}
   - component: {fileID: 311751979}
   - component: {fileID: 311751977}
+  - component: {fileID: 311751980}
   m_Layer: 9
   m_Name: T_F00_(-03,01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -1746,6 +1786,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &311751980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 311751974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &316559585
 GameObject:
   m_ObjectHideFlags: 0
@@ -1840,6 +1892,7 @@ GameObject:
   - component: {fileID: 1747526576}
   - component: {fileID: 413792809}
   - component: {fileID: 413792807}
+  - component: {fileID: 413792810}
   m_Layer: 9
   m_Name: T_F00_(-01,02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -1938,6 +1991,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &413792810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413792804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &419055772
 GameObject:
   m_ObjectHideFlags: 0
@@ -2226,6 +2291,7 @@ GameObject:
   - component: {fileID: 1469105598}
   - component: {fileID: 479550966}
   - component: {fileID: 479550964}
+  - component: {fileID: 479550967}
   m_Layer: 9
   m_Name: T_F00_(01,03)__iso-64x64-building_0
   m_TagString: Untagged
@@ -2324,6 +2390,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &479550967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 479550961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &487229115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2696,6 +2774,7 @@ GameObject:
   - component: {fileID: 1615820541}
   - component: {fileID: 538648986}
   - component: {fileID: 538648984}
+  - component: {fileID: 538648987}
   m_Layer: 9
   m_Name: T_F00_(00,00)__iso-64x64-building_0
   m_TagString: Untagged
@@ -2794,6 +2873,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &538648987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 538648981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &562914968
 GameObject:
   m_ObjectHideFlags: 0
@@ -2905,7 +2996,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1794111652}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 1339823309}
   _autoName: {fileID: 1794111651}
   _so: {fileID: 1794111650}
   _attachedList:
@@ -3892,6 +3983,7 @@ GameObject:
   - component: {fileID: 371090595}
   - component: {fileID: 755484782}
   - component: {fileID: 755484780}
+  - component: {fileID: 755484783}
   m_Layer: 9
   m_Name: T_F00_(00,02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -3974,6 +4066,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &755484783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755484778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &764868743
 GameObject:
   m_ObjectHideFlags: 0
@@ -4066,6 +4170,7 @@ GameObject:
   - component: {fileID: 693733837}
   - component: {fileID: 775754194}
   - component: {fileID: 775754192}
+  - component: {fileID: 775754195}
   m_Layer: 9
   m_Name: T_F00_(01,02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -4164,6 +4269,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &775754195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775754189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &777906483
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,6 +4715,7 @@ GameObject:
   - component: {fileID: 5505238}
   - component: {fileID: 833540966}
   - component: {fileID: 833540964}
+  - component: {fileID: 833540967}
   m_Layer: 9
   m_Name: T_F00_(00,-02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -4696,6 +4814,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &833540967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 833540961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &842890051
 GameObject:
   m_ObjectHideFlags: 0
@@ -4773,6 +4903,7 @@ GameObject:
   - component: {fileID: 980060041}
   - component: {fileID: 875244436}
   - component: {fileID: 875244434}
+  - component: {fileID: 875244437}
   m_Layer: 9
   m_Name: T_F00_(00,-01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -4871,6 +5002,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &875244437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875244431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &876544167
 GameObject:
   m_ObjectHideFlags: 0
@@ -4955,7 +5098,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1843292199}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 1339823309}
   _autoName: {fileID: 1843292198}
   _so: {fileID: 1843292197}
   _attachedList:
@@ -5374,6 +5517,7 @@ GameObject:
   - component: {fileID: 1426765254}
   - component: {fileID: 996197592}
   - component: {fileID: 996197590}
+  - component: {fileID: 996197593}
   m_Layer: 9
   m_Name: T_F00_(-03,-02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -5472,6 +5616,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &996197593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 996197587}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1000564043
 GameObject:
   m_ObjectHideFlags: 0
@@ -5487,6 +5643,7 @@ GameObject:
   - component: {fileID: 487229115}
   - component: {fileID: 1000564048}
   - component: {fileID: 1000564046}
+  - component: {fileID: 1000564049}
   m_Layer: 9
   m_Name: T_F00_(01,-02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -5585,6 +5742,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1000564049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1000564043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1002171853
 GameObject:
   m_ObjectHideFlags: 0
@@ -5975,6 +6144,7 @@ GameObject:
   - component: {fileID: 1682888750}
   - component: {fileID: 1101933958}
   - component: {fileID: 1101933956}
+  - component: {fileID: 1101933959}
   m_Layer: 9
   m_Name: T_F00_(01,00)__iso-64x64-building_0
   m_TagString: Untagged
@@ -6073,6 +6243,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1101933959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1101933953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1107919708
 GameObject:
   m_ObjectHideFlags: 0
@@ -6119,6 +6301,7 @@ GameObject:
   - component: {fileID: 1396126766}
   - component: {fileID: 1127971122}
   - component: {fileID: 1127971120}
+  - component: {fileID: 1127971123}
   m_Layer: 9
   m_Name: T_F00_(01,01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -6217,6 +6400,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1127971123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127971117}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1137877990
 GameObject:
   m_ObjectHideFlags: 0
@@ -6767,6 +6962,7 @@ GameObject:
   - component: {fileID: 1973500201}
   - component: {fileID: 1285123981}
   - component: {fileID: 1285123979}
+  - component: {fileID: 1285123982}
   m_Layer: 9
   m_Name: T_F00_(-01,-02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -6865,6 +7061,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1285123982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1285123976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1293420569
 GameObject:
   m_ObjectHideFlags: 0
@@ -7027,6 +7235,7 @@ GameObject:
   - component: {fileID: 1325028026}
   - component: {fileID: 1308724556}
   - component: {fileID: 1308724554}
+  - component: {fileID: 1308724557}
   m_Layer: 9
   m_Name: T_F00_(-02,-01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -7125,6 +7334,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1308724557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1308724551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1309230695
 GameObject:
   m_ObjectHideFlags: 0
@@ -7270,7 +7491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1308724555}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 1339823309}
   _autoName: {fileID: 1308724554}
   _so: {fileID: 1308724553}
   _attachedList:
@@ -7705,6 +7926,7 @@ GameObject:
   - component: {fileID: 2141533928}
   - component: {fileID: 1436373846}
   - component: {fileID: 1436373844}
+  - component: {fileID: 1436373847}
   m_Layer: 9
   m_Name: T_F00_(-01,-01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -7803,6 +8025,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1436373847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436373841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1445008821
 GameObject:
   m_ObjectHideFlags: 0
@@ -7942,6 +8176,7 @@ GameObject:
   - component: {fileID: 1470317209}
   - component: {fileID: 1470317208}
   - component: {fileID: 1470317207}
+  - component: {fileID: 1470317212}
   m_Layer: 9
   m_Name: T_F00_(-02,03)__iso-64x64-building_0
   m_TagString: Untagged
@@ -8058,6 +8293,18 @@ MonoBehaviour:
   bSnapFree: 0
   _autoName: {fileID: 1470317207}
   bChangedforEditor: 1
+--- !u!114 &1470317212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470317205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1478929650
 GameObject:
   m_ObjectHideFlags: 0
@@ -8821,6 +9068,7 @@ GameObject:
   - component: {fileID: 170014080}
   - component: {fileID: 1643621776}
   - component: {fileID: 1643621774}
+  - component: {fileID: 1643621777}
   m_Layer: 9
   m_Name: T_F00_(01,-01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -8919,6 +9167,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1643621777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643621771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1662942335
 Transform:
   m_ObjectHideFlags: 0
@@ -9135,7 +9395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1101933957}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 1339823309}
   _autoName: {fileID: 1101933956}
   _so: {fileID: 1101933955}
   _attachedList:
@@ -9159,6 +9419,7 @@ GameObject:
   - component: {fileID: 1703482869}
   - component: {fileID: 1703482873}
   - component: {fileID: 1703482871}
+  - component: {fileID: 1703482874}
   m_Layer: 9
   m_Name: T_F00_(00,03)__iso-64x64-building_0
   m_TagString: Untagged
@@ -9275,6 +9536,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1703482874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703482867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1709156545
 GameObject:
   m_ObjectHideFlags: 0
@@ -9351,6 +9624,7 @@ GameObject:
   - component: {fileID: 343503656}
   - component: {fileID: 1719896868}
   - component: {fileID: 1719896866}
+  - component: {fileID: 1719896869}
   m_Layer: 9
   m_Name: T_F00_(-03,-01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -9449,6 +9723,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1719896869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719896863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1730271477
 GameObject:
   m_ObjectHideFlags: 0
@@ -13353,6 +13639,7 @@ GameObject:
   - component: {fileID: 566737231}
   - component: {fileID: 1794111653}
   - component: {fileID: 1794111651}
+  - component: {fileID: 1794111654}
   m_Layer: 9
   m_Name: T_F00_(-02,01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -13451,6 +13738,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1794111654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1794111648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1806522077
 GameObject:
   m_ObjectHideFlags: 0
@@ -13638,6 +13937,7 @@ GameObject:
   - component: {fileID: 884496387}
   - component: {fileID: 1843292200}
   - component: {fileID: 1843292198}
+  - component: {fileID: 1843292201}
   m_Layer: 9
   m_Name: T_F00_(-02,-02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -13736,6 +14036,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1843292201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1843292195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1853335855
 GameObject:
   m_ObjectHideFlags: 0
@@ -14037,6 +14349,7 @@ GameObject:
   - component: {fileID: 504611228}
   - component: {fileID: 1926058201}
   - component: {fileID: 1926058199}
+  - component: {fileID: 1926058202}
   m_Layer: 9
   m_Name: T_F00_(-02,00)__iso-64x64-building_0
   m_TagString: Untagged
@@ -14135,6 +14448,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &1926058202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926058196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1930565321
 GameObject:
   m_ObjectHideFlags: 0
@@ -14436,6 +14761,7 @@ GameObject:
   - component: {fileID: 53266990}
   - component: {fileID: 2002896735}
   - component: {fileID: 2002896733}
+  - component: {fileID: 2002896736}
   m_Layer: 9
   m_Name: T_F00_(-03,02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -14534,6 +14860,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &2002896736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2002896730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2003288668
 GameObject:
   m_ObjectHideFlags: 0
@@ -14708,6 +15046,7 @@ GameObject:
   - component: {fileID: 2050825912}
   - component: {fileID: 2050825911}
   - component: {fileID: 2050825910}
+  - component: {fileID: 2050825915}
   m_Layer: 9
   m_Name: T_F00_(-03,03)__iso-64x64-building_0
   m_TagString: Untagged
@@ -14824,6 +15163,18 @@ MonoBehaviour:
   bSnapFree: 0
   _autoName: {fileID: 2050825910}
   bChangedforEditor: 1
+--- !u!114 &2050825915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050825908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2051325285
 GameObject:
   m_ObjectHideFlags: 0
@@ -14870,6 +15221,7 @@ GameObject:
   - component: {fileID: 1670056822}
   - component: {fileID: 2059162559}
   - component: {fileID: 2059162557}
+  - component: {fileID: 2059162560}
   m_Layer: 9
   m_Name: T_F00_(-01,00)__iso-64x64-building_0
   m_TagString: Untagged
@@ -14968,6 +15320,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &2059162560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059162554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2070502514
 GameObject:
   m_ObjectHideFlags: 0
@@ -14983,6 +15347,7 @@ GameObject:
   - component: {fileID: 648329358}
   - component: {fileID: 2070502519}
   - component: {fileID: 2070502517}
+  - component: {fileID: 2070502520}
   m_Layer: 9
   m_Name: T_F00_(-02,02)__iso-64x64-building_0
   m_TagString: Untagged
@@ -15081,6 +15446,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &2070502520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2070502514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2092356557
 GameObject:
   m_ObjectHideFlags: 0
@@ -15127,6 +15504,7 @@ GameObject:
   - component: {fileID: 566768381}
   - component: {fileID: 2100787041}
   - component: {fileID: 2100787039}
+  - component: {fileID: 2100787042}
   m_Layer: 9
   m_Name: T_F00_(00,01)__iso-64x64-building_0
   m_TagString: Untagged
@@ -15225,6 +15603,18 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
+--- !u!114 &2100787042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2100787036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1cda31492d7554281522aca390cd79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2102862399
 GameObject:
   m_ObjectHideFlags: 0

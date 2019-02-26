@@ -8,12 +8,10 @@ public class MonsterController : MonoBehaviour
 
     public enum MonsterState
     {
-        Idle,
-        Move,
-        Action
+        Idle, Move, Action
     };
 
-    [SerializeField] Transform target;
+    [SerializeField] Tile tiledTarget;
 
     private IsometricNavMeshAgent navAgent;
 
