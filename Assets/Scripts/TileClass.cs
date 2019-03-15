@@ -8,8 +8,6 @@ public abstract class TileClass : MonoBehaviour
     {
         FoodTile, RestTile, WorkTile
     }
-
-    public TypeTile typeTile;
     public abstract void SleepHere();
     public abstract void EatHere();
     public abstract void WaterHere();
