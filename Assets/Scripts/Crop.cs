@@ -9,11 +9,13 @@ public enum CropState
     Growing,
     Done
 }
+
 public enum WaterState
 {
     Watered,
     Dry
 }
+
 public class Crop
 {
     // get value from crop asset

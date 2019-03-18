@@ -8,6 +8,13 @@ public class WorkTile : TileClass
     public bool isWatered;
     public Crop m_crop;
 
+    public override Vector3 pos
+    {
+        get
+        {
+            return transform.position;
+        }
+    }
     public override void EatHere()
     {
        
