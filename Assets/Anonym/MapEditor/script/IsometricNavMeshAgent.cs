@@ -39,7 +39,7 @@ namespace Anonym.Isometric
         {
             if (NMAgent.hasPath)
                 NMAgent.ResetPath();
-            KeyInputAssist.instance.ClearAnchor();
+            //KeyInputAssist.instance.ClearAnchor();
         }
 
         bool SetDestination(ref Vector3 vDest, bool bDirectly = false)
@@ -182,6 +182,14 @@ namespace Anonym.Isometric
                 }
             }
             return false;
+        }
+
+        public void MoveToDestination(Vector3 vDest)
+        {
+            if (NMAgent.isOnNavMesh)
+            {
+                SetDestination(ref vDest);
+            }
         }
 
         override public Bounds GetBounds()
