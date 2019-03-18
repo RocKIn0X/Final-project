@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
+public enum CropState
+{
+    Seed,
+    Growing,
+    Done
+}
+public enum WaterState
+{
+    Watered,
+    Dry
+}
 public class Crop
 {
     // get value from crop asset
@@ -217,17 +228,4 @@ public class Crop
             return WaterState.Watered;
         }
     }
-}
-
-public enum CropState
-{
-    Seed,
-    Growing,
-    Done
-}
-
-public enum WaterState
-{
-    Watered,
-    Dry
 }
