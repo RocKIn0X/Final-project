@@ -49,6 +49,10 @@ public class TileManager : MonoBehaviour
         restTile_arr = Object.FindObjectsOfType<RestTile>();
         foodTile_arr = Object.FindObjectsOfType<FoodTile>();
     }
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) InputProcess();
+    }
 
     public Tile[] tiles
     {
@@ -70,5 +74,12 @@ public class TileManager : MonoBehaviour
         {
             return foodTile_arr;
         }
+    }
+    private void InputProcess()
+    {
+        LayerMask layerMask = LayerMask.GetMask("Tile");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1000, layerMask);
+        foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }
