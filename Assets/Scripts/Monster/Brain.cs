@@ -8,18 +8,14 @@ public class Replay
     public List<double> states;
     public double reward;
 
-    /*
-    public Replay(double topDistance, double bottonDistance, double r)
+    public Replay(double hungry, double tireness, double emotion, double r)
     {
         states = new List<double>();
-        states.Add(topDistance);
-        states.Add(bottonDistance);
-        //states.Add(vy);
+        states.Add(hungry);
+        states.Add(tireness);
+        states.Add(emotion);
         reward = r;
     }
-    */
-
-    // Create instance of replay memory
 }
 
 
@@ -182,5 +178,24 @@ public class Brain : MonoBehaviour
         {
             hitWall = true;
         }
+    }
+
+    void MoveToFoodTile ()
+    {
+        // decrease tireness status
+        // increase hungry status
+    }
+
+    void MoveToRestTile ()
+    {
+        // decrease tireness status
+        // increase tireness status
+        // increase emotion status
+    }
+
+    void MoveToWorkTile ()
+    {
+        // decrease emotioness status
+        // decrease hungry status
     }
 }
