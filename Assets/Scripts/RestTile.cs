@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RestTile : TileClass
 {
+    public TypeTile typeTile = TypeTile.RestTile;
     public override Vector3 pos
     {
         get

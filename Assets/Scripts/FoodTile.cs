@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class FoodTile : TileClass
 {
+    public TypeTile typeTile = TypeTile.FoodTile;
     public override Vector3 pos
     {
         get
