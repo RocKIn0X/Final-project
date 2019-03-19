@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RestTile : TileClass
+public class RestTile : Tile
 {
     public TypeTile typeTile = TypeTile.RestTile;
     public override Vector3 pos

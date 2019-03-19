@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WorkTile : TileClass
+public class WorkTile : Tile
 {
     public TypeTile typeTile = TypeTile.WorkTile;
     public bool isWatered;

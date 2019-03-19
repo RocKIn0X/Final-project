@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TileClass : MonoBehaviour
+public abstract class Tile : MonoBehaviour
 {
     public enum TypeTile
     {
