@@ -975,7 +975,7 @@ GameObject:
   - component: {fileID: 317184197}
   - component: {fileID: 317184201}
   m_Layer: 0
-  m_Name: Bulk_F30(00,-01)
+  m_Name: Bulk_RestTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1554,7 +1554,7 @@ GameObject:
   - component: {fileID: 473899138}
   - component: {fileID: 473899142}
   m_Layer: 0
-  m_Name: Bulk_F10(00,00)
+  m_Name: Bulk_MainTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1874,7 +1874,7 @@ GameObject:
   - component: {fileID: 671688746}
   - component: {fileID: 671688750}
   m_Layer: 0
-  m_Name: Bulk_F30(01,00)
+  m_Name: Bulk_FoodTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2549,7 +2549,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 796172096}
-  m_LocalRotation: {x: 0.27984515, y: -0.36470562, z: 0.11591567, w: 0.8804772}
+  m_LocalRotation: {x: 0.23911761, y: -0.36964384, z: 0.09904577, w: 0.8923991}
   m_LocalPosition: {x: 0.0061237244, y: 0.0049999994, z: -0.006123724}
   m_LocalScale: {x: 1.4142135, y: 1.4142135, z: 1.4142135}
   m_Children: []
@@ -3699,7 +3699,7 @@ GameObject:
   - component: {fileID: 1339823309}
   - component: {fileID: 1267939877}
   m_Layer: 0
-  m_Name: Bulk_Field
+  m_Name: Bulk_WorkTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4514,7 +4514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707230590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.15, y: -0.056, z: -0.001}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 301732775}
