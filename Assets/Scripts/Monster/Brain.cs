@@ -21,9 +21,12 @@ public class Replay
 
 public class Brain : MonoBehaviour
 {
+    [SerializeField]
     ANN ann;
 
-    bool hitWall = false;                           //check hit top or bottom wall
+    bool isPunished = false;                        //punished by player
+    bool giveReward = false;
+    bool isMoveState = false;
 
     float reward = 0.0f;                            //reward to associate with actions
     List<Replay> replayMemory = new List<Replay>(); //memory - list of past actions and rewards
@@ -44,12 +47,12 @@ public class Brain : MonoBehaviour
     float timer = 0;                                //timer to keep track of balancing
     float maxBalanceTime = 0;                       //record time ball is kept balanced	
 
-    public GameObject topWall;
-    public GameObject bottomWall;
+    [SerializeField]
+    private Status status;
 
     void Start()
     {
-        // Setting ANN
+        Init();
     }
 
     GUIStyle guiStyle = new GUIStyle();
@@ -59,102 +62,186 @@ public class Brain : MonoBehaviour
         guiStyle.normal.textColor = Color.white;
         GUI.BeginGroup(new Rect(10, 10, 600, 150));
         GUI.Box(new Rect(0, 0, 140, 140), "Stats", guiStyle);
-        GUI.Label(new Rect(10, 25, 500, 30), "Fails: " + failCount, guiStyle);
-        GUI.Label(new Rect(10, 50, 500, 30), "Decay Rate: " + exploreRate, guiStyle);
-        GUI.Label(new Rect(10, 75, 500, 30), "Last Best Balance: " + maxBalanceTime, guiStyle);
-        GUI.Label(new Rect(10, 100, 500, 30), "This Balance: " + timer, guiStyle);
+        GUI.Label(new Rect(10, 25, 500, 30), "Hungry: " + status.GetHungryRatio(), guiStyle);
+        GUI.Label(new Rect(10, 50, 500, 30), "Tireness: " + status.GetTirenessRatio(), guiStyle);
+        GUI.Label(new Rect(10, 75, 500, 30), "Emotion: " + status.GetEmotionRatio(), guiStyle);
+        GUI.Label(new Rect(10, 100, 500, 30), "Timer: " + timer, guiStyle);
         GUI.EndGroup();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // Get input for giving reward
+        if (Input.GetKeyDown("space") && !isMoveState)
+        {
+            StartCoroutine(MoveState());
+        }
 
-        // Get input for punishing it
+        if (isMoveState)
+        {
+            if (Input.GetKeyDown("q") && !giveReward)
+                Punished();
+
+            else if (Input.GetKeyDown("e") && !giveReward)
+                Praised();
+        }
     }
 
     void FixedUpdate()
     {
         timer += Time.deltaTime;
+
+        if (timer >= 5f)
+        {
+            Debug.Log("Time passed");
+            // status.SetStatus(-5, -5, -5);
+            timer = 0;
+        }
+    }
+
+    public IEnumerator MoveState ()
+    {
+        Debug.Log("Start Move State!");
+
+        isMoveState = true;
+
         List<double> states = new List<double>();
         List<double> qs = new List<double>();
 
-        // Adding parameter into state
+        double hungry = status.GetHungryRatio();
+        double tireness = status.GetTirenessRatio();
+        double emotion = status.GetEmotionRatio();
+        double maxQ;
 
-        /*
-        double td = Vector3.Distance(transform.position, topWall.transform.position);
-        double bd = Vector3.Distance(transform.position, bottomWall.transform.position);
-
-        states.Add(td);
-        states.Add(bd);
-        */
+        states.Add(hungry);
+        states.Add(tireness);
+        states.Add(emotion);
 
         qs = SoftMax(ann.CalcOutput(states));
-        double maxQ = qs.Max();
+        maxQ = qs.Max();
+        //ReceiveInput(hungry, tireness, emotion, out maxQ);
         int maxQIndex = qs.ToList().IndexOf(maxQ);
         exploreRate = Mathf.Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
 
         //if (Random.Range(0, 100) < exploreRate)
-         //   maxQIndex = Random.Range(0, 2);
+        //   maxQIndex = Random.Range(0, 2);
 
         // Choose action from max Q Index
-        /*
-        if (maxQIndex == 0)
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * moveForce * (float)qs[maxQIndex]);
-        else if (maxQIndex == 1)
-            GetComponent<Rigidbody2D>().AddForce(Vector2.up * -moveForce * (float)qs[maxQIndex]); // do nothing
-        */
+        ChooseAction(maxQIndex);
 
-        // Give reward
-        /*
-        if (hitWall)
-            reward = -1.0f;
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Arrive");
+        reward = GetReward();
+        Debug.Log("Reward: " + reward);
+        AddMemory(hungry, tireness, emotion, reward);
+        TrainANN(maxQ);
+        yield return null;
+        Debug.Log("Change to Action state");
+        isMoveState = false;
+        reward = 0;
+    }
+
+    void Init ()
+    {
+        status = new Status();
+
+        // Setting ANN
+        ann = new ANN(3, 3, 1, 6, 0.2f);
+    }
+
+    void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)
+    {
+        List<double> states = new List<double>();
+        List<double> qs = new List<double>();
+
+        states.Add(hungry);
+        states.Add(tireness);
+        states.Add(emotion);
+
+        qs = SoftMax(ann.CalcOutput(states));
+        maxQ = qs.Max();
+    }
+
+    void ChooseAction (int index)
+    {
+        if (index == 0)
+            MoveToWorkTile();
+
+        else if (index == 1)
+            MoveToFoodTile();
+
+        else if (index == 2)
+            MoveToRestTile();
+    }
+
+
+    void TrainANN(double maxQ)
+    {
+        for (int i = replayMemory.Count - 1; i >= 0; i--)
+        {
+            List<double> toutputsOld = new List<double>();
+            List<double> toutputsNew = new List<double>();
+            toutputsOld = SoftMax(ann.CalcOutput(replayMemory[i].states));
+
+            double maxQOld = toutputsOld.Max();
+            int action = toutputsOld.ToList().IndexOf(maxQOld);
+
+            double feedback;
+            if (i == replayMemory.Count - 1 || replayMemory[i].reward == -1)
+                feedback = replayMemory[i].reward;
+            else
+            {
+                toutputsNew = SoftMax(ann.CalcOutput(replayMemory[i + 1].states));
+                maxQ = toutputsNew.Max();
+                feedback = (replayMemory[i].reward +
+                    discount * maxQ);
+            }
+
+            toutputsOld[action] = feedback;
+            ann.Train(replayMemory[i].states, toutputsOld);
+        }
+    }
+
+    float GetReward ()
+    {
+        if (giveReward)
+        {
+            giveReward = false;
+
+            if (!isPunished)
+                return 1f;
+            else
+                return -1f;
+        }
+
         else
-            reward = 0.1f;
-        */
+            return 0f;
+    }
 
-        // Set last memory
-        /*
-        Replay lastMemory = new Replay(td, bd, reward);
-        */
+    void Praised ()
+    {
+        Debug.Log("Praise!");
+
+        giveReward = true;
+        isPunished = false;
+    }
+
+    void Punished ()
+    {
+        Debug.Log("Punish!");
+
+        giveReward = true;
+        isPunished = true;
+    }
+
+    void AddMemory (double hungry, double tireness, double emotion, double reward)
+    {
+        Replay lastMemory = new Replay(hungry, tireness, emotion, reward);
 
         if (replayMemory.Count > mCapacity)
             replayMemory.RemoveAt(0);
 
-        // replayMemory.Add(lastMemory);
-
-        if (hitWall)
-        {
-            for (int i = replayMemory.Count - 1; i >= 0; i--)
-            {
-                List<double> toutputsOld = new List<double>();
-                List<double> toutputsNew = new List<double>();
-                toutputsOld = SoftMax(ann.CalcOutput(replayMemory[i].states));
-
-                double maxQOld = toutputsOld.Max();
-                int action = toutputsOld.ToList().IndexOf(maxQOld);
-
-                double feedback;
-                if (i == replayMemory.Count - 1 || replayMemory[i].reward == -1)
-                    feedback = replayMemory[i].reward;
-                else
-                {
-                    toutputsNew = SoftMax(ann.CalcOutput(replayMemory[i + 1].states));
-                    maxQ = toutputsNew.Max();
-                    feedback = (replayMemory[i].reward +
-                        discount * maxQ);
-                }
-
-                toutputsOld[action] = feedback;
-                ann.Train(replayMemory[i].states, toutputsOld);
-            }
-            
-            /*
-            replayMemory.Clear();
-            failCount++;
-            */
-        }
+        replayMemory.Add(lastMemory);
     }
 
     List<double> SoftMax(List<double> values)
@@ -176,26 +263,49 @@ public class Brain : MonoBehaviour
     {
         if (col.gameObject.tag == "wall")
         {
-            hitWall = true;
+            isPunished = true;
         }
     }
 
     void MoveToFoodTile ()
     {
-        // decrease tireness status
+        Debug.Log("Choose Food Tile");
+
         // increase hungry status
+        int hungry = Random.Range(20, 40);
+        // decrease tireness status
+        int tireness = Random.Range(-15, -5);
+        // Nothing in emotion statue
+        int emotion = Random.Range(0, 20);
+
+        status.SetStatus(hungry, tireness, emotion);
     }
 
     void MoveToRestTile ()
     {
-        // decrease tireness status
+        Debug.Log("Choose Rest Tile");
+
+        // decrease hungry status
+        int hungry = Random.Range(-5, -10);
         // increase tireness status
+        int tireness = Random.Range(20, 40);
         // increase emotion status
+        int emotion = Random.Range(10, 30);
+
+        status.SetStatus(hungry, tireness, emotion);
     }
 
     void MoveToWorkTile ()
     {
-        // decrease emotioness status
+        Debug.Log("Choose Work Tile");
+
         // decrease hungry status
+        int hungry = Random.Range(-5, -10);
+        // decrease tireness status
+        int tireness = Random.Range(-30, -10);
+        // decrease emotioness status
+        int emotion = Random.Range(-20, -10);
+
+        status.SetStatus(hungry, tireness, emotion);
     }
 }

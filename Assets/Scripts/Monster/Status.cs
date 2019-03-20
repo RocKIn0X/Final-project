@@ -1,14 +1,53 @@
-﻿[System.Serializable]
+﻿using UnityEngine;
+
+[System.Serializable]
 public class Status
 {
-    public int hungry;
-    public int tireness;
-    public int emotion;
+    private int maxHungry;
+    private int maxTireness;
+    private int maxEmotion;
 
-    public Status ()
+    [SerializeField]
+    private int hungry;
+    [SerializeField]
+    private int tireness;
+    [SerializeField]
+    private int emotion;
+
+    public Status()
     {
-        hungry = 100;
-        tireness = 100;
-        emotion = 100;
+        maxHungry = 100;
+        maxTireness = 100;
+        maxEmotion = 100;
+
+        hungry = maxHungry;
+        tireness = maxTireness;
+        emotion = maxEmotion;
+    }
+
+    public void SetStatus(int hg, int tn, int em)
+    {
+        hungry += hg;
+        tireness += tn;
+        emotion += em;
+
+        hungry = Mathf.Clamp(hungry, 0, maxHungry);
+        tireness = Mathf.Clamp(tireness, 0, maxTireness);
+        emotion = Mathf.Clamp(emotion, 0, maxEmotion);
+    }
+
+    public double GetHungryRatio()
+    {
+        return (double)hungry / maxHungry;
+    }
+
+    public double GetEmotionRatio()
+    {
+        return (double)emotion / maxEmotion;
+    }
+
+    public double GetTirenessRatio()
+    {
+        return (double)tireness / maxTireness;
     }
 }
