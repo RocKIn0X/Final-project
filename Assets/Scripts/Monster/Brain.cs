@@ -72,6 +72,16 @@ public class Brain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKeyDown("l"))
+        {
+            ann.LoadWeights();
+        }
+
+        if (Input.GetKeyDown("s"))
+        {
+            ann.SaveWeights();
+        }
+
         if (Input.GetKeyDown("space") && !isMoveState)
         {
             StartCoroutine(MoveState());
@@ -146,7 +156,7 @@ public class Brain : MonoBehaviour
         status = new Status();
 
         // Setting ANN
-        ann = new ANN(3, 3, 1, 6, 0.2f);
+        ann = new ANN(3, 3, 1, 9, 0.6f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)

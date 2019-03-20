@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [System.Serializable]
@@ -157,9 +158,43 @@ public class ANN{
 		return weightStr;
 	}
 
-	public void LoadWeights(string weightStr)
+    public void SaveWeights()
+    {
+        Debug.Log("Save...");
+        string path = Application.dataPath + "/weights.txt";
+        var sr = File.CreateText(path);
+        string weightStr = "";
+        foreach (Layer l in layers)
+        {
+            foreach (Neuron n in l.neurons)
+            {
+                foreach (double w in n.weights)
+                {
+                    weightStr += w + ",";
+                }
+                weightStr += n.bias + ",";
+            }
+        }
+        sr.WriteLine(weightStr);
+        sr.Close();
+        Debug.Log("Save completed at " + path);
+    }
+
+    public void LoadWeights()
 	{
-		if(weightStr == "") return;
+
+        Debug.Log("Load...");
+        string path = Application.dataPath + "/weights.txt";
+        string weightStr = "";
+        if (File.Exists(path))
+        {
+            var sr = File.OpenText(path);
+            weightStr = sr.ReadLine();
+        }
+        else
+            return;
+
+        if (weightStr == "") return;
 		string[] weightValues = weightStr.Split(',');
 		int w = 0;
 		foreach(Layer l in layers)
