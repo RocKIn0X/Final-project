@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerManager : MonoBehaviour
+public class MarketManager : MonoBehaviour
 {
-    private static PlayerManager instance;
-    public static PlayerManager Instance
+
+    private static MarketManager instance;
+    public static MarketManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = new GameObject("PlayerManager").AddComponent<PlayerManager>();
+                instance = new GameObject("MarketManager").AddComponent<MarketManager>();
                 DontDestroyOnLoad(instance.gameObject);
             }
             return instance;

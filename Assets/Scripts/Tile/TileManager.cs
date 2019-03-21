@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TileManager : MonoBehaviour
 {
-
     private static TileManager instance;
     public static TileManager Instance
     {
@@ -75,6 +74,7 @@ public class TileManager : MonoBehaviour
             return foodTile_arr;
         }
     }
+
     private void InputProcess()
     {
         LayerMask layerMask = LayerMask.GetMask("Tile");

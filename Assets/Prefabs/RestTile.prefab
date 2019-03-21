@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 114788425888933882}
   - component: {fileID: 114272257355857272}
   - component: {fileID: 5050586035761443848}
-  m_Layer: 28
+  m_Layer: 9
   m_Name: RestTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 4740803679713916}
   - component: {fileID: 212428555986242910}
   - component: {fileID: 114614708174176450}
-  m_Layer: 28
+  m_Layer: 9
   m_Name: Iso2DObject_Union
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 4303338177059628}
   - component: {fileID: 65071931105341550}
   - component: {fileID: 114255059469048342}
-  m_Layer: 28
+  m_Layer: 9
   m_Name: Regualr_Collider_Union
   m_TagString: Untagged
   m_Icon: {fileID: 0}
