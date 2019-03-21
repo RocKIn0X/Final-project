@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 114272257355857272}
   - component: {fileID: 6730123627053332969}
   m_Layer: 28
-  m_Name: Tile
+  m_Name: WorkTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,10 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c914e22a14025d4ca748281dce18b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_crop:
-    asset: {fileID: 0}
-    state: 0
   typeTile: 2
+  isWatered: 0
 --- !u!1 &1391565788252348
 GameObject:
   m_ObjectHideFlags: 0
@@ -215,7 +213,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -141
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: fd88d8491e4db624184cc631d943510b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
