@@ -35,7 +35,7 @@ public class WorkTile : Tile
     }
     public override void WaterHere()
     {
-
+        crop.WaterCrop(Random.Range(1, 11));
     }
 
     private void AddCrop(GameObject _crop_obj)
