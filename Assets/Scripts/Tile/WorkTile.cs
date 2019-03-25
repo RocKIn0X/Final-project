@@ -6,7 +6,9 @@ public class WorkTile : Tile
 {
     public TypeTile typeTile = TypeTile.WorkTile;
     public bool isWatered;
-    public Crop m_crop;
+    public GameObject crop_obj;
+    public Crop crop;
+    
 
     public override Vector3 pos
     {
@@ -34,5 +36,22 @@ public class WorkTile : Tile
     public override void WaterHere()
     {
 
+    }
+
+    private void AddCrop(GameObject _crop_obj)
+    {
+        this.crop_obj = Instantiate(_crop_obj, this.transform);
+        crop = this.crop_obj.GetComponent<Crop>();
+    }
+
+    private void RemoveCrop()
+    {
+        if (this.crop_obj != null && crop != null)
+        {
+            PlayerManager.Instance.AddMoney(crop.GetCost());
+            Destroy(this.crop_obj);
+            crop = null;
+            this.crop_obj = null;
+        }
     }
 }

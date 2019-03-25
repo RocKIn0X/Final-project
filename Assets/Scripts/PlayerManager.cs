@@ -27,6 +27,8 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public float playerMoney;
+
     void Start()
     {
         if (instance == null)
@@ -38,5 +40,10 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        playerMoney = PlayerPrefs.HasKey("PlayerMoney") ? PlayerPrefs.GetInt("PlayerMoney") : 0;
+    }
+    public void AddMoney(float amount)
+    {
+        playerMoney += amount;
     }
 }
