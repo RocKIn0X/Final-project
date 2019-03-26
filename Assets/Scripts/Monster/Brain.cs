@@ -65,7 +65,7 @@ public class Brain : MonoBehaviour
         GUI.Label(new Rect(10, 25, 500, 30), "Hungry: " + status.GetHungryRatio(), guiStyle);
         GUI.Label(new Rect(10, 50, 500, 30), "Tireness: " + status.GetTirenessRatio(), guiStyle);
         GUI.Label(new Rect(10, 75, 500, 30), "Emotion: " + status.GetEmotionRatio(), guiStyle);
-        GUI.Label(new Rect(10, 100, 500, 30), "Timer: " + timer, guiStyle);
+        //GUI.Label(new Rect(10, 100, 500, 30), "Timer: " + timer, guiStyle);
         GUI.EndGroup();
     }
 
@@ -99,6 +99,7 @@ public class Brain : MonoBehaviour
 
     void FixedUpdate()
     {
+        /*
         timer += Time.deltaTime;
 
         if (timer >= 5f)
@@ -107,6 +108,7 @@ public class Brain : MonoBehaviour
             // status.SetStatus(-5, -5, -5);
             timer = 0;
         }
+        */
     }
 
     public IEnumerator MoveState ()
@@ -123,9 +125,9 @@ public class Brain : MonoBehaviour
         double emotion = status.GetEmotionRatio();
         double maxQ;
 
-        states.Add(hungry);
-        states.Add(tireness);
-        states.Add(emotion);
+        states.Add(hungry - 0.5f);
+        states.Add(tireness - 0.5f);
+        states.Add(emotion - 0.5f);
 
         qs = SoftMax(ann.CalcOutput(states));
         maxQ = qs.Max();
@@ -142,10 +144,12 @@ public class Brain : MonoBehaviour
         yield return new WaitForSeconds(3f);
         Debug.Log("Arrive");
         reward = GetReward();
+        // reward = GetAutoReward(maxQIndex);
         Debug.Log("Reward: " + reward);
         AddMemory(hungry, tireness, emotion, reward);
-        TrainANN(maxQ);
-        yield return null;
+        if (reward < 0)
+            TrainANN(maxQ);
+        yield return new WaitForSeconds(3f);
         Debug.Log("Change to Action state");
         isMoveState = false;
         reward = 0;
@@ -156,7 +160,7 @@ public class Brain : MonoBehaviour
         status = new Status();
 
         // Setting ANN
-        ann = new ANN(3, 3, 1, 9, 0.6f);
+        ann = new ANN(3, 3, 3, 6, 0.4f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)
@@ -187,17 +191,20 @@ public class Brain : MonoBehaviour
 
     void TrainANN(double maxQ)
     {
+        Debug.Log("memory count: " + replayMemory.Count);
         for (int i = replayMemory.Count - 1; i >= 0; i--)
         {
             List<double> toutputsOld = new List<double>();
             List<double> toutputsNew = new List<double>();
             toutputsOld = SoftMax(ann.CalcOutput(replayMemory[i].states));
+            Debug.Log("toutputsOld: " + toutputsOld[0] + ", " + toutputsOld[1] + ", " + toutputsOld[2]);
 
             double maxQOld = toutputsOld.Max();
             int action = toutputsOld.ToList().IndexOf(maxQOld);
 
             double feedback;
-            if (i == replayMemory.Count - 1 || replayMemory[i].reward == -1)
+            // bug
+            if (i == replayMemory.Count - 1)
                 feedback = replayMemory[i].reward;
             else
             {
@@ -208,8 +215,12 @@ public class Brain : MonoBehaviour
             }
 
             toutputsOld[action] = feedback;
+            Debug.Log("update toutputsOld: " + toutputsOld[0] + ", " + toutputsOld[1] + ", " + toutputsOld[2]);
+            // Bug!!!
             ann.Train(replayMemory[i].states, toutputsOld);
+            Debug.Log("replay " + i + " state: " + replayMemory[i].states[0] + ", " + replayMemory[i].states[1] + ", " + replayMemory[i].states[2]);
         }
+        replayMemory.Clear();
     }
 
     float GetReward ()
@@ -219,13 +230,37 @@ public class Brain : MonoBehaviour
             giveReward = false;
 
             if (!isPunished)
-                return 1f;
+                return 0.4f;
             else
-                return -1f;
+                return -0.4f;
         }
 
         else
-            return 0f;
+            return 0.1f;
+    }
+
+    // test player want to work if every statuses are more than half. 
+    float GetAutoReward (int actionIndex)
+    {
+        if (status.GetHungryRatio() > 0.5f && status.GetTirenessRatio() > 0.5f && status.GetEmotionRatio() > 0.5f)
+        {
+            if (actionIndex == 0) return 0.4f;
+        }
+        else if (status.GetHungryRatio() < status.GetTirenessRatio())
+        {
+            if (actionIndex == 1) return 0.4f;
+        }
+        else if (status.GetTirenessRatio() < status.GetHungryRatio())
+        {
+            if (actionIndex == 2) return 0.4f;
+        }
+
+        if (status.GetHungryRatio() < 0.2f || status.GetTirenessRatio() < 0.2f || status.GetEmotionRatio() < 0.2f)
+        {
+            if (actionIndex == 0) return -0.4f;
+        }
+
+        return 0.1f;
     }
 
     void Praised ()
@@ -282,13 +317,11 @@ public class Brain : MonoBehaviour
         Debug.Log("Choose Food Tile");
 
         // increase hungry status
-        int hungry = Random.Range(20, 40);
+        int hungry = 30;
         // decrease tireness status
-        int tireness = Random.Range(-15, -5);
-        // Nothing in emotion statue
-        int emotion = Random.Range(0, 20);
+        int tireness = 0;
 
-        status.SetStatus(hungry, tireness, emotion);
+        status.SetStatus(hungry, tireness);
     }
 
     void MoveToRestTile ()
@@ -296,13 +329,11 @@ public class Brain : MonoBehaviour
         Debug.Log("Choose Rest Tile");
 
         // decrease hungry status
-        int hungry = Random.Range(-5, -10);
+        int hungry = -5;
         // increase tireness status
-        int tireness = Random.Range(20, 40);
-        // increase emotion status
-        int emotion = Random.Range(10, 30);
+        int tireness = 30;
 
-        status.SetStatus(hungry, tireness, emotion);
+        status.SetStatus(hungry, tireness);
     }
 
     void MoveToWorkTile ()
@@ -310,12 +341,10 @@ public class Brain : MonoBehaviour
         Debug.Log("Choose Work Tile");
 
         // decrease hungry status
-        int hungry = Random.Range(-5, -10);
+        int hungry = -20;
         // decrease tireness status
-        int tireness = Random.Range(-30, -10);
-        // decrease emotioness status
-        int emotion = Random.Range(-20, -10);
+        int tireness = -30;
 
-        status.SetStatus(hungry, tireness, emotion);
+        status.SetStatus(hungry, tireness);
     }
 }

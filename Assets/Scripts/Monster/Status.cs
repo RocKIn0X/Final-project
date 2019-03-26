@@ -3,16 +3,16 @@
 [System.Serializable]
 public class Status
 {
-    private int maxHungry;
-    private int maxTireness;
-    private int maxEmotion;
+    private float maxHungry;
+    private float maxTireness;
+    private float maxEmotion;
 
     [SerializeField]
-    private int hungry;
+    private float hungry;
     [SerializeField]
-    private int tireness;
+    private float tireness;
     [SerializeField]
-    private int emotion;
+    private float emotion;
 
     public Status()
     {
@@ -25,11 +25,23 @@ public class Status
         emotion = maxEmotion;
     }
 
-    public void SetStatus(int hg, int tn, int em)
+    private float CalculateEmotion ()
+    {
+        if (hungry > 50f && tireness > 50f)
+        {
+            return 5f;
+        }
+        else
+        {
+            return -5f;
+        }
+    }
+
+    public void SetStatus(float hg, float tn)
     {
         hungry += hg;
         tireness += tn;
-        emotion += em;
+        emotion += CalculateEmotion();
 
         hungry = Mathf.Clamp(hungry, 0, maxHungry);
         tireness = Mathf.Clamp(tireness, 0, maxTireness);

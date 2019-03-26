@@ -137,6 +137,9 @@ public class ANN{
 					currentInput = 0;
 				}
 		}
+
+        foreach (var op in outputValues)
+            Debug.Log(op);
 		return outputValues;
 	}
 
