@@ -30,9 +30,9 @@ public class MonsterInteraction : MonoBehaviour
         // DisplayBubble(index);
     }
 
-    public void SetStatus (int hungry, int tireness, int emotion)
+    public void SetStatus (int hungry, int tireness)
     {
-        status.SetStatus(hungry, tireness, emotion);
+        status.SetStatus(hungry, tireness);
     }
 
     // Get index from ml
