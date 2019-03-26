@@ -23,8 +23,9 @@ public class MonsterInteraction : MonoBehaviour
         // actionBubble.ShowAction(timePerAction);
     }
 
-    public void MonsterAction (int index)
+    public void MonsterAction ()
     {
+        int index = GetRandomActionIndex();
         // tileTarget.GetComponent<TileClass>().Action(index, this);
         // DisplayBubble(index);
     }
@@ -32,6 +33,19 @@ public class MonsterInteraction : MonoBehaviour
     public void SetStatus (int hungry, int tireness, int emotion)
     {
         status.SetStatus(hungry, tireness, emotion);
+    }
+
+    // Get index from ml
+    /*
+    private int GetActionIndex ()
+    {
+        return;
+    }
+    */
+
+    private int GetRandomActionIndex ()
+    {
+        return (int)Random.Range(0, 6);
     }
 
     private void OnTriggerEnter(Collider col)
