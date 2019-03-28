@@ -16,13 +16,7 @@ public class Status
 
     public Status()
     {
-        maxHungry = 100;
-        maxTireness = 100;
-        maxEmotion = 100;
-
-        hungry = maxHungry;
-        tireness = maxTireness;
-        emotion = maxEmotion;
+        Reset();
     }
 
     private float CalculateEmotion ()
@@ -35,6 +29,17 @@ public class Status
         {
             return -5f;
         }
+    }
+
+    public void Reset ()
+    {
+        maxHungry = 100;
+        maxTireness = 100;
+        maxEmotion = 100;
+
+        hungry = maxHungry;
+        tireness = maxTireness;
+        emotion = maxEmotion;
     }
 
     public void SetStatus(float hg, float tn)
