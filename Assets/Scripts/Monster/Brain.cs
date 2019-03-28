@@ -27,6 +27,7 @@ public class Brain : MonoBehaviour
     bool isPunished = false;                        //punished by player
     bool giveReward = false;
     bool isMoveState = false;
+    bool isTrainedDone = false;
 
     float reward = 0.0f;                            //reward to associate with actions
     List<Replay> replayMemory = new List<Replay>(); //memory - list of past actions and rewards
@@ -36,10 +37,10 @@ public class Brain : MonoBehaviour
     float exploreRate = 100.0f;                     //chance of picking random action
     float maxExploreRate = 100.0f;					//max chance value
     float minExploreRate = 0.01f;					//min chance value
-    float exploreDecay = 0.0001f;                   //chance decay amount for each update
+    float exploreDecay = 0.01f;                   //chance decay amount for each update
 
     // Vector3 ballStartPos;                           //record start position of object
-    int failCount = 0;                              //count when the ball is dropped
+    int punishedCount = 0;                              //count player punished
     // float moveForce = 0.5f;                         //max force to apply force each update
                                                     //make sure this is large enough so that the q value
                                                     //multiplied by it is enough to recover balance
@@ -53,6 +54,11 @@ public class Brain : MonoBehaviour
     void Start()
     {
         Init();
+
+        while (!PreTrainedDone())
+            AutoMoveState();
+
+        status.Reset();
     }
 
     GUIStyle guiStyle = new GUIStyle();
@@ -65,35 +71,38 @@ public class Brain : MonoBehaviour
         GUI.Label(new Rect(10, 25, 500, 30), "Hungry: " + status.GetHungryRatio(), guiStyle);
         GUI.Label(new Rect(10, 50, 500, 30), "Tireness: " + status.GetTirenessRatio(), guiStyle);
         GUI.Label(new Rect(10, 75, 500, 30), "Emotion: " + status.GetEmotionRatio(), guiStyle);
-        //GUI.Label(new Rect(10, 100, 500, 30), "Timer: " + timer, guiStyle);
+        GUI.Label(new Rect(10, 100, 500, 30), "Explore rate: " + exploreRate, guiStyle);
         GUI.EndGroup();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("l"))
+        if (isTrainedDone)
         {
-            ann.LoadWeights();
-        }
+            if (Input.GetKeyDown("l"))
+            {
+                ann.LoadWeights();
+            }
 
-        if (Input.GetKeyDown("s"))
-        {
-            ann.SaveWeights();
-        }
+            if (Input.GetKeyDown("s"))
+            {
+                ann.SaveWeights();
+            }
 
-        if (Input.GetKeyDown("space") && !isMoveState)
-        {
-            StartCoroutine(MoveState());
-        }
+            if (Input.GetKeyDown("space") && !isMoveState)
+            {
+                StartCoroutine(MoveState());
+            }
 
-        if (isMoveState)
-        {
-            if (Input.GetKeyDown("q") && !giveReward)
-                Punished();
+            if (isMoveState)
+            {
+                if (Input.GetKeyDown("q") && !giveReward)
+                    Punished();
 
-            else if (Input.GetKeyDown("e") && !giveReward)
-                Praised();
+                else if (Input.GetKeyDown("e") && !giveReward)
+                    Praised();
+            }
         }
     }
 
@@ -116,6 +125,58 @@ public class Brain : MonoBehaviour
         Debug.Log("Start Move State!");
 
         isMoveState = true;
+        reward = 0.0f;
+
+        List<double> states = new List<double>();
+        List<double> qs = new List<double>();
+
+        double hungry = status.GetHungryRatio() - 0.5f;
+        double tireness = status.GetTirenessRatio() - 0.5f;
+        double emotion = status.GetEmotionRatio() - 0.5f;
+        double maxQ;
+
+        states.Add(hungry);
+        states.Add(tireness);
+        states.Add(emotion);
+
+        Debug.Log("State: " + states[0] + ", " + states[1] + ", " + states[2]);
+        qs = SoftMax(ann.CalcOutput(states));
+        Debug.Log("QS: " + qs[0] + ", " + qs[1] + ", " + qs[2]);
+        maxQ = qs.Max();
+
+        int maxQIndex = qs.ToList().IndexOf(maxQ);
+        exploreRate = Mathf.Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
+
+        if (Random.Range(0, 100) < exploreRate)
+           maxQIndex = Random.Range(0, 2);
+
+        // Choose action from max Q Index
+        ChooseAction(maxQIndex);
+
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Arrive");
+        reward = GetReward();
+        // reward = GetAutoReward(maxQIndex);
+        Debug.Log("Reward: " + reward);
+        AddMemory(hungry, tireness, emotion, reward);
+        if (reward < 0)
+        {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+            TrainANN(maxQ);
+            watch.Stop();
+            var elapsedMs = watch.ElapsedMilliseconds;
+            Debug.Log("Total training time: " + elapsedMs);
+        }
+        yield return new WaitForSeconds(3f);
+        Debug.Log("Change to Action state");
+        isMoveState = false;
+        giveReward = false;
+    }
+
+    public void AutoMoveState ()
+    {
+        isMoveState = true;
+        reward = 0.0f;
 
         List<double> states = new List<double>();
         List<double> qs = new List<double>();
@@ -131,28 +192,29 @@ public class Brain : MonoBehaviour
 
         qs = SoftMax(ann.CalcOutput(states));
         maxQ = qs.Max();
-        //ReceiveInput(hungry, tireness, emotion, out maxQ);
+
         int maxQIndex = qs.ToList().IndexOf(maxQ);
         exploreRate = Mathf.Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
 
-        //if (Random.Range(0, 100) < exploreRate)
-        //   maxQIndex = Random.Range(0, 2);
+        if (Random.Range(0, 100) < exploreRate)
+        {
+            maxQIndex = Random.Range(0, 3);
+        }
 
         // Choose action from max Q Index
         ChooseAction(maxQIndex);
 
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Arrive");
-        reward = GetReward();
-        // reward = GetAutoReward(maxQIndex);
-        Debug.Log("Reward: " + reward);
+        reward = GetPreTrainReward(maxQIndex);
+        Debug.Log("State: " + hungry + ", " + tireness + ", " + emotion + " | Action: " + maxQIndex + " | Reward: " + reward);
+
         AddMemory(hungry, tireness, emotion, reward);
         if (reward < 0)
+        {
             TrainANN(maxQ);
-        yield return new WaitForSeconds(3f);
-        Debug.Log("Change to Action state");
+        }
+
         isMoveState = false;
-        reward = 0;
+        giveReward = false;
     }
 
     void Init ()
@@ -160,7 +222,7 @@ public class Brain : MonoBehaviour
         status = new Status();
 
         // Setting ANN
-        ann = new ANN(3, 3, 3, 6, 0.4f);
+        ann = new ANN(3, 3, 3, 6, 0.2f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)
@@ -194,6 +256,8 @@ public class Brain : MonoBehaviour
         Debug.Log("memory count: " + replayMemory.Count);
         for (int i = replayMemory.Count - 1; i >= 0; i--)
         {
+            Debug.Log("replay " + i + " state: " + replayMemory[i].states[0] + ", " + replayMemory[i].states[1] + ", " + replayMemory[i].states[2]);
+
             List<double> toutputsOld = new List<double>();
             List<double> toutputsNew = new List<double>();
             toutputsOld = SoftMax(ann.CalcOutput(replayMemory[i].states));
@@ -218,9 +282,67 @@ public class Brain : MonoBehaviour
             Debug.Log("update toutputsOld: " + toutputsOld[0] + ", " + toutputsOld[1] + ", " + toutputsOld[2]);
             // Bug!!!
             ann.Train(replayMemory[i].states, toutputsOld);
-            Debug.Log("replay " + i + " state: " + replayMemory[i].states[0] + ", " + replayMemory[i].states[1] + ", " + replayMemory[i].states[2]);
         }
         replayMemory.Clear();
+    }
+
+    bool PreTrainedDone ()
+    {
+        if (exploreRate < 5f)
+        {
+            Debug.Log("Pre Training DONE!");
+
+            isTrainedDone = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    float GetPreTrainReward (int actionIndex)
+    {
+        if (status.GetHungryRatio() > 0.7f && status.GetTirenessRatio() > 0.7f)
+        {
+            if (actionIndex == 0) return 0.1f;
+        }
+
+        if (actionIndex == 0)
+        {
+            if (status.GetHungryRatio() >= 0.4f && status.GetTirenessRatio() >= 0.4f)
+            {
+                return 0.5f;
+            }
+            else
+            {
+                return -0.5f;
+            }
+        }
+        else if (actionIndex == 1)
+        {
+            if (status.GetHungryRatio() < 0.4f && status.GetTirenessRatio() > status.GetHungryRatio())
+            {
+                return 0.1f;
+            }
+            else
+            {
+                return -0.5f;
+            }
+        }
+        else if (actionIndex == 2)
+        {
+            if (status.GetTirenessRatio() < 0.4f && status.GetTirenessRatio() <= status.GetHungryRatio())
+            {
+                return 0.1f;
+            }
+            else
+            {
+                return -0.5f;
+            }
+        }
+
+        Debug.Log("ACTION [" + actionIndex + "] OUT OF TESTCASE: " + status.GetHungryRatio() + ", " + status.GetTirenessRatio());
+        return 0.1f;
     }
 
     float GetReward ()

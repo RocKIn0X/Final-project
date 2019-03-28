@@ -138,8 +138,6 @@ public class ANN{
 				}
 		}
 
-        foreach (var op in outputValues)
-            Debug.Log(op);
 		return outputValues;
 	}
 
