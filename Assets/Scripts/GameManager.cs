@@ -5,30 +5,54 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private float dayTimer;
-    private int weekCount;
-    [SerializeField] TextMeshProUGUI weekText;
 
-    void Start()
+    private static GameManager instance;
+    public static GameManager Instance
     {
-        dayTimer = 0f;
-        weekCount = 0;
-        SetWeekText();
-    }
-
-    void Update()
-    {
-        dayTimer += Time.deltaTime;
-        if ((dayTimer/10) > weekCount)
+        get
         {
-            weekCount++;
-            SetWeekText();
+            if (instance == null)
+            {
+                instance = new GameObject("GameManager").AddComponent<GameManager>();
+                DontDestroyOnLoad(instance.gameObject);
+            }
+            return instance;
+        }
+
+        private set
+        {
+            if (instance != null && instance != value)
+            {
+                Destroy(instance.gameObject);
+            }
+            instance = value;
         }
     }
 
-    void SetWeekText()
+    public int weekCount = 0;
+    [SerializeField] private TextMeshProUGUI weekCountText;
+    private float timeCounter = 0f;
+
+    void Start()
     {
-        weekText.text = "WEEK : " + weekCount.ToString();
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
+    private void Update()
+    {
+        timeCounter += Time.deltaTime;
+        if ((timeCounter / 10) > weekCount)
+        {
+            weekCount++;
+            weekCountText.text = weekCount.ToString();
+        }
+    }
 }
