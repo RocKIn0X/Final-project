@@ -27,6 +27,7 @@ public class MarketManager : MonoBehaviour
             instance = value;
         }
     }
+    [SerializeField] GameObject BuyConfirmPopup;
 
     void Start()
     {
@@ -39,5 +40,10 @@ public class MarketManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void PrepareToBuy()
+    {
+        BuyConfirmPopup.SetActive(true);
     }
 }
