@@ -228,7 +228,11 @@ public class Brain : MonoBehaviour
         status = new Status();
 
         // Setting ANN
-        ann = new ANN(3, 3, 3, 6, 0.2f);
+        List<int> hiddenLayer = new List<int>();
+        hiddenLayer.Add(4);
+        hiddenLayer.Add(6);
+        hiddenLayer.Add(4);
+        ann = new ANN(3, 3, hiddenLayer, 0.2f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)

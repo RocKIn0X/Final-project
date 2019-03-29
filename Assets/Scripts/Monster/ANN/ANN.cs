@@ -8,34 +8,40 @@ public class ANN{
 
 	public int numInputs;
 	public int numOutputs;
-	public int numHidden;
+	public List<int> hiddenLayer;
 	public int numNPerHidden;
 	public double alpha;
 	List<Layer> layers = new List<Layer>();
 
-	public ANN(int nI, int nO, int nH, int nPH, double a)
+	public ANN(int nI, int nO, List<int> hL, double a)
 	{
 		numInputs = nI;
 		numOutputs = nO;
-		numHidden = nH;
-		numNPerHidden = nPH;
+		hiddenLayer = hL;
 		alpha = a;
 
-		if(numHidden > 0)
-		{
-			layers.Add(new Layer(numNPerHidden, numInputs));
+        for (int i = 0; i < hiddenLayer.Count + 1; i++)
+        {
+            if (i == 0)
+            {
+                layers.Add(new Layer(hiddenLayer[i], numInputs));
+                continue;
+            }
 
-			for(int i = 0; i < numHidden-1; i++)
-			{
-				layers.Add(new Layer(numNPerHidden, numNPerHidden));
-			}
+            if (i == hiddenLayer.Count)
+            {
+                layers.Add(new Layer(numOutputs, hiddenLayer[i-1]));
+                break;
+            }
 
-			layers.Add(new Layer(numOutputs, numNPerHidden));
-		}
-		else
-		{
-			layers.Add(new Layer(numOutputs, numInputs));
-		}
+            layers.Add(new Layer(hiddenLayer[i], hiddenLayer[i-1]));
+
+        }
+
+        if (hiddenLayer.Count == 0)
+        {
+            layers.Add(new Layer(numOutputs, numInputs));
+        }
 	}
 
 	public List<double> Train(List<double> inputValues, List<double> desiredOutput)
@@ -59,7 +65,7 @@ public class ANN{
 		}
 
 		inputs = new List<double>(inputValues);
-		for(int i = 0; i < numHidden + 1; i++)
+		for(int i = 0; i < hiddenLayer.Count + 1; i++)
 		{
 				if(i > 0)
 				{
@@ -81,7 +87,7 @@ public class ANN{
 
 					N -= layers[i].neurons[j].bias;
 
-					if(i == numHidden)
+					if(i == hiddenLayer.Count)
 						layers[i].neurons[j].output = ActivationFunctionO(N);
 					else
 						layers[i].neurons[j].output = ActivationFunction(N);
@@ -106,7 +112,7 @@ public class ANN{
 		}
 
 		inputs = new List<double>(inputValues);
-		for(int i = 0; i < numHidden + 1; i++)
+		for(int i = 0; i < hiddenLayer.Count + 1; i++)
 		{
 				if(i > 0)
 				{
@@ -128,7 +134,7 @@ public class ANN{
 
 					N -= layers[i].neurons[j].bias;
 
-					if(i == numHidden)
+					if(i == hiddenLayer.Count)
 						layers[i].neurons[j].output = ActivationFunctionO(N);
 					else
 						layers[i].neurons[j].output = ActivationFunction(N);
@@ -216,11 +222,11 @@ public class ANN{
 	void UpdateWeights(List<double> outputs, List<double> desiredOutput)
 	{
 		double error;
-		for(int i = numHidden; i >= 0; i--)
+		for(int i = hiddenLayer.Count; i >= 0; i--)
 		{
 			for(int j = 0; j < layers[i].numNeurons; j++)
 			{
-				if(i == numHidden)
+				if(i == hiddenLayer.Count)
 				{
 					error = desiredOutput[j] - outputs[j];
 					layers[i].neurons[j].errorGradient = outputs[j] * (1-outputs[j]) * error;
@@ -237,7 +243,7 @@ public class ANN{
 				}	
 				for(int k = 0; k < layers[i].neurons[j].numInputs; k++)
 				{
-					if(i == numHidden)
+					if(i == hiddenLayer.Count)
 					{
 						error = desiredOutput[j] - outputs[j];
 						layers[i].neurons[j].weights[k] += alpha * layers[i].neurons[j].inputs[k] * error;
