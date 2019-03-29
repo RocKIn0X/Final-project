@@ -42,6 +42,13 @@ public class Status
         emotion = maxEmotion;
     }
 
+    public void RandomStatus ()
+    {
+        hungry = Random.Range(0, 100);
+        tireness = Random.Range(0, 100);
+        emotion = Random.Range(0, 100);
+    }
+
     public void SetStatus(float hg, float tn)
     {
         hungry += hg;

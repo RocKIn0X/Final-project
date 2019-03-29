@@ -56,7 +56,10 @@ public class Brain : MonoBehaviour
         Init();
 
         while (!PreTrainedDone())
+        {
+
             AutoMoveState();
+        }
 
         status.Reset();
     }
@@ -180,6 +183,9 @@ public class Brain : MonoBehaviour
 
         List<double> states = new List<double>();
         List<double> qs = new List<double>();
+
+        // Random status
+        status.RandomStatus();
 
         double hungry = status.GetHungryRatio();
         double tireness = status.GetTirenessRatio();
@@ -311,7 +317,7 @@ public class Brain : MonoBehaviour
         {
             if (status.GetHungryRatio() >= 0.4f && status.GetTirenessRatio() >= 0.4f)
             {
-                return 0.5f;
+                return 0.1f;
             }
             else
             {
