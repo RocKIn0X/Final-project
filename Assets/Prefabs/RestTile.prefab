@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 114788425888933882}
   - component: {fileID: 114272257355857272}
   - component: {fileID: 5050586035761443848}
-  m_Layer: 28
-  m_Name: WorkTile 1
+  m_Layer: 9
+  m_Name: RestTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 4740803679713916}
   - component: {fileID: 212428555986242910}
   - component: {fileID: 114614708174176450}
-  m_Layer: 28
+  m_Layer: 9
   m_Name: Iso2DObject_Union
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,8 +212,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -141
-  m_Sprite: {fileID: 21300000, guid: fd88d8491e4db624184cc631d943510b, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: a02ac985dd3fd5946a390be823375738, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 4303338177059628}
   - component: {fileID: 65071931105341550}
   - component: {fileID: 114255059469048342}
-  m_Layer: 28
+  m_Layer: 9
   m_Name: Regualr_Collider_Union
   m_TagString: Untagged
   m_Icon: {fileID: 0}

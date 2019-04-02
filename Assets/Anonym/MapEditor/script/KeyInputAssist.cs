@@ -67,8 +67,8 @@ namespace Anonym.Isometric
 
             inputProcess();
 
-            if (NMAgent != null && bUseClickToPathfinding)
-                ClickToMove();
+            //if (NMAgent != null && bUseClickToPathfinding)
+                //ClickToMove();
         }
 
         bool keyMacro(InGameDirection direction, bool bShift,
