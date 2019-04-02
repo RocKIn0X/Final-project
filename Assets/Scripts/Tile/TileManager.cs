@@ -77,9 +77,8 @@ public class TileManager : MonoBehaviour
 
     private void InputProcess()
     {
-        LayerMask layerMask = LayerMask.GetMask("Tile");
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit[] hits = Physics.RaycastAll(ray, 1000, layerMask);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
         foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }
