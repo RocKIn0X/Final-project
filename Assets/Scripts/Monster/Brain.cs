@@ -133,6 +133,8 @@ public class Brain : MonoBehaviour
         List<double> states = new List<double>();
         List<double> qs = new List<double>();
 
+        // status.RandomStatus();
+
         double hungry = status.GetHungryRatio() - 0.5f;
         double tireness = status.GetTirenessRatio() - 0.5f;
         double emotion = status.GetEmotionRatio() - 0.5f;
@@ -232,7 +234,7 @@ public class Brain : MonoBehaviour
         hiddenLayer.Add(4);
         hiddenLayer.Add(6);
         hiddenLayer.Add(4);
-        ann = new ANN(3, 3, hiddenLayer, 0.2f);
+        ann = new ANN(3, 3, hiddenLayer, 0.05f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)
@@ -314,14 +316,14 @@ public class Brain : MonoBehaviour
     {
         if (status.GetHungryRatio() > 0.7f && status.GetTirenessRatio() > 0.7f)
         {
-            if (actionIndex == 0) return 0.1f;
+            if (actionIndex == 0) return 0.05f;
         }
 
         if (actionIndex == 0)
         {
             if (status.GetHungryRatio() >= 0.4f && status.GetTirenessRatio() >= 0.4f)
             {
-                return 0.1f;
+                return 0.2f;
             }
             else
             {
@@ -332,7 +334,7 @@ public class Brain : MonoBehaviour
         {
             if (status.GetHungryRatio() < 0.4f && status.GetTirenessRatio() > status.GetHungryRatio())
             {
-                return 0.1f;
+                return 0.05f;
             }
             else
             {
@@ -343,7 +345,7 @@ public class Brain : MonoBehaviour
         {
             if (status.GetTirenessRatio() < 0.4f && status.GetTirenessRatio() <= status.GetHungryRatio())
             {
-                return 0.1f;
+                return 0.05f;
             }
             else
             {
@@ -362,13 +364,13 @@ public class Brain : MonoBehaviour
             giveReward = false;
 
             if (!isPunished)
-                return 0.4f;
+                return 0.001f;
             else
-                return -0.4f;
+                return -0.5f;
         }
 
         else
-            return 0.1f;
+            return 0.0001f;
     }
 
     // test player want to work if every statuses are more than half. 
@@ -376,15 +378,15 @@ public class Brain : MonoBehaviour
     {
         if (status.GetHungryRatio() > 0.5f && status.GetTirenessRatio() > 0.5f && status.GetEmotionRatio() > 0.5f)
         {
-            if (actionIndex == 0) return 0.4f;
+            if (actionIndex == 0) return 0.01f;
         }
         else if (status.GetHungryRatio() < status.GetTirenessRatio())
         {
-            if (actionIndex == 1) return 0.4f;
+            if (actionIndex == 1) return 0.01f;
         }
         else if (status.GetTirenessRatio() < status.GetHungryRatio())
         {
-            if (actionIndex == 2) return 0.4f;
+            if (actionIndex == 2) return 0.01f;
         }
 
         if (status.GetHungryRatio() < 0.2f || status.GetTirenessRatio() < 0.2f || status.GetEmotionRatio() < 0.2f)
@@ -436,14 +438,6 @@ public class Brain : MonoBehaviour
         return result;
     }
 
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "wall")
-        {
-            isPunished = true;
-        }
-    }
-
     void MoveToFoodTile ()
     {
         Debug.Log("Choose Food Tile");
@@ -473,9 +467,9 @@ public class Brain : MonoBehaviour
         Debug.Log("Choose Work Tile");
 
         // decrease hungry status
-        int hungry = -20;
+        int hungry = -10;
         // decrease tireness status
-        int tireness = -30;
+        int tireness = -20;
 
         status.SetStatus(hungry, tireness);
     }
