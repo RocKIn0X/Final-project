@@ -1,0 +1,118 @@
+
+toothy.png
+size: 1024,32
+format: RGBA4444
+filter: Nearest,Nearest
+repeat: none
+toothy_walk0000
+  rotate: false
+  xy: 0, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk0001
+  rotate: false
+  xy: 34, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk0002
+  rotate: false
+  xy: 68, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk0003
+  rotate: false
+  xy: 102, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back0000
+  rotate: false
+  xy: 136, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back0001
+  rotate: false
+  xy: 170, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back0002
+  rotate: false
+  xy: 204, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back0003
+  rotate: false
+  xy: 238, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back_flip0000
+  rotate: false
+  xy: 272, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back_flip0001
+  rotate: false
+  xy: 306, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back_flip0002
+  rotate: false
+  xy: 340, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_back_flip0003
+  rotate: false
+  xy: 374, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_flip0000
+  rotate: false
+  xy: 408, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_flip0001
+  rotate: false
+  xy: 442, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_flip0002
+  rotate: false
+  xy: 476, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+toothy_walk_flip0003
+  rotate: false
+  xy: 510, 0
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
