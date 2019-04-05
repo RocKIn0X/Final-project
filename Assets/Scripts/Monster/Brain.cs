@@ -272,7 +272,7 @@ public class Brain : MonoBehaviour
         hiddenLayer.Add(4);
         hiddenLayer.Add(6);
         hiddenLayer.Add(4);
-        ann = new ANN(3, 3, hiddenLayer, 0.05f);
+        ann = new ANN(3, 3, hiddenLayer, 0.2f);
     }
 
     void ReceiveInput (double hungry, double tireness, double emotion, out double maxQ)
@@ -300,6 +300,14 @@ public class Brain : MonoBehaviour
             MoveToRestTile();
     }
 
+    public void SaveStatesToReplayMemory (List<double> states, float reward)
+    {
+        AddMemory(states, reward);
+        if (reward < 0)
+        {
+            TrainANN();
+        }
+    }
 
     void TrainANN()
     {

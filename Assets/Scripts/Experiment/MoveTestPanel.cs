@@ -48,13 +48,15 @@ public class MoveTestPanel : MonoBehaviour
 
     public IEnumerator AutoTest ()
     {
-        CalculateAction();
+        List<double> states;
+
+        CalculateAction(out states);
         // activate reward
         rewardUI.SetActive(true);
         yield return new WaitForSeconds(3f);
 
         // save states and reward to memory
-        SaveStatesAndReward();
+        SaveStatesToMemory(states);
         // set value in reward slider to zero
         rewardUI.GetComponent<RewardTestUI>().ResetRewardSlider();
         // deactivate reward
@@ -78,10 +80,8 @@ public class MoveTestPanel : MonoBehaviour
         states.Add(emotionRatio);
     }
 
-    public void CalculateAction ()
+    public void CalculateAction (out List<double> states)
     {
-        List<double> states;
-
         SetStates(out states);
 
         int maxQIndex = brain.GetMaxQIndex(states);
@@ -94,8 +94,10 @@ public class MoveTestPanel : MonoBehaviour
         else if (maxQIndex == 2) actionText.text = "Sleeping";
     }
 
-    void SaveStatesAndReward ()
+    void SaveStatesToMemory (List<double> states)
     {
         reward = rewardUI.GetComponent<RewardTestUI>().GetRewardValue();
+        // save the current state and reward to replay memory
+        brain.SaveStatesToReplayMemory(states, reward);
     }
 }
