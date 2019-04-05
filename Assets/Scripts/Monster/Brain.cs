@@ -233,6 +233,11 @@ public class Brain : MonoBehaviour
         return FindMaxQ(maxQ);
     }
 
+    public List<double> GetQS ()
+    {
+        return qs;
+    }
+
     public void SetReward (float r)
     {
         reward = r;
@@ -249,11 +254,12 @@ public class Brain : MonoBehaviour
     private int FindMaxQ (double maxQ)
     {
         int maxQIndex = qs.ToList().IndexOf(maxQ);
+        /*
         exploreRate = Mathf.Clamp(exploreRate - exploreDecay, minExploreRate, maxExploreRate);
 
         if (Random.Range(0, 100) < exploreRate)
             maxQIndex = Random.Range(0, 2);
-
+        */
         return maxQIndex;
     }
 

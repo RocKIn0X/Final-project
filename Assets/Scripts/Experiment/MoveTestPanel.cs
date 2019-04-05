@@ -9,6 +9,7 @@ public class MoveTestPanel : MonoBehaviour
     public InputField hungerField;
     public InputField tirenessField;
     public InputField emotionField;
+    public GameObject actionBars;
     public GameObject rewardUI;
     public TextMeshProUGUI actionText;
 
@@ -84,6 +85,9 @@ public class MoveTestPanel : MonoBehaviour
         SetStates(out states);
 
         int maxQIndex = brain.GetMaxQIndex(states);
+
+        List<double> qs = brain.GetQS();
+        actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
 
         if (maxQIndex == 0) actionText.text = "Working";
         else if (maxQIndex == 1) actionText.text = "Eatting";
