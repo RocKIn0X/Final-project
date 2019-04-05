@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class ActionTestBar : MonoBehaviour
 {
-    public Slider workingBar;
-    public Slider eattingBar;
-    public Slider sleepingBar;
+    public BarController workingBar;
+    public BarController eattingBar;
+    public BarController sleepingBar;
 
     public void SetActionBar (float wValue, float eValue, float sValue)
     {
-        workingBar.value = wValue + 0.5f;
-        eattingBar.value = eValue + 0.5f;
-        sleepingBar.value = sValue + 0.5f;
+        workingBar.SetActionBar(wValue);
+        eattingBar.SetActionBar(eValue);
+        sleepingBar.SetActionBar(sValue);
     }
 }
