@@ -9,12 +9,15 @@ public class MoveTestPanel : MonoBehaviour
     public InputField hungerField;
     public InputField tirenessField;
     public InputField emotionField;
-    public Slider rewardSlider;
+    public GameObject rewardUI;
     public TextMeshProUGUI actionText;
 
     private Brain brain;
 
     private bool isAutoTest = false;
+    private double hungerRatio;
+    private double tirenessRatio;
+    private double emotionRatio;
     private float reward;
 
     // Start is called before the first frame update
@@ -24,7 +27,7 @@ public class MoveTestPanel : MonoBehaviour
 
         brain = GetComponent<Brain>();
 
-        rewardSlider.gameObject.SetActive(false);
+        rewardUI.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -46,11 +49,15 @@ public class MoveTestPanel : MonoBehaviour
     {
         CalculateAction();
         // activate reward
-        rewardSlider.gameObject.SetActive(true);
+        rewardUI.SetActive(true);
         yield return new WaitForSeconds(3f);
 
+        // save states and reward to memory
+        SaveStatesAndReward();
+        // set value in reward slider to zero
+        rewardUI.GetComponent<RewardTestUI>().ResetRewardSlider();
         // deactivate reward
-        rewardSlider.gameObject.SetActive(false);
+        rewardUI.SetActive(false);
         // set reward to ANN
         Debug.Log("Reward: " + reward);
         // end auto test
@@ -61,9 +68,9 @@ public class MoveTestPanel : MonoBehaviour
     {
         states = new List<double>();
 
-        double hungerRatio = double.Parse(hungerField.text.ToString()) / 100;
-        double tirenessRatio = double.Parse(tirenessField.text.ToString()) / 100;
-        double emotionRatio = double.Parse(emotionField.text.ToString()) / 100;
+        hungerRatio = (double.Parse(hungerField.text.ToString()) / 100) - 0.5f;
+        tirenessRatio = (double.Parse(tirenessField.text.ToString()) / 100) - 0.5f;
+        emotionRatio = (double.Parse(emotionField.text.ToString()) / 100) - 0.5f;
 
         states.Add(hungerRatio);
         states.Add(tirenessRatio);
@@ -83,8 +90,8 @@ public class MoveTestPanel : MonoBehaviour
         else if (maxQIndex == 2) actionText.text = "Sleeping";
     }
 
-    public void AdjustReward ()
+    void SaveStatesAndReward ()
     {
-        reward = rewardSlider.value;
+        reward = rewardUI.GetComponent<RewardTestUI>().GetRewardValue();
     }
 }

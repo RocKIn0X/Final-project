@@ -168,7 +168,7 @@ public class Brain : MonoBehaviour
         reward = GetReward();
         // reward = GetAutoReward(maxQIndex);
         Debug.Log("Reward: " + reward);
-        AddMemory(hungry, tireness, emotion, reward);
+        AddMemory(states, reward);
         if (reward < 0)
         {
             TrainANN();
@@ -216,7 +216,7 @@ public class Brain : MonoBehaviour
         reward = GetPreTrainReward(maxQIndex);
         Debug.Log("State: " + hungry + ", " + tireness + ", " + emotion + " | Action: " + maxQIndex + " | Reward: " + reward);
 
-        AddMemory(hungry, tireness, emotion, reward);
+        AddMemory(states, reward);
         if (reward < 0)
         {
             TrainANN();
@@ -445,9 +445,9 @@ public class Brain : MonoBehaviour
         isPunished = true;
     }
 
-    void AddMemory (double hungry, double tireness, double emotion, double reward)
+    void AddMemory (List<double> states, double reward)
     {
-        Replay lastMemory = new Replay(hungry, tireness, emotion, reward);
+        Replay lastMemory = new Replay(states[0], states[1], states[2], reward);
 
         if (replayMemory.Count > mCapacity)
             replayMemory.RemoveAt(0);
