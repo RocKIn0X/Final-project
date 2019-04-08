@@ -13,8 +13,6 @@ public class MoveTestPanel : MonoBehaviour
     public GameObject rewardUI;
     public TextMeshProUGUI actionText;
 
-    private Brain brain;
-
     private bool isAutoTest = false;
     private double hungerRatio;
     private double tirenessRatio;
@@ -25,8 +23,6 @@ public class MoveTestPanel : MonoBehaviour
     void Start()
     {
         reward = 0f;
-
-        brain = GetComponent<Brain>();
 
         rewardUI.gameObject.SetActive(false);
     }
@@ -49,8 +45,9 @@ public class MoveTestPanel : MonoBehaviour
     public IEnumerator AutoTest ()
     {
         List<double> states;
+        SetStates(out states);
 
-        CalculateAction(out states);
+        CalculateAction(states);
         // activate reward
         rewardUI.SetActive(true);
         yield return new WaitForSeconds(3f);
@@ -80,13 +77,11 @@ public class MoveTestPanel : MonoBehaviour
         states.Add(emotionRatio);
     }
 
-    public void CalculateAction (out List<double> states)
+    public void CalculateAction (List<double> states)
     {
-        SetStates(out states);
+        int maxQIndex = ActionManager.instance.CalculateAction(states);
 
-        int maxQIndex = brain.GetMaxQIndex(states);
-
-        List<double> qs = brain.GetQS();
+        List<double> qs = ActionManager.instance.GetQS();
         actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
 
         if (maxQIndex == 0) actionText.text = "Working";
@@ -98,6 +93,6 @@ public class MoveTestPanel : MonoBehaviour
     {
         reward = rewardUI.GetComponent<RewardTestUI>().GetRewardValue();
         // save the current state and reward to replay memory
-        brain.SaveStatesToReplayMemory(states, reward);
+        ActionManager.instance.SetMemory(states, reward);
     }
 }
