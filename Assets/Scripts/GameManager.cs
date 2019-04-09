@@ -1,25 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private float dayTimer;
-    private int weekCount;
+
+    private static GameManager instance;
+    public static GameManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameObject("GameManager").AddComponent<GameManager>();
+                DontDestroyOnLoad(instance.gameObject);
+            }
+            return instance;
+        }
+
+        private set
+        {
+            if (instance != null && instance != value)
+            {
+                Destroy(instance.gameObject);
+            }
+            instance = value;
+        }
+    }
+
+    public int weekCount = 0;
+    [SerializeField] private TextMeshProUGUI weekCountText;
+    private float timeCounter = 0f;
 
     void Start()
     {
-        dayTimer = 0f;
-        weekCount = 0;
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        dayTimer += Time.deltaTime;
-        if ((dayTimer/10) > weekCount)
+        timeCounter += Time.deltaTime;
+        if ((timeCounter / 10) > weekCount)
         {
             weekCount++;
-            Debug.Log(weekCount);
+            weekCountText.text = weekCount.ToString();
         }
     }
 }
