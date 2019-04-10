@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-
+    #region Singleton
     private static GameManager instance;
     public static GameManager Instance
     {
@@ -28,12 +28,20 @@ public class GameManager : MonoBehaviour
             instance = value;
         }
     }
+    #endregion
+
+    public delegate void SecondAction();
+    public static event SecondAction SecondEvent;
+
+    private float second = 1f;
+    private float secondInAWeek = 10f;
 
     public int weekCount = 0;
     [SerializeField] private TextMeshProUGUI weekCountText;
     private float timeCounter = 0f;
+    private float timeToStartGame = 1f;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
@@ -46,13 +54,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start ()
+    {
+        InvokeRepeating("CallSecondEvent", timeToStartGame, second);
+    }
+
     private void Update()
     {
         timeCounter += Time.deltaTime;
-        if ((timeCounter / 10) > weekCount)
+        if ((timeCounter / secondInAWeek) > weekCount)
         {
-            weekCount++;
-            weekCountText.text = weekCount.ToString();
+            UpdateWeekCount();
+        }
+    }
+
+    private void UpdateWeekCount ()
+    {
+        weekCount++;
+        weekCountText.text = weekCount.ToString();
+    }
+
+    private void CallSecondEvent ()
+    {
+        if (SecondEvent != null)
+        {
+            SecondEvent();
+        }
+        else
+        {
+            Debug.Log("No func in this event");
         }
     }
 }
