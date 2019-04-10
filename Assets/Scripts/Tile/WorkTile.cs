@@ -48,7 +48,7 @@ public class WorkTile : Tile
     {
         if (this.crop_obj != null && crop != null)
         {
-            PlayerManager.Instance.AddMoney(crop.GetCost());
+            PlayerManager.Instance.AddMoney(crop.CalculateCost());
             Destroy(this.crop_obj);
             crop = null;
             this.crop_obj = null;
