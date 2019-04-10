@@ -8,7 +8,17 @@ public class WorkTile : Tile
     public bool isWatered;
     public GameObject crop_obj;
     public Crop crop;
-    
+
+
+    private void OnEnable()
+    {
+        GameManager.SecondEvent += CropGrowth;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.SecondEvent -= CropGrowth;
+    }
 
     public override Vector3 pos
     {
@@ -52,6 +62,15 @@ public class WorkTile : Tile
             Destroy(this.crop_obj);
             crop = null;
             this.crop_obj = null;
+        }
+    }
+
+    private void CropGrowth ()
+    {
+        Debug.Log("Crop growth at " + Time.time);
+        if (this.crop_obj != null && crop != null)
+        {
+            crop.CropGrowth();
         }
     }
 }
