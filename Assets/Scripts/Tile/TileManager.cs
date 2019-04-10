@@ -75,6 +75,13 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    public Vector3 GetWorkTilePosition ()
+    {
+        int index = Random.Range(0, workTiles.Length);
+
+        return workTiles[index].pos;
+    }
+
     private void InputProcess()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
