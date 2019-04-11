@@ -28,37 +28,17 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             isOnMoveState = true;
 
-            List<double> states = new List<double>();
-            states.Add(status.GetHungryRatio());
-            states.Add(status.GetTirenessRatio());
-            states.Add(status.GetEmotionRatio());
-            int index = ActionManager.instance.CalculateAction(states);
-            Debug.Log("Index: " + index);
-
-            Vector3 targetPosition = this.transform.position;
-            string tileName = "";
-            if (index == 0)
-            {
-                tileName = "Work Tile";
-                targetPosition = TileManager.Instance.GetWorkTilePosition();
-            }
-            else if (index == 1)
-            {
-                tileName = "Food Tile";
-                targetPosition = TileManager.Instance.GetFoodTilePosition();
-            } 
-            else if (index == 2)
-            {
-                tileName = "Rest Tile";
-                targetPosition = TileManager.Instance.GetRestTilePosition();
-            }
-                
+            Vector3 targetPosition = GetTargetPosition();
+            
             NMAgent.MoveToDestination(targetPosition);
-            Debug.Log("Move to " + tileName);
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("Pressed A");
         }
     }
 
@@ -100,6 +80,43 @@ public class MonsterInteraction : MonoBehaviour
     {
         target = newTarget;
         NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
+    }
+
+    private Vector3 GetTargetPosition ()
+    {
+        int index = ActionManager.instance.CalculateAction(GetStatusStates());
+        Debug.Log("Index: " + index);
+
+        Vector3 targetPosition = this.transform.position;
+        string tileName = "";
+        if (index == 0)
+        {
+            tileName = "Work Tile";
+            targetPosition = TileManager.Instance.GetWorkTilePosition();
+        }
+        else if (index == 1)
+        {
+            tileName = "Food Tile";
+            targetPosition = TileManager.Instance.GetFoodTilePosition();
+        }
+        else if (index == 2)
+        {
+            tileName = "Rest Tile";
+            targetPosition = TileManager.Instance.GetRestTilePosition();
+        }
+        Debug.Log("Move to " + tileName);
+
+        return targetPosition;
+    }
+
+    private List<double> GetStatusStates ()
+    {
+        List<double> states = new List<double>();
+        states.Add(status.GetHungryRatio());
+        states.Add(status.GetTirenessRatio());
+        states.Add(status.GetEmotionRatio());
+
+        return states;
     }
 
     private int GetRandomActionIndex ()
