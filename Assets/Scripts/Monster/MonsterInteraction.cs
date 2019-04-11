@@ -18,6 +18,8 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    private bool isOnMoveState = false;
+
     private void Start()
     {
         status = new Status();
@@ -28,9 +30,35 @@ public class MonsterInteraction : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            Vector3 targetPosition = TileManager.Instance.GetWorkTilePosition();
+            isOnMoveState = true;
+
+            List<double> states = new List<double>();
+            states.Add(status.GetHungryRatio());
+            states.Add(status.GetTirenessRatio());
+            states.Add(status.GetEmotionRatio());
+            int index = ActionManager.instance.CalculateAction(states);
+            Debug.Log("Index: " + index);
+
+            Vector3 targetPosition = this.transform.position;
+            string tileName = "";
+            if (index == 0)
+            {
+                tileName = "Work Tile";
+                targetPosition = TileManager.Instance.GetWorkTilePosition();
+            }
+            else if (index == 1)
+            {
+                tileName = "Food Tile";
+                targetPosition = TileManager.Instance.GetFoodTilePosition();
+            } 
+            else if (index == 2)
+            {
+                tileName = "Rest Tile";
+                targetPosition = TileManager.Instance.GetRestTilePosition();
+            }
+                
             NMAgent.MoveToDestination(targetPosition);
-            Debug.Log("Move to (" + targetPosition + ")");
+            Debug.Log("Move to " + tileName);
         }
     }
 

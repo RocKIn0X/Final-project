@@ -75,11 +75,29 @@ public class TileManager : MonoBehaviour
         }
     }
 
+    public RestTile[] restTiles
+    {
+        get
+        {
+            return restTile_arr;
+        }
+    }
+
     public Vector3 GetWorkTilePosition ()
     {
         int index = Random.Range(0, workTiles.Length);
 
         return workTiles[index].pos;
+    }
+
+    public Vector3 GetFoodTilePosition ()
+    {
+        return foodTiles[0].pos;
+    }
+
+    public Vector3 GetRestTilePosition()
+    {
+        return restTiles[0].pos;
     }
 
     private void InputProcess()
