@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2699498312474870658}
   - component: {fileID: 1359720286465469503}
   m_Layer: 5
-  m_Name: SeedScrollSnap
+  m_Name: Seed_ScrollSnap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 618675280675512878}
   - component: {fileID: 218877564164223499}
   m_Layer: 5
-  m_Name: MaskSeedScrollSnap
+  m_Name: Mask_Seed_ScrollSnap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

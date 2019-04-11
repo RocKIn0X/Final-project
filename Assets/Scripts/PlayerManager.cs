@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -28,6 +29,9 @@ public class PlayerManager : MonoBehaviour
     }
 
     public float playerMoney;
+    [SerializeField] TextMeshProUGUI playerMoneyText;
+    [Header("Inventory")]
+    [SerializeField] Dictionary<string, int> cropAmountList;
 
     void Start()
     {
@@ -40,10 +44,13 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        playerMoney = PlayerPrefs.HasKey("PlayerMoney") ? PlayerPrefs.GetInt("PlayerMoney") : 0;
+        //playerMoney = PlayerPrefs.HasKey("PlayerMoney") ? PlayerPrefs.GetInt("PlayerMoney") : 0;
+        playerMoneyText.text = "$" + playerMoney.ToString();
     }
+
     public void AddMoney(float amount)
     {
         playerMoney += amount;
+        playerMoneyText.text = "$" + playerMoney.ToString();
     }
 }
