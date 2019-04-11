@@ -84,6 +84,8 @@ public class MonsterInteraction : MonoBehaviour
 
     private Vector3 GetTargetPosition ()
     {
+        status.RandomStatus();
+
         int index = ActionManager.instance.CalculateAction(GetStatusStates());
         Debug.Log("Index: " + index);
 
@@ -112,9 +114,11 @@ public class MonsterInteraction : MonoBehaviour
     private List<double> GetStatusStates ()
     {
         List<double> states = new List<double>();
-        states.Add(status.GetHungryRatio());
-        states.Add(status.GetTirenessRatio());
-        states.Add(status.GetEmotionRatio());
+        states.Add(status.GetHungryRatio() - 0.5f);
+        states.Add(status.GetTirenessRatio() - 0.5f);
+        states.Add(status.GetEmotionRatio() - 0.5f);
+
+        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
 
         return states;
     }
