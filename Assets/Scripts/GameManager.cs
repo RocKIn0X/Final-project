@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     private void UpdateWeekCount ()
     {
         weekCount++;
-        weekCountText.text = weekCount.ToString();
+        weekCountText.text = "WEEK " + weekCount.ToString();
     }
 
     private void CallSecondEvent ()
