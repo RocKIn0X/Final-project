@@ -10,25 +10,18 @@ public enum CropState
     Done
 }
 
-public enum WaterState
-{
-    Watered,
-    Dry
-}
-
+[System.Serializable]
 public class Crop
 {
     // get value from crop asset
-    private float bestWaterQuantityAtPlanted;
-    private float bestWaterQuantityAtGrowing;
-    private float durationToDone;
+    private float minGrowthRate;
+    private float maxGrowthRate;
+    private float waterToGrowth;
     private float maximumCost;
-    private float percentOfPenalty;
 
-    private float devalueTime = 5f;
-    private float maxWaterQuantity;
+    private float growthRate;
     private float realCost;
-    private float waterAmount;
+    private float waterGauge;
 
     public CropAssets asset;
     public CropState state;
@@ -55,93 +48,67 @@ public class Crop
     void InitializeValue ()
     {
         state = CropState.Seed;
-        maxWaterQuantity = 0f;
+        growthRate = 0f;
         realCost = 0f;
-        waterAmount = 0;
+        waterGauge = 0;
     }
 
     void GetDataFromAsset (CropAssets asset)
     {
-        bestWaterQuantityAtPlanted = asset.bestWaterQuantityAtPlanted;
-        bestWaterQuantityAtGrowing = asset.bestWaterQuantityAtGrowing;
-        durationToDone = asset.durationToDone;
+        minGrowthRate = asset.minGrowthRate;
+        maxGrowthRate = asset.maxGrowthRate;
+        waterToGrowth = asset.waterToGrowth;
         maximumCost = asset.maximumCost;
-        maxWaterQuantity = bestWaterQuantityAtPlanted + bestWaterQuantityAtGrowing;
-        percentOfPenalty = asset.percentOfPenalty / 100f;
-    }
-
-    // calculate cost of the crop
-    void CalculateCost ()
-    {
-        float perfectCostAtState = 0;
-
-        switch (state)
-        {
-            case CropState.Seed:
-                perfectCostAtState = (bestWaterQuantityAtPlanted / maxWaterQuantity) * maximumCost;
-                realCost += (1 - (Mathf.Abs(waterAmount - bestWaterQuantityAtPlanted) / 5)) * perfectCostAtState;
-                Debug.Log("Real cost: " + realCost);
-                break;
-            case CropState.Growing:
-                perfectCostAtState = (bestWaterQuantityAtGrowing / maxWaterQuantity) * maximumCost;
-                realCost += (1 - (Mathf.Abs(waterAmount - bestWaterQuantityAtGrowing) / 5)) * perfectCostAtState;
-                Debug.Log("Real cost: " + realCost);
-                break;
-            default:
-                break;
-        }
-
-        if (realCost > maximumCost)
-        {
-            realCost = maximumCost;
-        }
-
-        Debug.Log(realCost + " / " + maximumCost);
-    }
-
-    // decrease cost after its state is done but monster doesn't harvest it.
-    public void Devalue (float time)
-    {
-        devalueTime -= time;
-
-        if (devalueTime < 0f)
-        {
-            Debug.Log("devalue crop cost!");
-            realCost -= 2f;
-            devalueTime = 5f;
-        }
     }
 
     // transition state of the crop
-    public void TransitionState ()
+    void TransitionState ()
     {
         switch (state)
         {
             case CropState.Seed:
-                CalculateCost();
                 state = CropState.Growing;
-                waterAmount = 0;
                 break;
             case CropState.Growing:
-                CalculateCost();
                 state = CropState.Done;
-                waterAmount = 0;
                 break;
             default:
                 break;
         }
     }
 
-    // increase water quantity
-    public void WaterCrop (int amount)
+    bool isChangeState()
     {
-        Debug.Log("Water quantity: " + amount);
-        waterAmount += amount;
+        if (state == CropState.Seed && growthRate > 0.3f) return true;
+        else if (state == CropState.Growing && growthRate > 0.8f) return true;
+        else return false;
+    }
 
-        if (waterAmount > 10)
+    // Run every 1 second (Link to TimeManager)
+    public void CropGrowth()
+    {
+        float waterConsumed = waterGauge >= waterToGrowth ? 1f : waterGauge / waterToGrowth;
+        float growthValue = minGrowthRate + maxGrowthRate * waterConsumed;
+
+        growthRate = Mathf.Clamp(growthRate + growthValue, 0f, 1f);
+        waterGauge = Mathf.Clamp(waterGauge - waterToGrowth, 0f, 1f);
+
+        if (isChangeState())
         {
-            waterAmount = 10;
+            TransitionState();
         }
+    }
+
+    // increase water guage
+    public void WaterCrop(float amount)
+    {
+        waterGauge = Mathf.Clamp(waterGauge + amount, 0f, 1f);
+    }
+
+    // calculate cost of the crop
+    public float CalculateCost()
+    {
+        return maximumCost * growthRate;
     }
 
     public bool HasCrop ()
@@ -154,36 +121,6 @@ public class Crop
         {
             return true;
         }
-    }
-
-    public bool IsCropDone (float time)
-    {
-        if (GetWaterState() == WaterState.Watered)
-        {
-            durationToDone -= time;
-        }
-
-        if (durationToDone <= 0f)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    public float GetCost ()
-    {
-        if (realCost <= 2f)
-        {
-            return 2f;
-        }
-
-        return realCost;
-    }
-
-    public float GetTimeRemaining ()
-    {
-        return durationToDone;
     }
 
     public string GetName ()
@@ -217,17 +154,5 @@ public class Crop
     public CropState GetCropState ()
     {
         return state;
-    }
-
-    public WaterState GetWaterState ()
-    {
-        if (waterAmount <= 0)
-        {
-            return WaterState.Dry;
-        }
-        else
-        {
-            return WaterState.Watered;
-        }
     }
 }

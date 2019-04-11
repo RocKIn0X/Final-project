@@ -5,13 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Crop", menuName = "Crop")]
 public class CropAssets : ScriptableObject
 {
-    [Header("Best water quantity at each state (1 - 5)")]
-    public float bestWaterQuantityAtPlanted;
-    public float bestWaterQuantityAtGrowing;
+    [Header("Growth parameter")]
+    public float minGrowthRate;
+    public float maxGrowthRate;
+    public float waterToGrowth;
 
-    [Header("Paremeters")]
-    public float durationToDone;
-    public float percentOfPenalty;
+    [Header("Price")]
     public float maximumCost;
 
     [Header("Sprite for each state")]
