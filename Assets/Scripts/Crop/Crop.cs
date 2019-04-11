@@ -10,6 +10,7 @@ public enum CropState
     Done
 }
 
+[System.Serializable]
 public class Crop
 {
     // get value from crop asset
