@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MarketManager : MonoBehaviour
 {
@@ -27,7 +28,10 @@ public class MarketManager : MonoBehaviour
             instance = value;
         }
     }
-    [SerializeField] GameObject BuyConfirmPopup;
+    [SerializeField] CanvasGroup buyConfirmPopupGroup;
+    public CropAssets buyingCropAssets;
+    public int itemAmountToBuy = 0;
+    public float totalCostToPay = 0;
 
     void Start()
     {
@@ -41,9 +45,22 @@ public class MarketManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
-    public void PrepareToBuy()
+    public void PrepareToBuy(CropAssets _buyingCropAssets)
     {
-        BuyConfirmPopup.SetActive(true);
+        buyingCropAssets = _buyingCropAssets;
+        buyConfirmPopupGroup.alpha = 1;
+        buyConfirmPopupGroup.blocksRaycasts = true;
+        buyConfirmPopupGroup.interactable = true;
+        itemAmountToBuy = 1;
+        totalCostToPay = buyingCropAssets.buyingCost * itemAmountToBuy;
+    }
+
+    public void BuyItem()
+    {
+        PlayerManager.Instance.playerMoney -= totalCostToPay;
+        if (PlayerManager.Instance.cropAmountList.ContainsKey(buyingCropAssets)) PlayerManager.Instance.cropAmountList[buyingCropAssets] += itemAmountToBuy;
+        else PlayerManager.Instance.cropAmountList.Add(buyingCropAssets, itemAmountToBuy);
+        PlayerManager.Instance.SetInventory();
+        PlayerManager.Instance.AddMoney(0);
     }
 }

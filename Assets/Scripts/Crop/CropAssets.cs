@@ -11,9 +11,11 @@ public class CropAssets : ScriptableObject
     public float waterToGrowth;
 
     [Header("Price")]
-    public float maximumCost;
+    public float buyingCost;
+    public float maximumSellingCost;
 
     [Header("Sprite for each state")]
+    public Sprite cropSprite;
     public Sprite seedSprite;
     public Sprite growingSprite;
     public Sprite doneSprite;

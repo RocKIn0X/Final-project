@@ -67,7 +67,7 @@ public class WorkTile : Tile
 
     private void CropGrowth ()
     {
-        Debug.Log("Crop growth at " + Time.time);
+        //Debug.Log("Crop growth at " + Time.time);
         if (this.overlayObj != null && crop != null)
         {
             crop.CropGrowth();
