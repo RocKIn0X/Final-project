@@ -18,6 +18,9 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
     {
         cursorImage.enabled = true;
         PlayerManager.Instance.cropAsset_selectToPlant = this.cropAsset;
+        Vector2 pos;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(PopupCanvase.transform as RectTransform, Input.mousePosition, PopupCanvase.worldCamera, out pos);
+        cursorImage.transform.position = PopupCanvase.transform.TransformPoint(pos);
     }
     
     public void OnBeginDrag(PointerEventData data)
