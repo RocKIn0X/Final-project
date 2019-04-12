@@ -6,7 +6,7 @@ public class WorkTile : Tile
 {
     public TypeTile typeTile = TypeTile.WorkTile;
     public bool isWatered;
-    public GameObject crop_obj;
+    public GameObject overlayObj;
     public Crop crop;
 
 
@@ -51,27 +51,28 @@ public class WorkTile : Tile
 
     private void AddCrop(GameObject _crop_obj)
     {
-        this.crop_obj = Instantiate(_crop_obj, this.transform);
-        crop = this.crop_obj.GetComponent<Crop>();
+        this.overlayObj = Instantiate(_crop_obj, this.transform);
+        crop = this.overlayObj.GetComponent<Crop>();
     }
 
-    private void RemoveCrop()
+    private void HarvestCrop()
     {
-        if (this.crop_obj != null && crop != null)
+        if (this.overlayObj != null && crop != null)
         {
             PlayerManager.Instance.AddMoney(crop.CalculateCost());
-            Destroy(this.crop_obj);
+            //Destroy(this.overlayObj);
             crop = null;
-            this.crop_obj = null;
+            this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
         }
     }
 
     private void CropGrowth ()
     {
         //Debug.Log("Crop growth at " + Time.time);
-        if (this.crop_obj != null && crop != null)
+        if (this.overlayObj != null && crop != null)
         {
             crop.CropGrowth();
+            overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
         }
     }
 }

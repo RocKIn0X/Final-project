@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TileManager : MonoBehaviour
 {
@@ -49,10 +50,6 @@ public class TileManager : MonoBehaviour
         workTile_arr = Object.FindObjectsOfType<WorkTile>();
         restTile_arr = Object.FindObjectsOfType<RestTile>();
         foodTile_arr = Object.FindObjectsOfType<FoodTile>();
-    }
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) InputProcess();
     }
 
     public Tile[] tiles

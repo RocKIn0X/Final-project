@@ -10,6 +10,7 @@ public enum CropState
     Done
 }
 
+[System.Serializable]
 public class Crop
 {
     // get value from crop asset
@@ -57,7 +58,7 @@ public class Crop
         minGrowthRate = asset.minGrowthRate;
         maxGrowthRate = asset.maxGrowthRate;
         waterToGrowth = asset.waterToGrowth;
-        maximumCost = asset.maximumCost;
+        maximumCost = asset.maximumSellingCost;
     }
 
     // transition state of the crop
