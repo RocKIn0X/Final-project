@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
     private float timeCounter = 0f;
     private float timeToStartGame = 1f;
 
+    public static bool isGameRunning;
+
     void Awake()
     {
         if (instance == null)
@@ -56,6 +58,7 @@ public class GameManager : MonoBehaviour
 
     void Start ()
     {
+        isGameRunning = true;
         InvokeRepeating("CallSecondEvent", timeToStartGame, second);
     }
 
@@ -84,5 +87,17 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No func in this event");
         }
+    }
+
+    public void PauseGame ()
+    {
+        isGameRunning = false;
+        Time.timeScale = 0f;
+    }
+
+    public void ResumeGame ()
+    {
+        isGameRunning = true;
+        Time.timeScale = 1f;
     }
 }
