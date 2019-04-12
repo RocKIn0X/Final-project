@@ -32,6 +32,8 @@ public class TileManager : MonoBehaviour
     public RestTile[] restTile_arr;
     public FoodTile[] foodTile_arr;
 
+    private int prevWorkIndex = -1;
+
     void Start()
     {
         if (instance == null)
@@ -85,7 +87,22 @@ public class TileManager : MonoBehaviour
 
     public Vector3 GetWorkTilePosition ()
     {
-        int index = Random.Range(0, workTiles.Length);
+        int index = 0;
+
+        if (prevWorkIndex == -1)
+        {
+            index = Random.Range(0, workTiles.Length);
+        }            
+        else
+        {
+            do
+            {
+                index = Random.Range(0, workTiles.Length);
+            }
+            while (index == prevWorkIndex);
+        }
+
+        prevWorkIndex = index;
 
         return workTiles[index].pos;
     }
