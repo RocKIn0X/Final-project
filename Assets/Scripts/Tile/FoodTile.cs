@@ -14,22 +14,22 @@ public class FoodTile : Tile
     }
     public override void EatHere()
     {
-
+        Debug.Log("Eat at Food tile");
     }
     public override void HarvestHere()
     {
-
+        Debug.Log("Harvest at Food tile");
     }
     public override void PlantHere()
     {
-
+        Debug.Log("Plant at Food tile");
     }
     public override void SleepHere()
     {
-
+        Debug.Log("Sleep at Food tile");
     }
     public override void WaterHere()
     {
-
+        Debug.Log("Water at Food tile");
     }
 }

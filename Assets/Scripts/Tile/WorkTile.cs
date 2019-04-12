@@ -29,23 +29,24 @@ public class WorkTile : Tile
     }
     public override void EatHere()
     {
-       
+        Debug.Log("Eat at Work tile");
     }
     public override void HarvestHere()
     {
-       
+        Debug.Log("Harvest at Work tile");
     }
     public override void PlantHere()
     {
-        
+        Debug.Log("Plant at Work tile");
     }
     public override void SleepHere()
     {
-        
+        Debug.Log("Sleep at Work tile");
     }
     public override void WaterHere()
     {
-        crop.WaterCrop(Random.Range(1, 11));
+        Debug.Log("Water at Work tile");
+        //crop.WaterCrop(Random.Range(1, 11));
     }
 
     private void AddCrop(GameObject _crop_obj)
