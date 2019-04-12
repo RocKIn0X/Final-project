@@ -85,7 +85,16 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public Tile GetWorkTile ()
+    public Tile GetTile (int index)
+    {
+        if (index == 0) return GetWorkTile();
+        else if (index == 1) return GetFoodTile();
+        else if (index == 2) return GetRestTile();
+
+        return null;
+    }
+
+    private Tile GetWorkTile ()
     {
         int index = 0;
 
@@ -107,12 +116,12 @@ public class TileManager : MonoBehaviour
         return workTiles[index];
     }
 
-    public Tile GetFoodTile ()
+    private Tile GetFoodTile ()
     {
         return foodTiles[0];
     }
 
-    public Tile GetRestTile ()
+    private Tile GetRestTile ()
     {
         return restTiles[0];
     }

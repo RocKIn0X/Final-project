@@ -31,9 +31,7 @@ public class MonsterInteraction : MonoBehaviour
         {
             isOnMoveState = true;
 
-            Vector3 targetPosition = GetTargetPosition();
-            
-            NMAgent.MoveToDestination(targetPosition);
+            MoveToTarget();
         }
         if (Input.GetKeyDown(KeyCode.A))
         {
@@ -82,33 +80,26 @@ public class MonsterInteraction : MonoBehaviour
         NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
     }
 
+    private void MoveToTarget ()
+    {
+        Vector3 targetPosition = GetTargetPosition();
+        NMAgent.MoveToDestination(targetPosition);
+    }
+
     private Vector3 GetTargetPosition ()
     {
         status.RandomStatus();
 
         int index = ActionManager.instance.CalculateAction(GetStatusStates());
         Debug.Log("Index: " + index);
+        tileTarget = TileManager.Instance.GetTile(index);
 
         Vector3 targetPosition = this.transform.position;
-        string tileName = "";
-        if (index == 0)
-        {
-            tileName = "Work Tile";
-            tileTarget = TileManager.Instance.GetWorkTile();
-        }
-        else if (index == 1)
-        {
-            tileName = "Food Tile";
-            tileTarget = TileManager.Instance.GetFoodTile();
-        }
-        else if (index == 2)
-        {
-            tileName = "Rest Tile";
-            tileTarget = TileManager.Instance.GetRestTile();
-        }
-        Debug.Log("Move to " + tileName);
 
-        targetPosition = tileTarget.pos;
+        if (tileTarget != null)
+        {
+            targetPosition = tileTarget.pos;
+        }
 
         return targetPosition;
     }
