@@ -49,10 +49,6 @@ public class TileManager : MonoBehaviour
         restTile_arr = Object.FindObjectsOfType<RestTile>();
         foodTile_arr = Object.FindObjectsOfType<FoodTile>();
     }
-    void Update()
-    {
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
-    }
 
     public Tile[] tiles
     {
@@ -74,12 +70,5 @@ public class TileManager : MonoBehaviour
         {
             return foodTile_arr;
         }
-    }
-
-    private void InputProcess()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
-        foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }

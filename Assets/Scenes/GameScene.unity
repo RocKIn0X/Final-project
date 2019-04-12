@@ -1202,9 +1202,15 @@ PrefabInstance:
     - target: {fileID: 1040473587809656722, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00007559456
+      value: -0.00013008292
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8697480217742897563, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
+        type: 3}
+      propertyPath: m_TagString
+      value: Inventory
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4710584632478836864, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06, type: 3}
 --- !u!224 &170267617 stripped
 RectTransform:

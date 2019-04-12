@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class PlayerManager : MonoBehaviour
@@ -48,6 +49,11 @@ public class PlayerManager : MonoBehaviour
         playerMoneyText.text = "$" + playerMoney.ToString();
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) InputProcess();
+    }
+
     public void AddMoney(float amount)
     {
         playerMoney += amount;
@@ -60,5 +66,12 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log(cropAsset.Key + ":" + cropAsset.Value);
         }
+    }
+
+    private void InputProcess()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
+        foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }
