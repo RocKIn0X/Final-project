@@ -17,7 +17,7 @@ MonoBehaviour:
   waterToGrowth: 0.3
   buyingCost: 100
   maximumSellingCost: 0
-  cropSprite: {fileID: 0}
+  cropSprite: {fileID: 21300000, guid: d2b2b24a7b0041dd5bd0c31e743ffc25, type: 3}
   seedSprite: {fileID: 21300000, guid: 078c04fa7947c22d28a9c73d12e140ef, type: 3}
   growingSprite: {fileID: 21300000, guid: 9da4ea757740796eda83a01dbf1c12f0, type: 3}
   doneSprite: {fileID: 21300000, guid: 44abcfa20d7b6147fa42b54f68d0475f, type: 3}

@@ -75,4 +75,9 @@ public class WorkTile : Tile
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
         }
     }
+    
+    public void PlantFromPlayer(CropAssets cropAsset)
+    {
+        if (!crop.HasCrop()) crop = new Crop(cropAsset);
+    }
 }
