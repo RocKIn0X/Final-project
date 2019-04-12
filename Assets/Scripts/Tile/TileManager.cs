@@ -85,7 +85,7 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public Vector3 GetWorkTilePosition ()
+    public Tile GetWorkTile ()
     {
         int index = 0;
 
@@ -104,17 +104,17 @@ public class TileManager : MonoBehaviour
 
         prevWorkIndex = index;
 
-        return workTiles[index].pos;
+        return workTiles[index];
     }
 
-    public Vector3 GetFoodTilePosition ()
+    public Tile GetFoodTile ()
     {
-        return foodTiles[0].pos;
+        return foodTiles[0];
     }
 
-    public Vector3 GetRestTilePosition()
+    public Tile GetRestTile ()
     {
-        return restTiles[0].pos;
+        return restTiles[0];
     }
 
     private void InputProcess()

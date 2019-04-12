@@ -3,10 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(SphereCollider))]
 public class MonsterInteraction : MonoBehaviour
 {
-    public GameObject tileTarget;
+    public Tile tileTarget;
     public ActionBubble actionBubble;
 
     [SerializeField]
@@ -39,6 +38,7 @@ public class MonsterInteraction : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             Debug.Log("Pressed A");
+            tileTarget.EatHere();
         }
     }
 
@@ -94,19 +94,21 @@ public class MonsterInteraction : MonoBehaviour
         if (index == 0)
         {
             tileName = "Work Tile";
-            targetPosition = TileManager.Instance.GetWorkTilePosition();
+            tileTarget = TileManager.Instance.GetWorkTile();
         }
         else if (index == 1)
         {
             tileName = "Food Tile";
-            targetPosition = TileManager.Instance.GetFoodTilePosition();
+            tileTarget = TileManager.Instance.GetFoodTile();
         }
         else if (index == 2)
         {
             tileName = "Rest Tile";
-            targetPosition = TileManager.Instance.GetRestTilePosition();
+            tileTarget = TileManager.Instance.GetRestTile();
         }
         Debug.Log("Move to " + tileName);
+
+        targetPosition = tileTarget.pos;
 
         return targetPosition;
     }
@@ -130,7 +132,8 @@ public class MonsterInteraction : MonoBehaviour
 
     private void OnTriggerEnter(Collider col)
     {
-        tileTarget = col.gameObject;
+        Debug.Log("Hit something");
+        //tileTarget = col.gameObject;
     }
 
     private void OnTriggerExit(Collider col)
