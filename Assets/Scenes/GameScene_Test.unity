@@ -1202,7 +1202,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &187867972
 GameObject:
   m_ObjectHideFlags: 0
@@ -2126,7 +2129,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &473899137
 GameObject:
   m_ObjectHideFlags: 0
@@ -3390,7 +3396,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 845631110}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 845631107}
   _so: {fileID: 845631109}
   _attachedList:
@@ -3993,7 +3999,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &967005709
 GameObject:
   m_ObjectHideFlags: 0
@@ -4124,6 +4133,49 @@ MonoBehaviour:
       indentLevel: 2
   bAutoFit_ColliderScale: 1
   bAutoFit_SpriteSize: 1
+--- !u!1 &970268438
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 970268440}
+  - component: {fileID: 970268439}
+  m_Layer: 0
+  m_Name: TestPause
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &970268439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970268438}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40f3a102642e77459230359864e9ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &970268440
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970268438}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.2956169, y: 6.2753205, z: -0.40546972}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1005939099
 GameObject:
   m_ObjectHideFlags: 0
@@ -4359,7 +4411,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &1055262979
 GameObject:
   m_ObjectHideFlags: 0
@@ -4833,7 +4888,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &1174752694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5664,7 +5722,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44e8e000e78606a46bff286c7c6919b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BuyConfirmPopup: {fileID: 571364689}
+  buyConfirmPopupGroup: {fileID: 0}
+  buyingCropAssets: {fileID: 0}
+  itemAmountToBuy: 0
+  totalCostToPay: 0
 --- !u!4 &1401058812
 Transform:
   m_ObjectHideFlags: 0
@@ -6722,7 +6783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1592134034}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 1592134031}
   _so: {fileID: 1592134033}
   _attachedList:
@@ -6766,7 +6827,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1603763761}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 1603763760}
   _so: {fileID: 1603763759}
   _attachedList:
@@ -7274,7 +7335,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &1734020256
 GameObject:
   m_ObjectHideFlags: 0
@@ -7666,7 +7730,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &1806522077
 GameObject:
   m_ObjectHideFlags: 0
@@ -8150,7 +8217,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 1822108042}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 1822108039}
   _so: {fileID: 1822108041}
   _attachedList:
@@ -8505,7 +8572,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!1 &1866314009
 GameObject:
   m_ObjectHideFlags: 0
@@ -8605,10 +8675,10 @@ GameObject:
   - component: {fileID: 1900639388}
   - component: {fileID: 1900639387}
   - component: {fileID: 1900639386}
-  - component: {fileID: 1900639393}
   - component: {fileID: 1900639392}
   - component: {fileID: 1900639391}
   - component: {fileID: 1900639394}
+  - component: {fileID: 1900639393}
   m_Layer: 0
   m_Name: IsoCharacter_2D NavMeshAgent
   m_TagString: Untagged
@@ -8625,7 +8695,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900639384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 6, z: 0}
+  m_LocalPosition: {x: 1.94, y: 5.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 787787451}
@@ -8785,8 +8855,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.69092107
-  m_Center: {x: 0, y: 0.5, z: 0}
+  m_Radius: 0.23
+  m_Center: {x: 0.07, y: 0.2, z: 0}
 --- !u!111 &1900639391
 Animation:
   m_ObjectHideFlags: 0
@@ -8821,27 +8891,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1900639393
-MonoBehaviour:
+--- !u!54 &1900639393
+Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1900639384}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 262e15ea2f8a5a942bd9acb4c811a346, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tileTarget: {fileID: 0}
-  actionBubble: {fileID: 0}
-  target: {fileID: 0}
-  status:
-    hungry: 100
-    tireness: 100
-    emotion: 100
-  timePerAction: 0
-  NMAgent: {fileID: 0}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &1900639394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8861,8 +8926,13 @@ MonoBehaviour:
     hungry: 100
     tireness: 100
     emotion: 100
-  timePerAction: 0
+  waitTimeBeforeAction: 2
+  timePerAction: 3
   NMAgent: {fileID: 0}
+  isArrived: 0
+  isOnMoveState: 0
+  isOnActionState: 0
+  timer: 0
 --- !u!1 &1929132283
 GameObject:
   m_ObjectHideFlags: 0
@@ -9229,6 +9299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMoney: 0
+  cropAsset_selectToPlant: {fileID: 0}
+  playerMoneyText: {fileID: 1366234963}
+  inventoryItemList: []
 --- !u!1 &2022428886
 GameObject:
   m_ObjectHideFlags: 0
@@ -9349,7 +9422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 2022428892}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 2022428889}
   _so: {fileID: 2022428891}
   _attachedList:
@@ -9515,7 +9588,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!114 &2046715648
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9979,7 +10055,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _coordinates: {fileID: 2100401586}
-  _bulk: {fileID: 0}
+  _bulk: {fileID: 927546536}
   _autoName: {fileID: 2100401583}
   _so: {fileID: 2100401585}
   _attachedList:
@@ -10207,7 +10283,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0001411438, y: 0}
+  m_AnchoredPosition: {x: -0.0001449585, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2137445272

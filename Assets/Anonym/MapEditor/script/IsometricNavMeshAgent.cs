@@ -145,6 +145,11 @@ namespace Anonym.Isometric
             OffMeshAction = null;
         }
 
+        public bool isMoving ()
+        {
+            return bOnMoving;
+        }
+
         public bool ClickToMove(out Vector3 destination)
         {
             destination = Vector3.zero;

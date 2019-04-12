@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StateSystem;
 
 public class MonsterInteraction : MonoBehaviour
 {
@@ -13,24 +14,36 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField]
     private Status status;
     [SerializeField]
+    private float waitTimeBeforeAction;
+    [SerializeField]
     private float timePerAction;
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
-    private bool isOnMoveState = false;
+    public bool isArrived = false;
+    public bool isOnMoveState = false;
+    public bool isOnActionState = false;
+
+    public float timer;
+
+    public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
     private void Start()
     {
         status = new Status();
         Init();
+        timer = 0f;
+
+        stateMachine = new StateMachine<MonsterInteraction>(this);
+        stateMachine.ChangeState(new MoveState(this));
     }
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Space))
         {
             isOnMoveState = true;
-
             MoveToTarget();
         }
         if (Input.GetKeyDown(KeyCode.A))
@@ -38,6 +51,49 @@ public class MonsterInteraction : MonoBehaviour
             Debug.Log("Pressed A");
             tileTarget.EatHere();
         }
+        */
+
+
+        stateMachine.Update();
+    }
+
+    public IEnumerator MoveState ()
+    {
+        MoveToTarget();
+        
+        while (!isArrived)
+        {
+            yield return null;
+        }
+    }
+
+    public IEnumerator ActionState ()
+    {
+        isOnActionState = true;
+
+        // calculate output for action
+        while (timer < 3f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public bool IsWaitTime ()
+    {
+        timer += Time.deltaTime;
+
+        if (isOnMoveState && timer < waitTimeBeforeAction)
+        {
+            return false;
+        }
+
+        if (isOnActionState && timer < timePerAction)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     public void DisplayBubble (int index)
@@ -50,6 +106,34 @@ public class MonsterInteraction : MonoBehaviour
         int index = GetRandomActionIndex();
         // tileTarget.GetComponent<TileClass>().Action(index, this);
         // DisplayBubble(index);
+        if (index == 0)
+        {
+            tileTarget.EatHere();
+        }
+        else if (index == 1)
+        {
+            tileTarget.HarvestHere();
+        }
+        else if (index == 2)
+        {
+            tileTarget.PlantHere();
+        }
+        else if (index == 3)
+        {
+            tileTarget.SleepHere();
+        }
+        else if (index == 4)
+        {
+            tileTarget.WaterHere();
+        }
+        else if (index == 5)
+        {
+
+        }
+        else
+        {
+            Debug.Log("Null action");
+        }
     }
 
     public void SetStatus (int hungry, int tireness)
@@ -125,6 +209,7 @@ public class MonsterInteraction : MonoBehaviour
     {
         Debug.Log("Hit something");
         //tileTarget = col.gameObject;
+        isArrived = true;
     }
 
     private void OnTriggerExit(Collider col)
