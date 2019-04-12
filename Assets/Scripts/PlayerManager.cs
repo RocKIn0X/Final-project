@@ -32,6 +32,7 @@ public class PlayerManager : MonoBehaviour
     public float playerMoney;
     [SerializeField] TextMeshProUGUI playerMoneyText;
     [Header("Inventory")]
+    public List<InventoryItem> inventoryItemList = new List<InventoryItem>();
     public Dictionary<CropAssets, int> cropAmountList = new Dictionary<CropAssets, int>();
 
     void Start()
@@ -45,8 +46,8 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        //playerMoney = PlayerPrefs.HasKey("PlayerMoney") ? PlayerPrefs.GetInt("PlayerMoney") : 0;
         playerMoneyText.text = "$" + playerMoney.ToString();
+        SetInventory();
     }
 
     void Update()
@@ -62,9 +63,15 @@ public class PlayerManager : MonoBehaviour
 
     public void SetInventory()
     {
+        int i = 0;
         foreach (KeyValuePair<CropAssets, int> cropAsset in cropAmountList)
         {
-            Debug.Log(cropAsset.Key + ":" + cropAsset.Value);
+            inventoryItemList[i].gameObject.SetActive(true);
+            inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+        }
+        for (int j = i; j < inventoryItemList.Capacity; j++)
+        {
+            inventoryItemList[i].gameObject.SetActive(false);
         }
     }
 
