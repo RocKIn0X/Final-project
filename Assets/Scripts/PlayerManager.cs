@@ -30,6 +30,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     public float playerMoney;
+    public CropAssets cropAsset_selectToPlant;
     [SerializeField] TextMeshProUGUI playerMoneyText;
     [Header("Inventory")]
     public List<InventoryItem> inventoryItemList = new List<InventoryItem>();
@@ -50,11 +51,6 @@ public class PlayerManager : MonoBehaviour
         SetInventory();
     }
 
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) InputProcess();
-    }
-
     public void AddMoney(float amount)
     {
         playerMoney += amount;
@@ -73,12 +69,5 @@ public class PlayerManager : MonoBehaviour
         {
             inventoryItemList[i].gameObject.SetActive(false);
         }
-    }
-
-    private void InputProcess()
-    {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
-        foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }
