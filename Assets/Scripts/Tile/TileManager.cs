@@ -33,6 +33,8 @@ public class TileManager : MonoBehaviour
     public RestTile[] restTile_arr;
     public FoodTile[] foodTile_arr;
 
+    private int prevWorkIndex = -1;
+
     void Start()
     {
         if (instance == null)
@@ -70,5 +72,61 @@ public class TileManager : MonoBehaviour
         {
             return foodTile_arr;
         }
+    }
+
+    public RestTile[] restTiles
+    {
+        get
+        {
+            return restTile_arr;
+        }
+    }
+
+    public Tile GetTile (int index)
+    {
+        if (index == 0) return GetWorkTile();
+        else if (index == 1) return GetFoodTile();
+        else if (index == 2) return GetRestTile();
+
+        return null;
+    }
+
+    private Tile GetWorkTile ()
+    {
+        int index = 0;
+
+        if (prevWorkIndex == -1)
+        {
+            index = Random.Range(0, workTiles.Length);
+        }            
+        else
+        {
+            do
+            {
+                index = Random.Range(0, workTiles.Length);
+            }
+            while (index == prevWorkIndex);
+        }
+
+        prevWorkIndex = index;
+
+        return workTiles[index];
+    }
+
+    private Tile GetFoodTile ()
+    {
+        return foodTiles[0];
+    }
+
+    private Tile GetRestTile ()
+    {
+        return restTiles[0];
+    }
+
+    private void InputProcess()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
+        foreach (RaycastHit hit in hits) Debug.Log(hit.collider.name);
     }
 }
