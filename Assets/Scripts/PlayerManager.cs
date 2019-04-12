@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     public float playerMoney;
     [SerializeField] TextMeshProUGUI playerMoneyText;
     [Header("Inventory")]
-    [SerializeField] Dictionary<string, int> cropAmountList;
+    public Dictionary<CropAssets, int> cropAmountList = new Dictionary<CropAssets, int>();
 
     void Start()
     {
@@ -52,5 +52,13 @@ public class PlayerManager : MonoBehaviour
     {
         playerMoney += amount;
         playerMoneyText.text = "$" + playerMoney.ToString();
+    }
+
+    public void SetInventory()
+    {
+        foreach (KeyValuePair<CropAssets, int> cropAsset in cropAmountList)
+        {
+            Debug.Log(cropAsset.Key + ":" + cropAsset.Value);
+        }
     }
 }
