@@ -61,7 +61,7 @@ public class MonsterInteraction : MonoBehaviour
     {
         MoveToTarget();
         
-        while (!isArrived)
+        while (!IsArrivedNow())
         {
             yield return null;
         }
@@ -205,12 +205,25 @@ public class MonsterInteraction : MonoBehaviour
         return (int)Random.Range(0, 6);
     }
 
+    private bool IsArrivedNow ()
+    {
+        float distance = Vector3.Distance(transform.position, tileTarget.pos);
+
+        if (distance < 0.3f)
+        {
+            isArrived = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
     private void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Hit something");
+        //Debug.Log("Hit something");
         //tileTarget = col.gameObject;
-        if (stateMachine.currentState.Equals(new MoveState(this)))
-            isArrived = true;
+        //isArrived = true;
     }
 
     private void OnTriggerExit(Collider col)
