@@ -8,10 +8,12 @@ public abstract class Tile : MonoBehaviour
     {
         FoodTile, RestTile, WorkTile
     }
+    public abstract GameObject go { get; }
     public abstract Vector3 pos { get; }
-    public abstract void SleepHere();
-    public abstract void EatHere();
-    public abstract void WaterHere();
-    public abstract void HarvestHere();
-    public abstract void PlantHere();
+    public abstract void SleepHere(MonsterInteraction m);
+    public abstract void EatHere(MonsterInteraction m);
+    public abstract void WaterHere(MonsterInteraction m);
+    public abstract void HarvestHere(MonsterInteraction m);
+    public abstract void PlantHere(MonsterInteraction m);
+    public abstract void ActionResult(int index);
 }

@@ -108,23 +108,23 @@ public class MonsterInteraction : MonoBehaviour
         // DisplayBubble(index);
         if (index == 0)
         {
-            tileTarget.EatHere();
+            tileTarget.EatHere(this);
         }
         else if (index == 1)
         {
-            tileTarget.HarvestHere();
+            tileTarget.HarvestHere(this);
         }
         else if (index == 2)
         {
-            tileTarget.PlantHere();
+            tileTarget.PlantHere(this);
         }
         else if (index == 3)
         {
-            tileTarget.SleepHere();
+            tileTarget.SleepHere(this);
         }
         else if (index == 4)
         {
-            tileTarget.WaterHere();
+            tileTarget.WaterHere(this);
         }
         else if (index == 5)
         {
@@ -209,7 +209,8 @@ public class MonsterInteraction : MonoBehaviour
     {
         Debug.Log("Hit something");
         //tileTarget = col.gameObject;
-        isArrived = true;
+        if (stateMachine.currentState.Equals(new MoveState(this)))
+            isArrived = true;
     }
 
     private void OnTriggerExit(Collider col)

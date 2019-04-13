@@ -12,23 +12,37 @@ public class RestTile : Tile
             return transform.position;
         }
     }
-    public override void EatHere()
+
+    public override GameObject go
+    {
+        get
+        {
+            return gameObject;
+        }
+    }
+
+    public override void ActionResult(int index)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void EatHere(MonsterInteraction m)
     {
         Debug.Log("Eat at Rest tile");
     }
-    public override void HarvestHere()
+    public override void HarvestHere(MonsterInteraction m)
     {
         Debug.Log("Harvest at Rest tile");
     }
-    public override void PlantHere()
+    public override void PlantHere(MonsterInteraction m)
     {
         Debug.Log("Plant at Rest tile");
     }
-    public override void SleepHere()
+    public override void SleepHere(MonsterInteraction m)
     {
         Debug.Log("Sleep at Rest tile");
     }
-    public override void WaterHere()
+    public override void WaterHere(MonsterInteraction m)
     {
         Debug.Log("Water at Rest tile");
     }
