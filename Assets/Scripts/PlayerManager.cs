@@ -54,6 +54,19 @@ public class PlayerManager : MonoBehaviour
     public void AddMoney(float amount)
     {
         playerMoney += amount;
+        SetMoney();
+    }
+
+    public bool ConsumeMoney(float amount)
+    {
+        if (playerMoney - amount < 0) return false;
+        playerMoney -= amount;
+        SetMoney();
+        return true;
+    }
+
+    public void SetMoney()
+    {
         playerMoneyText.text = "$" + playerMoney.ToString();
     }
 

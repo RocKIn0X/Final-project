@@ -57,10 +57,11 @@ public class MarketManager : MonoBehaviour
 
     public void BuyItem()
     {
-        PlayerManager.Instance.playerMoney -= totalCostToPay;
-        if (PlayerManager.Instance.cropAmountList.ContainsKey(buyingCropAssets)) PlayerManager.Instance.cropAmountList[buyingCropAssets] += itemAmountToBuy;
-        else PlayerManager.Instance.cropAmountList.Add(buyingCropAssets, itemAmountToBuy);
-        PlayerManager.Instance.SetInventory();
-        PlayerManager.Instance.AddMoney(0);
+        if (PlayerManager.Instance.ConsumeMoney(totalCostToPay))
+        {
+            if (PlayerManager.Instance.cropAmountList.ContainsKey(buyingCropAssets)) PlayerManager.Instance.cropAmountList[buyingCropAssets] += itemAmountToBuy;
+            else PlayerManager.Instance.cropAmountList.Add(buyingCropAssets, itemAmountToBuy);
+            PlayerManager.Instance.SetInventory();
+        }
     }
 }
