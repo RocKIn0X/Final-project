@@ -41,7 +41,6 @@ public class ActionState : State<MonsterInteraction>
 
     public override void ExitState()
     {
-        owner.isOnActionState = false;
-        owner.timer = 0f;
+        owner.EndAction();
     }
 }

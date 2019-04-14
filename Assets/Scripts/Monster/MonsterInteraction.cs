@@ -98,14 +98,20 @@ public class MonsterInteraction : MonoBehaviour
 
     public void DisplayBubble (int index)
     {
-        // actionBubble.ShowAction(timePerAction);
+        actionBubble.ShowAction(0);
+        //actionBubble.ShowAction(index);
+    }
+
+    public void RemoveBubble()
+    {
+        actionBubble.Disappear();
     }
 
     public void MonsterAction ()
     {
         int index = GetRandomActionIndex();
-        // tileTarget.GetComponent<TileClass>().Action(index, this);
-        // DisplayBubble(index);
+        DisplayBubble(index);
+
         if (index == 0)
         {
             tileTarget.EatHere(this);
@@ -126,14 +132,18 @@ public class MonsterInteraction : MonoBehaviour
         {
             tileTarget.WaterHere(this);
         }
-        else if (index == 5)
-        {
-
-        }
         else
         {
             Debug.Log("Null action");
         }
+    }
+
+    public void EndAction ()
+    {
+        RemoveBubble();
+
+        isOnActionState = false;
+        timer = 0f;
     }
 
     public void SetStatus (int hungry, int tireness)
@@ -202,7 +212,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private int GetRandomActionIndex ()
     {
-        return (int)Random.Range(0, 6);
+        return (int)Random.Range(0, 5);
     }
 
     private bool IsArrivedNow ()
