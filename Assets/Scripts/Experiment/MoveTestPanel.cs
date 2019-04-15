@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class MoveTestPanel : MonoBehaviour
 {
+    public int actionIndex = 0;
+
     public InputField hungerField;
     public InputField tirenessField;
     public InputField emotionField;
@@ -31,6 +33,18 @@ public class MoveTestPanel : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void MoveIndex ()
+    {
+        actionIndex = 0;
+        emotionField.gameObject.SetActive(true);
+    }
+
+    public void ActionIndex ()
+    {
+        actionIndex = 1;
+        emotionField.gameObject.SetActive(false);
     }
 
     public void RunAutoTest ()
@@ -70,29 +84,49 @@ public class MoveTestPanel : MonoBehaviour
 
         hungerRatio = (double.Parse(hungerField.text.ToString()) / 100) - 0.5f;
         tirenessRatio = (double.Parse(tirenessField.text.ToString()) / 100) - 0.5f;
-        emotionRatio = (double.Parse(emotionField.text.ToString()) / 100) - 0.5f;
+        emotionRatio = actionIndex == 0 ? (double.Parse(emotionField.text.ToString()) / 100) - 0.5f : 0f;
 
-        states.Add(hungerRatio);
-        states.Add(tirenessRatio);
-        states.Add(emotionRatio);
+        if (actionIndex == 0)
+        {
+            states.Add(hungerRatio);
+            states.Add(tirenessRatio);
+            states.Add(emotionRatio);
+        }
+        else if (actionIndex == 1)
+        {
+            states.Add(hungerRatio);
+            states.Add(tirenessRatio);
+        }
     }
 
     public void CalculateAction (List<double> states)
     {
-        int maxQIndex = ActionManager.instance.CalculateAction(states);
+        int maxQIndex = ActionManager.instance.CalculateAction(actionIndex, states);
 
-        List<double> qs = ActionManager.instance.GetQS();
-        actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
+        List<double> qs = ActionManager.instance.GetQS(actionIndex);
+        if (actionIndex == 0)
+            actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
+        else
+            actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
 
-        if (maxQIndex == 0) actionText.text = "Working";
-        else if (maxQIndex == 1) actionText.text = "Eatting";
-        else if (maxQIndex == 2) actionText.text = "Sleeping";
+        if (actionIndex == 0)
+        {
+            if (maxQIndex == 0) actionText.text = "Working";
+            else if (maxQIndex == 1) actionText.text = "Eatting";
+            else if (maxQIndex == 2) actionText.text = "Sleeping";
+        }
+        else if (actionIndex == 1)
+        {
+            if (maxQIndex == 0) actionText.text = "Idle";
+            else if (maxQIndex == 1) actionText.text = "Harvest";
+            else if (maxQIndex == 2) actionText.text = "Water";
+        }
     }
 
     void SaveStatesToMemory (List<double> states)
     {
         reward = rewardUI.GetComponent<RewardTestUI>().GetRewardValue();
         // save the current state and reward to replay memory
-        ActionManager.instance.SetMemory(states, reward);
+        ActionManager.instance.SetMemory(actionIndex, states, reward);
     }
 }

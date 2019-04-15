@@ -184,7 +184,7 @@ public class MonsterInteraction : MonoBehaviour
     {
         status.RandomStatus();
 
-        int index = ActionManager.instance.CalculateAction(GetStatusStates());
+        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
         Debug.Log("Index: " + index);
         tileTarget = TileManager.Instance.GetTile(index);
 

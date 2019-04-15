@@ -70,40 +70,27 @@ public class ActionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<int> moveHiddenLayer = new List<int>();
-        moveHiddenLayer.Add(4);
-        moveHiddenLayer.Add(6);
-        moveHiddenLayer.Add(4);
-        //moveBrain = new MonsterBrain(3, 3, moveHiddenLayer, 0.2f);
-        //moveBrain = new MonsterBrain();
-
-        /*
-        List<int> actionHiddenLayer = new List<int>();
-        actionHiddenLayer.Add(3);
-        actionBrain = new MonsterBrain(2, 3, actionHiddenLayer, 0.2f);
-        */
-
         foreach (var b in brainCollections)
         {
             b.InitEachBrain();
         }
     }
 
-    public int CalculateAction (List<double> states)
+    public int CalculateAction (int actionIndex, List<double> states)
     {
-        return brainCollections[0].CalculateAction(states);
+        return brainCollections[actionIndex].CalculateAction(states);
     }
 
-    public List<double> GetQS ()
+    public List<double> GetQS (int actionIndex)
     {
-        return brainCollections[0].GetQS();
+        return brainCollections[actionIndex].GetQS();
 
         //return actionBrain.GetQS();
     }
 
-    public void SetMemory (List<double> states, float reward)
+    public void SetMemory (int actionIndex, List<double> states, float reward)
     {
-        brainCollections[0].SetMemory(states, reward);
+        brainCollections[actionIndex].SetMemory(states, reward);
         //actionBrain.SetMemory(states, reward);
     }
 }

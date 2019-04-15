@@ -50,6 +50,12 @@ MonoBehaviour:
     numNEachLayer: 040000000800000004000000
     alpha: 0.2
     discount: 0.99
+  - nameState: Action State
+    numInputs: 2
+    numOutputs: 3
+    numNEachLayer: 03000000
+    alpha: 0.2
+    discount: 0.99
   idleReward: 0
   praiseReward: 0
   punishReward: 0
