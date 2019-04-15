@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WorkTile : Tile
 {
-    public TypeTile typeTile = TypeTile.WorkTile;
     public bool isWatered;
     public GameObject overlayObj;
     public Crop crop;
@@ -36,9 +35,31 @@ public class WorkTile : Tile
         }
     }
 
-    public override void ActionResult(int index)
+    public override TypeTile typeTile
     {
-        throw new System.NotImplementedException();
+        get
+        {
+            return TypeTile.WorkTile;
+        }
+    }
+
+    public override void ActionResult(int index, MonsterInteraction m)
+    {
+        if (index == 0)
+        {
+            // Idle
+            Debug.Log("Idle");
+        }
+        else if (index == 1)
+        {
+            // Harvest
+            HarvestHere(m);
+        }
+        else if (index == 2)
+        {
+            // Water
+            WaterHere(m);
+        }
     }
 
     public override void EatHere(MonsterInteraction m)
@@ -94,5 +115,10 @@ public class WorkTile : Tile
     {
         if (!crop.HasCrop()) crop = new Crop(cropAsset);
         overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
+    }
+
+    public List<double> GetCropInfo ()
+    {
+        return crop.GetInfo();
     }
 }

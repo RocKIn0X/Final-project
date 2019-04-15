@@ -155,4 +155,13 @@ public class Crop
     {
         return state;
     }
+
+    public List<double> GetInfo ()
+    {
+        List<double> info = new List<double>();
+        info.Add((double)growthRate);
+        info.Add((double)waterGauge);
+
+        return info;
+    }
 }

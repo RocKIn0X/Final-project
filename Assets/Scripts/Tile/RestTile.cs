@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RestTile : Tile
 {
-    public TypeTile typeTile = TypeTile.RestTile;
     public override Vector3 pos
     {
         get
@@ -21,7 +20,15 @@ public class RestTile : Tile
         }
     }
 
-    public override void ActionResult(int index)
+    public override TypeTile typeTile
+    {
+        get
+        {
+            return TypeTile.RestTile;
+        }
+    }
+
+    public override void ActionResult(int index, MonsterInteraction m)
     {
         throw new System.NotImplementedException();
     }
