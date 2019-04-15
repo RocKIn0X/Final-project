@@ -43,8 +43,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e2a5240f6992744a79e104f98cb683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveBrain:
-    input: 0
-    output: 0
-    hiddenLayer: 
-    alpha: 0
+  brainCollections:
+  - nameState: Move State
+    numInputs: 3
+    numOutputs: 3
+    numNEachLayer: 040000000800000004000000
+    alpha: 0.2
+    discount: 0.99
+  idleReward: 0
+  praiseReward: 0
+  punishReward: 0

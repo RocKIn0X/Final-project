@@ -1103,21 +1103,91 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190198118}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d74be8a3600a1464b8bb9a75660d1a16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
   ann:
     numInputs: 0
     numOutputs: 0
-    hiddenLayer: 
-    numNPerHidden: 0
+    numNEachLayer: 
     alpha: 0
+  isPunished: 0
+  giveReward: 0
+  isMoveState: 0
+  isTrainedDone: 0
+  hungry: 0
+  tireness: 0
+  emotion: 0
+  maxQ: 0
+  reward: 0
+  mCapacity: 10000
+  discount: 0.99
+  exploreRate: 100
+  maxExploreRate: 100
+  minExploreRate: 0.01
+  exploreDecay: 0.01
+  punishedCount: 0
+  timer: 0
+  maxBalanceTime: 0
   status:
+    maxHungry: 100
+    maxTireness: 100
+    maxEmotion: 100
     hungry: 100
     tireness: 100
     emotion: 100
+  states: []
+  qs: []
 --- !u!114 &190198123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2904,16 +2974,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d74be8a3600a1464b8bb9a75660d1a16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   ann:
     numInputs: 0
     numOutputs: 0
-    hiddenLayer: 
-    numNPerHidden: 0
+    numNEachLayer: 
     alpha: 0
+  isPunished: 0
+  giveReward: 0
+  isMoveState: 0
+  isTrainedDone: 0
+  hungry: 0
+  tireness: 0
+  emotion: 0
+  maxQ: 0
+  reward: 0
+  mCapacity: 10000
+  discount: 0.99
+  exploreRate: 100
+  maxExploreRate: 100
+  minExploreRate: 0.01
+  exploreDecay: 0.01
+  punishedCount: 0
+  timer: 0
+  maxBalanceTime: 0
   status:
+    maxHungry: 100
+    maxTireness: 100
+    maxEmotion: 100
     hungry: 100
     tireness: 100
     emotion: 100
+  states: []
+  qs: []
 --- !u!4 &606869817
 Transform:
   m_ObjectHideFlags: 0
@@ -4546,7 +4686,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   typeTile: 2
   isWatered: 0
-  crop_obj: {fileID: 0}
+  overlayObj: {fileID: 0}
+  crop:
+    asset: {fileID: 0}
+    state: 0
 --- !u!114 &975509061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7469,8 +7612,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActionBook:
   - actionKey: Watering
+    actionIndex: 0
     actionTarget: {fileID: 21300000, guid: 2fbd5e84dfde8149b86c6f64bfdb3b5b, type: 3}
   - actionKey: Hello
+    actionIndex: 0
     actionTarget: {fileID: 21300000, guid: 2fbd5e84dfde8149b86c6f64bfdb3b5b, type: 3}
 --- !u!4 &1822968133
 Transform:
