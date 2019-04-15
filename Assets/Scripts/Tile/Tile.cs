@@ -12,6 +12,7 @@ public abstract class Tile : MonoBehaviour
     public abstract GameObject go { get; }
     public abstract TypeTile typeTile { get; }
     public abstract Vector3 pos { get; }
+    public abstract List<double> info { get; }
     public abstract void SleepHere(MonsterInteraction m);
     public abstract void EatHere(MonsterInteraction m);
     public abstract void WaterHere(MonsterInteraction m);

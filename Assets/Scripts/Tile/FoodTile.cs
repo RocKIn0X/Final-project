@@ -28,6 +28,14 @@ public class FoodTile : Tile
         }
     }
 
+    public override List<double> info
+    {
+        get
+        {
+            return null;
+        }
+    }
+
     public override void ActionResult(int index, MonsterInteraction m)
     {
         throw new System.NotImplementedException();

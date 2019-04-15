@@ -43,6 +43,14 @@ public class WorkTile : Tile
         }
     }
 
+    public override List<double> info
+    {
+        get
+        {
+            return crop.GetInfo();
+        }
+    }
+
     public override void ActionResult(int index, MonsterInteraction m)
     {
         if (index == 0)
@@ -115,10 +123,5 @@ public class WorkTile : Tile
     {
         if (!crop.HasCrop()) crop = new Crop(cropAsset);
         overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
-    }
-
-    public List<double> GetCropInfo ()
-    {
-        return crop.GetInfo();
     }
 }

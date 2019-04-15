@@ -20,6 +20,8 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    public int actionIndex = 0;
+
     public bool isArrived = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
@@ -98,7 +100,7 @@ public class MonsterInteraction : MonoBehaviour
 
     public void DisplayBubble (int index)
     {
-        actionBubble.ShowAction(0);
+        actionBubble.ShowAction(index);
         //actionBubble.ShowAction(index);
     }
 
@@ -107,35 +109,25 @@ public class MonsterInteraction : MonoBehaviour
         actionBubble.Disappear();
     }
 
+    public void EnterMoveState ()
+    {
+        actionIndex = 0; 
+        isOnMoveState = true;
+        StartCoroutine(MoveState());
+    }
+
+    public void ExitMoveState ()
+    {
+        isArrived = false;
+        isOnMoveState = false;
+        timer = 0f;
+    }
+
     public void MonsterAction ()
     {
-        int index = GetRandomActionIndex();
-        DisplayBubble(index);
+        actionIndex = 1;
 
-        if (index == 0)
-        {
-            tileTarget.EatHere(this);
-        }
-        else if (index == 1)
-        {
-            tileTarget.HarvestHere(this);
-        }
-        else if (index == 2)
-        {
-            tileTarget.PlantHere(this);
-        }
-        else if (index == 3)
-        {
-            tileTarget.SleepHere(this);
-        }
-        else if (index == 4)
-        {
-            tileTarget.WaterHere(this);
-        }
-        else
-        {
-            Debug.Log("Null action");
-        }
+        DoAction();
     }
 
     public void EndAction ()
@@ -168,7 +160,7 @@ public class MonsterInteraction : MonoBehaviour
             SetTarget(FindObjectOfType<IsometricMovement>());
     }
 
-    public void SetTarget(IsometricMovement newTarget)
+    private void SetTarget(IsometricMovement newTarget)
     {
         target = newTarget;
         NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
@@ -178,6 +170,26 @@ public class MonsterInteraction : MonoBehaviour
     {
         Vector3 targetPosition = GetTargetPosition();
         NMAgent.MoveToDestination(targetPosition);
+    }
+
+    private void DoAction ()
+    {
+        if (tileTarget.typeTile == TypeTile.FoodTile)
+        {
+            DisplayBubble(3);
+        }
+        else if (tileTarget.typeTile == TypeTile.RestTile)
+        {
+            DisplayBubble(4);
+        }
+        else if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            List<double> info = tileTarget.info;
+
+            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            tileTarget.ActionResult(index, this);
+            DisplayBubble(index);
+        }
     }
 
     private Vector3 GetTargetPosition ()
