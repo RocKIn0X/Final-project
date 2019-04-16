@@ -53,12 +53,16 @@ public class PlayerManager : MonoBehaviour
         SetMoney();
     }
 
+    private void Update()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess(); 
+    }
+
     public void AddMoney(float amount)
     {
         playerMoney += amount;
         SetMoney();
     }
-
     public bool ConsumeMoney(float amount)
     {
         if (playerMoney - amount < 0) return false;
@@ -66,13 +70,11 @@ public class PlayerManager : MonoBehaviour
         SetMoney();
         return true;
     }
-
     public void SetMoney()
     {
         playerMoneyText.text = "$" + playerMoney.ToString();
         DataManager.Instance.SaveData();
     }
-
     public void SetInventory()
     {
         int i = 0;
@@ -86,5 +88,15 @@ public class PlayerManager : MonoBehaviour
             inventoryItemList[i].gameObject.SetActive(false);
         }
         DataManager.Instance.SaveData();
+    }
+    private void InputProcess()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        LayerMask layerMask = LayerMask.GetMask("Monster");
+        RaycastHit[] hits = Physics.RaycastAll(ray, 1000, layerMask);
+        foreach (RaycastHit hit in hits)
+        {
+            ActionManager.instance.CallTrainningPopup();
+        }
     }
 }

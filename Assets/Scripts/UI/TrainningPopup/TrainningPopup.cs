@@ -11,11 +11,6 @@ public class TrainningPopup : MonoBehaviour
     public GaugePanel inputPanel;
     public GaugePanel outputPanel;
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void ActivatePopup (int actionIndex, List<double> states, List<double> qs)
     {
         title.text = actionIndex == 0 ? "Move state" : "Action state";
