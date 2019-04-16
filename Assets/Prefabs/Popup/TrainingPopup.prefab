@@ -169,6 +169,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7338920016981278826}
+  - component: {fileID: 6796579868038828363}
   m_Layer: 11
   m_Name: Input gauge (1)
   m_TagString: Untagged
@@ -185,7 +186,7 @@ RectTransform:
   m_GameObject: {fileID: 2036574133137179753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999992, y: 0.99999887, z: 0.999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 503580439303337836}
   - {fileID: 608893264446691142}
@@ -197,6 +198,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: -32}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6796579868038828363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036574133137179753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 4617742419015989280}
+  gaugeObj: {fileID: 503580439303337839}
 --- !u!1 &2413306680330168583
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,7 +649,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 5678646735969414223}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetMemory
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &4116914675130420174
@@ -648,6 +674,7 @@ GameObject:
   - component: {fileID: 1837253140369144611}
   - component: {fileID: 1361792306810082506}
   - component: {fileID: 3532578985314270654}
+  - component: {fileID: 5265480}
   m_Layer: 11
   m_Name: Output Panel
   m_TagString: Untagged
@@ -715,6 +742,33 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &5265480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4116914675130420174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77638fff55f9fd4aba14b0a1a8c5258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gaugeBooks:
+  - name: Move State
+    gaugeName:
+    - Work
+    - Food
+    - Rest
+  - name: Action State
+    gaugeName:
+    - Idle
+    - Harvest
+    - Water
+  gaugesHolder:
+  - {fileID: 5914485321927859487}
+  - {fileID: 5994010909587858304}
+  - {fileID: 5167606624182740354}
 --- !u!1 &4653795401763436253
 GameObject:
   m_ObjectHideFlags: 0
@@ -782,10 +836,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 36
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -793,7 +847,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Punish
 --- !u!1 &4684497467895561893
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,6 +1337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5806857669016729643}
+  - component: {fileID: 5031563201747828267}
   m_Layer: 11
   m_Name: Output gauge (2)
   m_TagString: Untagged
@@ -1311,6 +1366,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: -96}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5031563201747828267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5167606624182740354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 8716281582602188079}
+  gaugeObj: {fileID: 1003982305305498558}
 --- !u!1 &5339342120750340819
 GameObject:
   m_ObjectHideFlags: 0
@@ -1484,6 +1553,7 @@ GameObject:
   - component: {fileID: 3529852276912711277}
   - component: {fileID: 4507854226856142537}
   - component: {fileID: 8594966359707331542}
+  - component: {fileID: 1130121169}
   m_Layer: 11
   m_Name: TrainingPopup
   m_TagString: Untagged
@@ -1498,7 +1568,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5380351004952856175}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9989308, y: 0.9989311, z: 0.998931}
   m_Children:
@@ -1554,6 +1624,21 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1130121169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380351004952856175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d6936a6ac253a43a0514151d95354d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: {fileID: 7425124128753441174}
+  inputPanel: {fileID: 1560222264}
+  outputPanel: {fileID: 5265480}
 --- !u!1 &5836923409257641853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1883,6 +1968,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3619744363975996557}
+  - component: {fileID: 5281634940262710869}
   m_Layer: 11
   m_Name: Output gauge
   m_TagString: Untagged
@@ -1911,6 +1997,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 32}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5281634940262710869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5914485321927859487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 2863549532006071494}
+  gaugeObj: {fileID: 1378763111968268249}
 --- !u!1 &5994010909587858304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,6 +2020,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7513688934846889604}
+  - component: {fileID: 2460610291392585882}
   m_Layer: 11
   m_Name: Output gauge (1)
   m_TagString: Untagged
@@ -1948,6 +2049,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: -32}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2460610291392585882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994010909587858304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 4669305089853249247}
+  gaugeObj: {fileID: 1537470941987004286}
 --- !u!1 &6072901327248987133
 GameObject:
   m_ObjectHideFlags: 0
@@ -2121,6 +2236,7 @@ GameObject:
   - component: {fileID: 2803512762022393945}
   - component: {fileID: 6142131989230203686}
   - component: {fileID: 1409452437617479454}
+  - component: {fileID: 1560222264}
   m_Layer: 11
   m_Name: Input Panel
   m_TagString: Untagged
@@ -2188,6 +2304,29 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &1560222264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6240747033409452472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77638fff55f9fd4aba14b0a1a8c5258, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gaugeBooks:
+  - name: Move State
+    gaugeName:
+    - Hunger
+    - Tireness
+    - Emotion
+  - name: Action State
+    gaugeName:
+    - GrowthRate
+    - WaterGuage
+  gaugesHolder: []
 --- !u!1 &7573519683331357528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2334,10 +2473,10 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
+    m_FontSize: 36
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 3
     m_MaxSize: 40
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -2345,7 +2484,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Praise
 --- !u!1 &8101003569504591289
 GameObject:
   m_ObjectHideFlags: 0
@@ -2484,6 +2623,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5609244667432232163}
+  - component: {fileID: 1883337633908215421}
   m_Layer: 11
   m_Name: Input gauge (2)
   m_TagString: Untagged
@@ -2500,7 +2640,7 @@ RectTransform:
   m_GameObject: {fileID: 8223733320563053822}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9999992, y: 0.99999887, z: 0.999999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7711644092659721024}
   - {fileID: 5629810979231814682}
@@ -2512,6 +2652,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: -96}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1883337633908215421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8223733320563053822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 4834444136798256424}
+  gaugeObj: {fileID: 7711644092659721027}
 --- !u!1 &8425996627222492274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2521,6 +2675,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5879921279332303747}
+  - component: {fileID: 898611683220577436}
   m_Layer: 11
   m_Name: Input gauge
   m_TagString: Untagged
@@ -2549,6 +2704,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 32}
   m_SizeDelta: {x: 384, y: 64}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &898611683220577436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8425996627222492274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f140f51831c07734283681878866a350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  keyText: {fileID: 9046483994283457089}
+  gaugeObj: {fileID: 579382313044647281}
 --- !u!1 &8779410213206282567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2664,7 +2833,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4114056125442461403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: SetMemory
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: -0.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1001 &2541618927085404989
@@ -2791,6 +2971,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &7711644092659721027 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 2541618927085404989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7711644092659721024 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -2927,6 +3119,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4632663222015933711}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &579382313044647281 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4632663222015933711}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5021015597336376256
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3051,6 +3255,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &1003982305305498558 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5021015597336376256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1003982305305498557 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -3181,6 +3397,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &503580439303337839 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5673959656422086417}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &503580439303337836 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -3317,6 +3545,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6585034777595412391}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1378763111968268249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6585034777595412391}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6707784188272312064
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3447,3 +3687,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 6707784188272312064}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1537470941987004286 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 6707784188272312064}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

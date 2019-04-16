@@ -103,7 +103,7 @@ public class MoveTestPanel : MonoBehaviour
     {
         int maxQIndex = ActionManager.instance.CalculateAction(actionIndex, states);
 
-        List<double> qs = ActionManager.instance.GetQS(actionIndex);
+        List<double> qs = ActionManager.instance.GetQS();
         if (actionIndex == 0)
             actionBars.GetComponent<ActionTestBar>().SetActionBar((float)qs[0], (float)qs[1], (float)qs[2]);
         else
@@ -127,6 +127,6 @@ public class MoveTestPanel : MonoBehaviour
     {
         reward = rewardUI.GetComponent<RewardTestUI>().GetRewardValue();
         // save the current state and reward to replay memory
-        ActionManager.instance.SetMemory(actionIndex, states, reward);
+        ActionManager.instance.SetMemory(reward);
     }
 }

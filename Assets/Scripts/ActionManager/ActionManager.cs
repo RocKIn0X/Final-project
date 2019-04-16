@@ -42,25 +42,8 @@ public class BrainCollection
 }
 
 public class ActionManager : MonoBehaviour
-{
-    [System.Serializable]
-    public struct InputDictionary
-    {
-        public string inputKey;
-        public double inputValue;
-    };
-
-    [System.Serializable]
-    public struct OutputDictionary
-    {
-        public string outputKey;
-        public double outputValue;
-    };
-
+{ 
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
-
-    public List<InputDictionary> inputBook = new List<InputDictionary>();
-    public List<OutputDictionary> outputBook = new List<OutputDictionary>();
 
     #region Reward
     public float idleReward;
@@ -84,21 +67,8 @@ public class ActionManager : MonoBehaviour
 
     private int actionIndex;
     private List<double> states = new List<double>();
-    private static Dictionary<string, double> InputDict = new Dictionary<string, double>();
-    private static Dictionary<string, double> OutputDict = new Dictionary<string, double>();
 
-    private void PopulateDict()
-    {
-        foreach (InputDictionary value in inputBook)
-        {
-            InputDict.Add(value.inputKey, value.inputValue);
-        }
-
-        foreach (OutputDictionary value in outputBook)
-        {
-            OutputDict.Add(value.outputKey, value.outputValue);
-        }
-    }
+    public GameObject trainingPopup;
 
     // Start is called before the first frame update
     void Start()
@@ -107,40 +77,13 @@ public class ActionManager : MonoBehaviour
         {
             b.InitEachBrain();
         }
-
-        PopulateDict();
     }
 
-    private void SetInputDict ()
+    private void Update()
     {
-        if (actionIndex == 0)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            InputDict["Hunger"] = states[0];
-            InputDict["Tireness"] = states[1];
-            InputDict["Emotion"] = states[2];
-        }
-        else if (actionIndex == 1)
-        {
-            InputDict["GrowthRate"] = states[0];
-            InputDict["WaterGauge"] = states[1];
-        }
-    }
-
-    private void SetOutputDict ()
-    {
-        List<double> qs = GetQS(actionIndex);
-
-        if (actionIndex == 0)
-        {
-            OutputDict["WorkTile"] = qs[0];
-            OutputDict["FoodTile"] = qs[1];
-            OutputDict["RestTile"] = qs[2];
-        }
-        else if (actionIndex == 1)
-        {
-            OutputDict["Idle"] = qs[0];
-            OutputDict["Harvest"] = qs[1];
-            OutputDict["Water"] = qs[2];
+            CallTrainningPopup();
         }
     }
 
@@ -152,7 +95,12 @@ public class ActionManager : MonoBehaviour
         return brainCollections[actionIndex].CalculateAction(states);
     }
 
-    public List<double> GetQS (int actionIndex)
+    public List<double> GetStates()
+    {
+        return states;
+    }
+
+    public List<double> GetQS ()
     {
         return brainCollections[actionIndex].GetQS();
 
@@ -165,17 +113,9 @@ public class ActionManager : MonoBehaviour
         //actionBrain.SetMemory(states, reward);
     }
 
-    public Dictionary<string, double> GetInputDict ()
+    public void CallTrainningPopup ()
     {
-        SetInputDict();
-
-        return InputDict;
-    }
-
-    public Dictionary<string, double> GetOutputDict()
-    {
-        SetOutputDict();
-
-        return OutputDict;
+        trainingPopup.SetActive(true);
+        trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
     }
 }
