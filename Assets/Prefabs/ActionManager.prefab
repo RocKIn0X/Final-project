@@ -56,7 +56,7 @@ MonoBehaviour:
     numNEachLayer: 03000000
     alpha: 0.2
     discount: 0.99
-  idleReward: 0
-  praiseReward: 0
-  punishReward: 0
+  idleReward: 0.05
+  praiseReward: 0.3
+  punishReward: -0.3
   trainingPopup: {fileID: 0}

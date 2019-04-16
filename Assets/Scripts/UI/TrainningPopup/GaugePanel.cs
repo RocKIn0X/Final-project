@@ -16,6 +16,8 @@ public class GaugePanel : MonoBehaviour
 
     public void SetAllGauges (int index, List<double> values)
     {
+        Debug.Log("Value: " + values.Count);
+
         for (int i = 0; i < gaugesHolder.Count; i++)
         {
             if (i < values.Count)

@@ -121,6 +121,10 @@ public class MonsterInteraction : MonoBehaviour
         isArrived = false;
         isOnMoveState = false;
         timer = 0f;
+
+        // set reward move state
+        Debug.Log("Action index: " + actionIndex);
+        ActionManager.instance.SetMemory();
     }
 
     public void MonsterAction ()
@@ -136,6 +140,10 @@ public class MonsterInteraction : MonoBehaviour
 
         isOnActionState = false;
         timer = 0f;
+
+        // set reward action state
+        if (tileTarget.typeTile == TypeTile.WorkTile)
+            ActionManager.instance.SetMemory();
     }
 
     public void SetStatus (int hungry, int tireness)
@@ -196,7 +204,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private Vector3 GetTargetPosition ()
     {
-        status.RandomStatus();
+        //status.RandomStatus();
 
         int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
         Debug.Log("Index: " + index);

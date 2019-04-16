@@ -49,6 +49,7 @@ public class ActionManager : MonoBehaviour
     public float idleReward;
     public float praiseReward;
     public float punishReward;
+    private float reward;
     #endregion
 
     #region Singleton Object
@@ -77,6 +78,8 @@ public class ActionManager : MonoBehaviour
         {
             b.InitEachBrain();
         }
+
+        reward = idleReward;
     }
 
     private void Update()
@@ -91,6 +94,9 @@ public class ActionManager : MonoBehaviour
     {
         this.actionIndex = actionIndex;
         this.states = states;
+
+        // initial reward this state equal idle reward
+        reward = idleReward;
 
         return brainCollections[actionIndex].CalculateAction(states);
     }
@@ -112,15 +118,45 @@ public class ActionManager : MonoBehaviour
         actionIndex = index;
     }
 
-    public void SetMemory (float reward)
+    public void praise ()
+    {
+        reward = praiseReward;
+        trainingPopup.SetActive(false);
+    }
+
+    public void punish ()
+    {
+        reward = punishReward;
+        trainingPopup.SetActive(false);
+    }
+
+    public void SetMemory ()
+    {
+        Debug.Log("Action index: " + actionIndex);
+        brainCollections[actionIndex].SetMemory(states, reward);
+    }
+
+    public void SetMemory(float reward)
     {
         brainCollections[actionIndex].SetMemory(states, reward);
-        //actionBrain.SetMemory(states, reward);
     }
 
     public void CallTrainningPopup ()
     {
+        GameManager.Instance.PauseGame();
         trainingPopup.SetActive(true);
-        trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+        if (actionIndex == 0)
+        {
+            // status
+            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+        }
+        else
+        {
+            // crop info
+            List<double> cropInfo = new List<double>();
+            cropInfo.Add(0);
+            cropInfo.Add(0);
+            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
+        }
     }
 }

@@ -24,12 +24,29 @@ public class TrainningPopup : MonoBehaviour
         List<double> preValueQS = new List<double>();
 
         foreach (double v in states)
-            preValueStates.Add((v + 0.5f) * 100);
-
+        {
+            if (actionIndex == 0)
+                preValueStates.Add((v + 0.5f) * 100);
+            else
+                preValueStates.Add(v * 100);
+        }
+            
         foreach (double v in qs)
             preValueQS.Add(v * 100);
 
         inputPanel.SetAllGauges(actionIndex, preValueStates);
         outputPanel.SetAllGauges(actionIndex, preValueQS);
+    }
+
+    public void ClickPraise ()
+    {
+        ActionManager.instance.praise();
+        GameManager.Instance.ResumeGame();
+    }
+
+    public void ClickPunish ()
+    {
+        ActionManager.instance.punish();
+        GameManager.Instance.ResumeGame();
     }
 }

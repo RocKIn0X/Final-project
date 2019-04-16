@@ -4978,6 +4978,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1259402126841451844}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1130121167 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1130121169, guid: 91713f9bc5336464dbfb54f73cc648f2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1259402126841451844}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1130121166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d6936a6ac253a43a0514151d95354d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1174752694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5248,18 +5260,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   marketCanvasGroup: {fileID: 903490116}
---- !u!114 &1237735176 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
-    type: 3}
-  m_PrefabInstance: {fileID: 1859818234}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11e2a5240f6992744a79e104f98cb683, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1248771237
 GameObject:
   m_ObjectHideFlags: 0
@@ -8600,6 +8600,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: ActionManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
+        type: 3}
+      propertyPath: trainingPopup
+      value: 
+      objectReference: {fileID: 1130121166}
+    - target: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
+        type: 3}
+      propertyPath: idleReward
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
+        type: 3}
+      propertyPath: praiseReward
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
+        type: 3}
+      propertyPath: punishReward
+      value: -0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 2568033932739933444, guid: 5f39a6a48fb34774893fd6a178919b9a,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8655,11 +8675,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
-        type: 3}
-      propertyPath: trainingPopup
-      value: 
-      objectReference: {fileID: 1130121166}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f39a6a48fb34774893fd6a178919b9a, type: 3}
 --- !u!1 &1861956480
@@ -10454,7 +10469,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00014066113, y: 0}
+  m_AnchoredPosition: {x: -0.0000454422, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2137445272
@@ -10757,12 +10772,37 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1237735176}
+      objectReference: {fileID: 1130121167}
+    - target: {fileID: 1022683509793867904, guid: 91713f9bc5336464dbfb54f73cc648f2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickPraise
+      objectReference: {fileID: 0}
+    - target: {fileID: 1022683509793867904, guid: 91713f9bc5336464dbfb54f73cc648f2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7260716588661603499, guid: 91713f9bc5336464dbfb54f73cc648f2,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1237735176}
+      objectReference: {fileID: 1130121167}
+    - target: {fileID: 7260716588661603499, guid: 91713f9bc5336464dbfb54f73cc648f2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClickPunish
+      objectReference: {fileID: 0}
+    - target: {fileID: 7260716588661603499, guid: 91713f9bc5336464dbfb54f73cc648f2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1812436131}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 91713f9bc5336464dbfb54f73cc648f2, type: 3}
 --- !u!224 &3529852276912711277 stripped
