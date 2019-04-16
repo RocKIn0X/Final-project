@@ -29,6 +29,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public PlayerData playerData;
     const string folderName = "BinaryCharacterData";
     const string fileExtension = ".data";
 
@@ -45,11 +46,44 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public void SavingData()
+    public void SaveData()
     {
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
         if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
-        string dataPath = Path.Combine(folderPath
+        string dataPath = Path.Combine(folderPath, PlayerManager.Instance.playerName + fileExtension);
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
+        {
+            binaryFormatter.Serialize(fileStream, playerData);
+        }
     }
+
+    public void LoadData()
+    {
+        string[] filePaths = GetFilePaths();
+
+        if (filePaths.Length > 0) playerData = LoadPlayerData(filePaths[0]);
+    }
+
+    public PlayerData LoadPlayerData(string path)
+    {
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+        using (FileStream fileStream = File.Open(path, FileMode.Open))
+        {
+            return (PlayerData)binaryFormatter.Deserialize(fileStream);
+        }
+    }
+
+    public string[] GetFilePaths()
+    {
+        string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+
+        return Directory.GetFiles(folderPath, fileExtension);
+    }
+}
+
+public class PlayerData
+{
 }

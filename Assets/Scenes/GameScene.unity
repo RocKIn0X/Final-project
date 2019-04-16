@@ -962,7 +962,7 @@ PrefabInstance:
     - target: {fileID: 1040473587809656722, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.00002512994
+      value: 0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 8697480217742897563, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
@@ -6934,6 +6934,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1949360210}
   m_CullTransparentMesh: 0
+--- !u!1 &1955286908
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1955286910}
+  - component: {fileID: 1955286909}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1955286909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955286908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3066594b144d0da4ba780822148dfa17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &1955286910
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1955286908}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1963251368
 GameObject:
   m_ObjectHideFlags: 0
@@ -6977,6 +7020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a57d6189763642244a266020ec6df601, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerName: 
   playerMoney: 1000
   cropAsset_selectToPlant: {fileID: 0}
   playerMoneyText: {fileID: 739801230}
