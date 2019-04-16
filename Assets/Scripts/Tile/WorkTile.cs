@@ -121,7 +121,14 @@ public class WorkTile : Tile
     
     public void PlantFromPlayer(CropAssets cropAsset)
     {
-        if (!crop.HasCrop()) crop = new Crop(cropAsset);
-        overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
+        if (PlayerManager.Instance.cropAmountList.ContainsKey(cropAsset) 
+            && PlayerManager.Instance.cropAmountList[cropAsset] > 0
+            && !crop.HasCrop())
+        {
+            crop = new Crop(cropAsset);
+            overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
+            PlayerManager.Instance.cropAmountList[cropAsset] -= 1;
+            PlayerManager.Instance.SetInventory();
+        }
     }
 }
