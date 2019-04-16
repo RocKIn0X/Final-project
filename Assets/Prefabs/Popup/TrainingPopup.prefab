@@ -2326,7 +2326,10 @@ MonoBehaviour:
     gaugeName:
     - GrowthRate
     - WaterGuage
-  gaugesHolder: []
+  gaugesHolder:
+  - {fileID: 8425996627222492274}
+  - {fileID: 2036574133137179753}
+  - {fileID: 8223733320563053822}
 --- !u!1 &7573519683331357528
 GameObject:
   m_ObjectHideFlags: 0
