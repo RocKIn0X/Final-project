@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class BrainCollection
@@ -68,6 +69,7 @@ public class ActionManager : MonoBehaviour
 
     private int actionIndex;
     private List<double> states = new List<double>();
+    private CanvasGroup trainingPopupCanvas;
 
     public GameObject trainingPopup;
 
@@ -80,6 +82,7 @@ public class ActionManager : MonoBehaviour
         }
 
         reward = idleReward;
+        trainingPopupCanvas = trainingPopup.GetComponent<CanvasGroup>();
     }
 
     private void Update()
@@ -121,13 +124,13 @@ public class ActionManager : MonoBehaviour
     public void praise ()
     {
         reward = praiseReward;
-        trainingPopup.SetActive(false);
+        SetTrainingPopup(false);
     }
 
     public void punish ()
     {
         reward = punishReward;
-        trainingPopup.SetActive(false);
+        SetTrainingPopup(false);
     }
 
     public void SetMemory ()
@@ -141,10 +144,12 @@ public class ActionManager : MonoBehaviour
         brainCollections[actionIndex].SetMemory(states, reward);
     }
 
-    public void CallTrainningPopup ()
+    public void CallTrainningPopup()
     {
         GameManager.Instance.PauseGame();
-        trainingPopup.SetActive(true);
+
+        SetTrainingPopup(true);
+
         if (actionIndex == 0)
         {
             // status
@@ -158,5 +163,12 @@ public class ActionManager : MonoBehaviour
             cropInfo.Add(0);
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
         }
+    }
+
+    public void SetTrainingPopup(bool isOn)
+    {
+        trainingPopupCanvas.alpha = isOn ? 1 : 0;
+        trainingPopupCanvas.blocksRaycasts = isOn;
+        trainingPopupCanvas.interactable = isOn;
     }
 }
