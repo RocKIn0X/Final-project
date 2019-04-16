@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public string playerName = "Testing01";
     public float playerMoney;
     public CropAssets cropAsset_selectToPlant;
     [SerializeField] TextMeshProUGUI playerMoneyText;
@@ -47,14 +48,29 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        playerMoneyText.text = "$" + playerMoney.ToString();
+        DataManager.Instance.LoadData();
         SetInventory();
+        SetMoney();
     }
 
     public void AddMoney(float amount)
     {
         playerMoney += amount;
+        SetMoney();
+    }
+
+    public bool ConsumeMoney(float amount)
+    {
+        if (playerMoney - amount < 0) return false;
+        playerMoney -= amount;
+        SetMoney();
+        return true;
+    }
+
+    public void SetMoney()
+    {
         playerMoneyText.text = "$" + playerMoney.ToString();
+        DataManager.Instance.SaveData();
     }
 
     public void SetInventory()
@@ -69,5 +85,6 @@ public class PlayerManager : MonoBehaviour
         {
             inventoryItemList[i].gameObject.SetActive(false);
         }
+        DataManager.Instance.SaveData();
     }
 }
