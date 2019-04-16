@@ -20,6 +20,8 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    public int actionIndex = 0;
+
     public bool isArrived = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
@@ -61,7 +63,7 @@ public class MonsterInteraction : MonoBehaviour
     {
         MoveToTarget();
         
-        while (!isArrived)
+        while (!IsArrivedNow())
         {
             yield return null;
         }
@@ -98,42 +100,50 @@ public class MonsterInteraction : MonoBehaviour
 
     public void DisplayBubble (int index)
     {
-        // actionBubble.ShowAction(timePerAction);
+        actionBubble.ShowAction(index);
+        //actionBubble.ShowAction(index);
+    }
+
+    public void RemoveBubble()
+    {
+        actionBubble.Disappear();
+    }
+
+    public void EnterMoveState ()
+    {
+        actionIndex = 0; 
+        isOnMoveState = true;
+        StartCoroutine(MoveState());
+    }
+
+    public void ExitMoveState ()
+    {
+        isArrived = false;
+        isOnMoveState = false;
+        timer = 0f;
+
+        // set reward move state
+        Debug.Log("Action index: " + actionIndex);
+        ActionManager.instance.SetMemory();
     }
 
     public void MonsterAction ()
     {
-        int index = GetRandomActionIndex();
-        // tileTarget.GetComponent<TileClass>().Action(index, this);
-        // DisplayBubble(index);
-        if (index == 0)
-        {
-            tileTarget.EatHere();
-        }
-        else if (index == 1)
-        {
-            tileTarget.HarvestHere();
-        }
-        else if (index == 2)
-        {
-            tileTarget.PlantHere();
-        }
-        else if (index == 3)
-        {
-            tileTarget.SleepHere();
-        }
-        else if (index == 4)
-        {
-            tileTarget.WaterHere();
-        }
-        else if (index == 5)
-        {
+        actionIndex = 1;
+        isOnActionState = true;
+        DoAction();
+    }
 
-        }
-        else
-        {
-            Debug.Log("Null action");
-        }
+    public void EndAction ()
+    {
+        RemoveBubble();
+
+        isOnActionState = false;
+        timer = 0f;
+
+        // set reward action state
+        if (tileTarget.typeTile == TypeTile.WorkTile)
+            ActionManager.instance.SetMemory();
     }
 
     public void SetStatus (int hungry, int tireness)
@@ -158,7 +168,7 @@ public class MonsterInteraction : MonoBehaviour
             SetTarget(FindObjectOfType<IsometricMovement>());
     }
 
-    public void SetTarget(IsometricMovement newTarget)
+    private void SetTarget(IsometricMovement newTarget)
     {
         target = newTarget;
         NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
@@ -170,11 +180,33 @@ public class MonsterInteraction : MonoBehaviour
         NMAgent.MoveToDestination(targetPosition);
     }
 
+    private void DoAction ()
+    {
+        ActionManager.instance.SetActionIndex(actionIndex);
+
+        if (tileTarget.typeTile == TypeTile.FoodTile)
+        {
+            DisplayBubble(3);
+        }
+        else if (tileTarget.typeTile == TypeTile.RestTile)
+        {
+            DisplayBubble(4);
+        }
+        else if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            List<double> info = tileTarget.info;
+
+            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            tileTarget.ActionResult(index, this);
+            DisplayBubble(index);
+        }
+    }
+
     private Vector3 GetTargetPosition ()
     {
-        status.RandomStatus();
+        //status.RandomStatus();
 
-        int index = ActionManager.instance.CalculateAction(GetStatusStates());
+        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
         Debug.Log("Index: " + index);
         tileTarget = TileManager.Instance.GetTile(index);
 
@@ -202,14 +234,28 @@ public class MonsterInteraction : MonoBehaviour
 
     private int GetRandomActionIndex ()
     {
-        return (int)Random.Range(0, 6);
+        return (int)Random.Range(0, 5);
+    }
+
+    private bool IsArrivedNow ()
+    {
+        float distance = Vector3.Distance(transform.position, tileTarget.pos);
+
+        if (distance < 0.3f)
+        {
+            isArrived = true;
+
+            return true;
+        }
+
+        return false;
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        Debug.Log("Hit something");
+        //Debug.Log("Hit something");
         //tileTarget = col.gameObject;
-        isArrived = true;
+        //isArrived = true;
     }
 
     private void OnTriggerExit(Collider col)

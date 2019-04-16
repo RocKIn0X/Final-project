@@ -6,25 +6,17 @@ using System.Linq;
 [System.Serializable]
 public class MonsterBrain
 {
-    private ANN ann;
-    [SerializeField]
-    private int input;
-    [SerializeField]
-    private int output;
-    [SerializeField]
-    private List<int> hiddenLayer = new List<int>();
-    [SerializeField]
-    private double alpha;
-
-    float reward = 0.0f;                            //reward to associate with actions
-    List<ReplayMemory> replayMemory = new List<ReplayMemory>(); //memory - list of past actions and rewards
-    int mCapacity = 10000;                          //memory capacity
+    public ANN ann;
 
     float discount = 0.99f;                         //how much future states affect rewards
     float exploreRate = 100.0f;                     //chance of picking random action
     float maxExploreRate = 100.0f;					//max chance value
     float minExploreRate = 0.01f;					//min chance value
     float exploreDecay = 0.01f;                   //chance decay amount for each update
+
+    float reward = 0.0f;                            //reward to associate with actions
+    List<ReplayMemory> replayMemory = new List<ReplayMemory>(); //memory - list of past actions and rewards
+    int mCapacity = 10000;                          //memory capacity
 
     int punishedCount = 0;                              //count player punished
 
@@ -34,17 +26,23 @@ public class MonsterBrain
     List<double> states = new List<double>();
     List<double> qs = new List<double>();
 
-    public MonsterBrain(int input, int output, List<int> hiddenLayer, double alpha)
+    public MonsterBrain()
     {
-        this.hiddenLayer = new List<int>();
+        // Setting ANN
+        ann = new ANN();
+    }
 
-        this.input = input;
-        this.output = output;
-        this.hiddenLayer = hiddenLayer;
-        this.alpha = alpha;
+    public MonsterBrain(int input, int output, List<int> hiddenLayer, double alpha, float discount)
+    {
+        this.discount = discount;
 
         // Setting ANN
-        ann = new ANN(this.input, this.output, this.hiddenLayer, this.alpha);
+        ann = new ANN(input, output, hiddenLayer, alpha);
+    }
+
+    public void InitBrain ()
+    {
+        ann = new ANN();
     }
 
     public int CalculateAction (List<double> states)
