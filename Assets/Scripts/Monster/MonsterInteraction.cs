@@ -126,7 +126,7 @@ public class MonsterInteraction : MonoBehaviour
     public void MonsterAction ()
     {
         actionIndex = 1;
-
+        isOnActionState = true;
         DoAction();
     }
 
@@ -174,6 +174,8 @@ public class MonsterInteraction : MonoBehaviour
 
     private void DoAction ()
     {
+        ActionManager.instance.SetActionIndex(actionIndex);
+
         if (tileTarget.typeTile == TypeTile.FoodTile)
         {
             DisplayBubble(3);

@@ -107,6 +107,11 @@ public class ActionManager : MonoBehaviour
         //return actionBrain.GetQS();
     }
 
+    public void SetActionIndex (int index)
+    {
+        actionIndex = index;
+    }
+
     public void SetMemory (float reward)
     {
         brainCollections[actionIndex].SetMemory(states, reward);
