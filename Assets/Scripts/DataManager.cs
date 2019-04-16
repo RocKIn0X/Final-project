@@ -29,9 +29,11 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    public PlayerData playerData;
     const string folderName = "BinaryCharacterData";
     const string fileExtension = ".data";
+    [SerializeField] List<CropAssets> allCropAssets = new List<CropAssets>();
+    Dictionary<string, CropAssets> cropAssetsNameDic = new Dictionary<string, CropAssets>();
+    public PlayerData playerData = new PlayerData();
 
     void Start()
     {
@@ -44,10 +46,20 @@ public class DataManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        InittialData();
+    }
+
+    void InittialData()
+    {
+        foreach (CropAssets cropAsset in allCropAssets)
+        {
+            cropAssetsNameDic.Add(cropAsset.name, cropAsset);
+        }
     }
 
     public void SaveData()
     {
+        SavePlayerData();
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
         if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
@@ -63,7 +75,12 @@ public class DataManager : MonoBehaviour
     {
         string[] filePaths = GetFilePaths();
 
-        if (filePaths.Length > 0) playerData = LoadPlayerData(filePaths[0]);
+        if (filePaths.Length > 0)
+        {
+            playerData = LoadPlayerData(filePaths[0]);
+            PlayerManager.Instance.playerMoney = playerData.playerMoney;
+            ConvertLoadingData();
+        }
     }
 
     public PlayerData LoadPlayerData(string path)
@@ -82,8 +99,34 @@ public class DataManager : MonoBehaviour
 
         return Directory.GetFiles(folderPath, fileExtension);
     }
+
+    public void SavePlayerData()
+    {
+        playerData.playerMoney = PlayerManager.Instance.playerMoney;
+        ConvertSavingData();
+    }
+
+    private void ConvertSavingData()
+    {
+        playerData.cropAmountNameList.Clear();
+        foreach (KeyValuePair<CropAssets, int> cropAsset in PlayerManager.Instance.cropAmountList)
+        {
+            playerData.cropAmountNameList.Add(cropAsset.Key.name, cropAsset.Value);
+        }
+    }
+
+    private void ConvertLoadingData()
+    {
+        foreach (KeyValuePair<string, int> cropAsset in playerData.cropAmountNameList)
+        {
+            PlayerManager.Instance.cropAmountList.Add(this.cropAssetsNameDic[cropAsset.Key], cropAsset.Value);
+        }
+    }
 }
 
+[System.Serializable]
 public class PlayerData
 {
+    public float playerMoney;
+    public Dictionary<string, int> cropAmountNameList = new Dictionary<string, int>();
 }
