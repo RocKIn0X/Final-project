@@ -22,9 +22,7 @@ public class MoveState : State<MonsterInteraction>
     public override void EnterState()
     {
         Debug.Log("Enter move state");
-        owner.isOnMoveState = true;
-
-        owner.StartCoroutine(owner.MoveState());
+        owner.EnterMoveState();
     }
 
     public override void ExecuteState()
@@ -43,8 +41,6 @@ public class MoveState : State<MonsterInteraction>
 
     public override void ExitState()
     {
-        owner.isArrived = false;
-        owner.isOnMoveState = false;
-        owner.timer = 0f;
+        owner.ExitMoveState();
     }
 }
