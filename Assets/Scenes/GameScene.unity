@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -960,7 +960,7 @@ PrefabInstance:
     - target: {fileID: 1040473587809656722, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000042889642
+      value: -0.000091999034
       objectReference: {fileID: 0}
     - target: {fileID: 8697480217742897563, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
@@ -2614,18 +2614,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &890362516 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2568033932739933445, guid: 5f39a6a48fb34774893fd6a178919b9a,
-    type: 3}
-  m_PrefabInstance: {fileID: 693276845}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11e2a5240f6992744a79e104f98cb683, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &891618963
 GameObject:
   m_ObjectHideFlags: 0
@@ -7772,6 +7760,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuyComfirmPopup
       objectReference: {fileID: 0}
+    - target: {fileID: 5956345103951676539, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5956345103951676539, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3682414801165633397, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7876,6 +7874,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
+        type: 3}
+      propertyPath: m_inputSource
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3682414801517404103, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
         type: 3}
@@ -8021,31 +8034,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
-        type: 3}
-      propertyPath: m_inputSource
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2354745289856528366, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5956345103951676539, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5956345103951676539, guid: 30e0a76f90c15594bb4a27e1e4cc3567,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30e0a76f90c15594bb4a27e1e4cc3567, type: 3}
@@ -8198,31 +8186,6 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 890362516}
-    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SetTrainingPopup
-      objectReference: {fileID: 0}
-    - target: {fileID: 6144934570762106251, guid: 91713f9bc5336464dbfb54f73cc648f2,
-        type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 6
-      objectReference: {fileID: 0}
     - target: {fileID: 9046483994283457089, guid: 91713f9bc5336464dbfb54f73cc648f2,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -8311,18 +8274,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5010129654726833501}
   m_PrefabAsset: {fileID: 0}
---- !u!225 &5380351004952856176
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5380351004952856175}
-  m_Enabled: 1
-  m_Alpha: 0
-  m_Interactable: 0
-  m_BlocksRaycasts: 0
-  m_IgnoreParentGroups: 0
 --- !u!114 &5768187899852418116 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5768187898297589609, guid: 920fe2f53690a1d908f4b93fbe112ebf,

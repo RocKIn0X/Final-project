@@ -146,8 +146,6 @@ public class ActionManager : MonoBehaviour
 
     public void CallTrainningPopup()
     {
-        GameManager.Instance.PauseGame();
-
         SetTrainingPopup(true);
 
         if (actionIndex == 0)
@@ -170,5 +168,10 @@ public class ActionManager : MonoBehaviour
         trainingPopupCanvas.alpha = isOn ? 1 : 0;
         trainingPopupCanvas.blocksRaycasts = isOn;
         trainingPopupCanvas.interactable = isOn;
+
+        if (isOn)
+            GameManager.Instance.PauseGame();
+        else
+            GameManager.Instance.ResumeGame();
     }
 }
