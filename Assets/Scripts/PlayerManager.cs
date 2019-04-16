@@ -29,6 +29,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+    public string playerName;
     public float playerMoney;
     public CropAssets cropAsset_selectToPlant;
     [SerializeField] TextMeshProUGUI playerMoneyText;
