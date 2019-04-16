@@ -56,6 +56,30 @@ MonoBehaviour:
     numNEachLayer: 03000000
     alpha: 0.2
     discount: 0.99
+  inputList:
+  - inputKey: Hunger
+    inputValue: 0
+  - inputKey: Tireness
+    inputValue: 0
+  - inputKey: Emotion
+    inputValue: 0
+  - inputKey: GrowthRate
+    inputValue: 0
+  - inputKey: WaterGauge
+    inputValue: 0
+  outputList:
+  - outputKey: WorkTile
+    outputValue: 0
+  - outputKey: FoodTile
+    outputValue: 0
+  - outputKey: RestTile
+    outputValue: 0
+  - outputKey: Idle
+    outputValue: 0
+  - outputKey: Harvest
+    outputValue: 0
+  - outputKey: Water
+    outputValue: 0
   idleReward: 0
   praiseReward: 0
   punishReward: 0
