@@ -1,20 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GaugePanel : MonoBehaviour
 {
     [System.Serializable]
+    public struct GaugeData
+    {
+        public string gaugeName;
+        public Sprite gaugeIcon;
+    };
+
+    [System.Serializable]
     public struct GaugeDictionary
     {
         public string name;
-        public List<string> gaugeName;
+        public List<GaugeData> gaugeData;
     };
 
     public List<GaugeDictionary> gaugeBooks = new List<GaugeDictionary>();
-    public List<GameObject> gaugesHolder = new List<GameObject>();
+    public List<UI_GaugeObject> gaugesHolder = new List<UI_GaugeObject>();
 
-    public void SetAllGauges (int index, List<double> values)
+    public void SetAllGauges (int layoutType, List<double> values)
     {
         Debug.Log("Value: " + values.Count);
 
@@ -22,11 +30,13 @@ public class GaugePanel : MonoBehaviour
         {
             if (i < values.Count)
             {
-                gaugesHolder[i].SetActive(true);
-                gaugesHolder[i].GetComponent<GaugeAndKey>().SetGaugeAndKey(gaugeBooks[index].gaugeName[i], values[i]);
-            }  
+                gaugesHolder[i].needIcon = gaugeBooks[layoutType].gaugeData[i].gaugeIcon;
+                gaugesHolder[i].RefreshGauge();
+                gaugesHolder[i].SetGaugePercent((float)values[i]);
+                gaugesHolder[i].gameObject.SetActive(true);
+            }
             else
-                gaugesHolder[i].SetActive(false);
+                gaugesHolder[i].gameObject.SetActive(false);
         }
     }
 }
