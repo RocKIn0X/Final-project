@@ -8,15 +8,19 @@ public class WorkTile : Tile
     public GameObject overlayObj;
     public Crop crop;
 
+    public float waterAmount;
+    public float waterDecay;
 
     private void OnEnable()
     {
         GameManager.SecondEvent += CropGrowth;
+        GameManager.SecondEvent += DryWaterInTile;
     }
 
     private void OnDisable()
     {
         GameManager.SecondEvent -= CropGrowth;
+        GameManager.SecondEvent -= DryWaterInTile;
     }
 
     public override Vector3 pos
@@ -47,7 +51,7 @@ public class WorkTile : Tile
     {
         get
         {
-            return crop.GetInfo();
+            return GetInfo();
         }
     }
 
@@ -77,6 +81,8 @@ public class WorkTile : Tile
     public override void HarvestHere(MonsterInteraction m)
     {
         Debug.Log("Harvest at Work tile");
+
+        HarvestCrop();
     }
     public override void PlantHere(MonsterInteraction m)
     {
@@ -89,7 +95,9 @@ public class WorkTile : Tile
     public override void WaterHere(MonsterInteraction m)
     {
         Debug.Log("Water at Work tile");
-        //crop.WaterCrop(Random.Range(1, 11));
+
+        waterAmount += m.waterAmount;
+        crop.WaterCrop(waterAmount);
     }
 
     private void AddCrop(GameObject _crop_obj)
@@ -109,12 +117,36 @@ public class WorkTile : Tile
         }
     }
 
+    private void DryWaterInTile ()
+    {
+        if (crop != null && !crop.HasCrop())
+            waterAmount = Mathf.Clamp(waterAmount - waterDecay, 0f, 1f);
+    }
+
+    private List<double> GetInfo()
+    {
+        List<double> info = new List<double>();
+
+        if (crop != null)
+        {
+            info.Add(crop.GetGrowthRate());
+            info.Add(waterAmount);
+        }
+        else
+        {
+            info.Add(0);
+            info.Add(0);
+        }
+
+        return info;
+    }
+
     private void CropGrowth ()
     {
         //Debug.Log("Crop growth at " + Time.time);
         if (this.overlayObj != null && crop != null)
         {
-            crop.CropGrowth();
+            crop.CropGrowth(ref waterAmount);
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
         }
     }
