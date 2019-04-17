@@ -36,12 +36,15 @@ public class TrainningPopup : MonoBehaviour
     public void ClickPraise ()
     {
         ActionManager.instance.praise();
-        GameManager.Instance.ResumeGame();
     }
 
     public void ClickPunish ()
     {
         ActionManager.instance.punish();
-        GameManager.Instance.ResumeGame();
+    }
+
+    public void ClosePanel ()
+    {
+        ActionManager.instance.SetTrainingPopup(false);
     }
 }
