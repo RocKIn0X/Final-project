@@ -703,13 +703,14 @@ GameObject:
   - component: {fileID: 4955565486309325097}
   - component: {fileID: 850810292012482998}
   - component: {fileID: 4826441331337895680}
+  - component: {fileID: 4378686135274015659}
   m_Layer: 5
   m_Name: UI_BuyPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6647875420840097306
 RectTransform:
   m_ObjectHideFlags: 0
@@ -785,9 +786,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d9de0b941a1e5702ac4db853e664494, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buyPanel_canvasGroup: {fileID: 4378686135274015659}
   itemDisplay: {fileID: 1572511316032401629}
   itemQuantity: {fileID: 6215375743242750505}
   itemPrice: {fileID: 8940609357237908058}
+--- !u!225 &4378686135274015659
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4177929802774238167}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &4658043767071470024
 GameObject:
   m_ObjectHideFlags: 0
