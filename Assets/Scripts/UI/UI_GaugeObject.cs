@@ -20,6 +20,7 @@ public class UI_GaugeObject : MonoBehaviour
 
     private float gaugePercent = 100f;
 
+    public bool isTesting = true;
 
     private bool testIncrease = false;
     private void TestGaugeDisplay()
@@ -32,6 +33,11 @@ public class UI_GaugeObject : MonoBehaviour
             testIncrease = true;
         else if (gaugePercent >= 100.0f)
             testIncrease = false;
+    }
+
+    public void RefreshGauge()
+    {
+        needImage.sprite = needIcon;
     }
 
     public void SetGaugePercent(float percent)
@@ -59,12 +65,13 @@ public class UI_GaugeObject : MonoBehaviour
 
         void Start()
         {
-            needImage.sprite = needIcon;
+            RefreshGauge();
             SetGaugePercent(100);
         }
 
         void Update()
         {
-            TestGaugeDisplay();
+            if (isTesting == true)
+                TestGaugeDisplay();
         }
 }

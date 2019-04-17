@@ -6,12 +6,12 @@ using TMPro;
 
 public class GaugeAndKey : MonoBehaviour
 {
-    public TextMeshProUGUI keyText;
     public UI_GaugeObject gaugeObj;
+    public Image gaugeImage;
 
-    public void SetGaugeAndKey (string key, double value)
+    public void SetGaugeAndKey (Sprite icon, double value)
     {
-        keyText.text = key;
+        gaugeImage.sprite = icon;
         gaugeObj.SetGaugePercent((float)value);
     }
 }
