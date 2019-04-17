@@ -29,11 +29,9 @@ public class MarketManager : MonoBehaviour
             instance = value;
         }
     }
-    [SerializeField] CanvasGroup buyConfirmPopupGroup;
-    [SerializeField] TextMeshProUGUI buyingItemAmountText;
-    [SerializeField] TextMeshProUGUI totalCostText;
+    [SerializeField] UI_BuyPanel buyPanel;
     public CropAssets buyingCropAssets;
-    public int buyingItemAmount = 0;
+    public int buyingQuantity = 0;
     public float totalCost = 0;
 
     void Start()
@@ -41,7 +39,6 @@ public class MarketManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
@@ -52,46 +49,17 @@ public class MarketManager : MonoBehaviour
     public void PrepareToBuy(CropAssets _buyingCropAssets)
     {
         buyingCropAssets = _buyingCropAssets;
-        buyingItemAmount = 0;
-        SetConfirmPopup(isOn: true);
-        IncreaseBuyingAmount();
+        buyPanel.DisplayItem(buyingCropAssets.cropSprite, buyingCropAssets.buyingCost);
     }
 
     public void BuyItem()
     {
         if (PlayerManager.Instance.ConsumeMoney(totalCost))
         {
-            if (PlayerManager.Instance.cropAmountList.ContainsKey(buyingCropAssets)) PlayerManager.Instance.cropAmountList[buyingCropAssets] += buyingItemAmount;
-            else PlayerManager.Instance.cropAmountList.Add(buyingCropAssets, buyingItemAmount);
+            if (PlayerManager.Instance.cropAmountList.ContainsKey(buyingCropAssets)) PlayerManager.Instance.cropAmountList[buyingCropAssets] += buyingQuantity;
+            else PlayerManager.Instance.cropAmountList.Add(buyingCropAssets, buyingQuantity);
             PlayerManager.Instance.SetInventory();
         }
-        SetConfirmPopup(isOn: false);
-    }
-
-    public void IncreaseBuyingAmount()
-    {
-        buyingItemAmount += 1;
-        totalCost = buyingCropAssets.buyingCost * buyingItemAmount;
-        SetConfirmPopupText();
-    }
-
-    public void DecreaseBuyingAmount()
-    {
-        buyingItemAmount = buyingItemAmount -= 1 > 1 ? buyingItemAmount - 1 : 1;
-        totalCost = buyingCropAssets.buyingCost * buyingItemAmount;
-        SetConfirmPopupText();
-    }
-
-    public void SetConfirmPopupText()
-    {
-        buyingItemAmountText.text = buyingItemAmount.ToString();
-        totalCostText.text = totalCost.ToString();
-    }
-
-    public void SetConfirmPopup(bool isOn)
-    {
-        buyConfirmPopupGroup.alpha = isOn ? 1 : 0;
-        buyConfirmPopupGroup.blocksRaycasts = isOn;
-        buyConfirmPopupGroup.interactable = isOn;
+        buyPanel.SetCanvasGroup(isOn: false);
     }
 }
