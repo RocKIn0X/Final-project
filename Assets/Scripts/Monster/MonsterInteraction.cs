@@ -7,6 +7,8 @@ using StateSystem;
 public class MonsterInteraction : MonoBehaviour
 {
     public Tile tileTarget;
+    public float waterAmount;
+
     public ActionBubble actionBubble;
 
     [SerializeField]
@@ -196,7 +198,8 @@ public class MonsterInteraction : MonoBehaviour
         {
             List<double> info = tileTarget.info;
 
-            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            //int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            int index = Random.Range(0, 3);
             tileTarget.ActionResult(index, this);
             DisplayBubble(index);
         }

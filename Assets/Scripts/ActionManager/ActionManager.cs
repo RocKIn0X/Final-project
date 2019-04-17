@@ -162,6 +162,7 @@ public class ActionManager : MonoBehaviour
             cropInfo.Add(0);
             cropInfo.Add(0);
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
+            //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
         }
     }
 
