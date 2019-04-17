@@ -310,12 +310,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c914e22a14025d4ca748281dce18b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeTile: 2
   isWatered: 0
   overlayObj: {fileID: 8182109090045881816}
   crop:
     asset: {fileID: 0}
     state: 0
+    growthRate: 0
+    realCost: 0
+  waterAmount: 0
+  waterDecay: 0.01
 --- !u!1 &8182109090045881816
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,6 +38,9 @@ public class MonsterBrain
 
         // Setting ANN
         ann = new ANN(input, output, hiddenLayer, alpha);
+
+        states = new List<double>();
+        qs = new List<double>();
     }
 
     public void InitBrain ()
@@ -47,6 +50,7 @@ public class MonsterBrain
 
     public int CalculateAction (List<double> states)
     {
+        Debug.Log("states[0]: " + states[0]);
         qs = SoftMax(ann.CalcOutput(states));
         double maxQ = qs.Max();
         int maxQIndex = qs.ToList().IndexOf(maxQ);
