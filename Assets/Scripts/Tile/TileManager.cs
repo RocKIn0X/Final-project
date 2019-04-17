@@ -33,6 +33,8 @@ public class TileManager : MonoBehaviour
     public RestTile[] restTile_arr;
     public FoodTile[] foodTile_arr;
 
+    public Tile tileTarget;
+
     private int prevWorkIndex = -1;
 
     void Start()
@@ -109,17 +111,22 @@ public class TileManager : MonoBehaviour
         }
 
         prevWorkIndex = index;
+        tileTarget = workTiles[index];
 
-        return workTiles[index];
+        return tileTarget;
     }
 
     private Tile GetFoodTile ()
     {
-        return foodTiles[0];
+        tileTarget = foodTiles[0];
+
+        return tileTarget;
     }
 
     private Tile GetRestTile ()
     {
-        return restTiles[0];
+        tileTarget = restTiles[0];
+
+        return tileTarget;
     }
 }
