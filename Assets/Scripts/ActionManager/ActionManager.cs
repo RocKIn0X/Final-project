@@ -24,11 +24,12 @@ public class BrainCollection
     public void InitEachBrain()
     {
         brain = new MonsterBrain(numInputs, numOutputs, numNEachLayer, alpha, discount);
+        Debug.Log(brain);
     }
 
     public int CalculateAction(List<double> states)
     {
-        Debug.Log(states[0]);
+        Debug.Log(brain);
 
         return brain.CalculateAction(states);
     }
@@ -45,7 +46,8 @@ public class BrainCollection
 }
 
 public class ActionManager : MonoBehaviour
-{ 
+{
+    public bool isInitBrain = false;
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
 
     #region Reward
@@ -78,13 +80,33 @@ public class ActionManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        /*
         foreach (var b in brainCollections)
         {
             b.InitEachBrain();
         }
+        */
+        StartCoroutine(InitBrain());
 
         reward = idleReward;
         trainingPopupCanvas = trainingPopup.GetComponent<CanvasGroup>();
+    }
+
+    IEnumerator InitEachBrain (BrainCollection b)
+    {
+        b.InitEachBrain();
+        yield return null;
+    }
+
+    IEnumerator InitBrain ()
+    {
+        foreach (BrainCollection b in brainCollections)
+        {
+            yield return StartCoroutine(InitEachBrain(b));
+        }
+
+        ActionManager.instance.isInitBrain = true;
+        yield return null;
     }
 
     private void Update()

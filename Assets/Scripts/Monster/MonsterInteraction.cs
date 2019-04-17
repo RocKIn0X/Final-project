@@ -27,19 +27,26 @@ public class MonsterInteraction : MonoBehaviour
     public bool isArrived = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
+    public bool isStateMachineRunning = false;
 
     public float timer;
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         status = new Status();
+    }
+
+    private void Start()
+    {
         Init();
         timer = 0f;
 
-        stateMachine = new StateMachine<MonsterInteraction>(this);
-        stateMachine.ChangeState(new MoveState(this));
+        Debug.Log("Monster Start");
+        //stateMachine = new StateMachine<MonsterInteraction>(this);
+        //stateMachine.ChangeState(new MoveState(this));
+        StartCoroutine(WaitInitBrain());
     }
 
     private void Update()
@@ -57,8 +64,19 @@ public class MonsterInteraction : MonoBehaviour
         }
         */
 
+        if (isStateMachineRunning)
+            stateMachine.Update();
+    }
 
-        stateMachine.Update();
+    public IEnumerator WaitInitBrain ()
+    {
+        while (!ActionManager.instance.isInitBrain)
+        {
+            yield return null;
+            stateMachine = new StateMachine<MonsterInteraction>(this);
+            stateMachine.ChangeState(new MoveState(this));
+            isStateMachineRunning = true;
+        }
     }
 
     public IEnumerator MoveState ()
