@@ -14,11 +14,13 @@ public class Neuron {
 
 	public Neuron(int nInputs)
 	{
-		float weightRange = (float) 2.4/(float) nInputs;
-		bias = UnityEngine.Random.Range(-weightRange,weightRange);
-		numInputs = nInputs;
+		//float weightRange = (float) 2.4/(float) nInputs;
+		//bias = UnityEngine.Random.Range(-weightRange,weightRange);
+        bias = UnityEngine.Random.Range(-1, 1);
+        numInputs = nInputs;
 
 		for(int i = 0; i < nInputs; i++)
-			weights.Add(UnityEngine.Random.Range(-weightRange,weightRange));
+            weights.Add(UnityEngine.Random.Range(-1, 1));
+            //weights.Add(UnityEngine.Random.Range(-weightRange,weightRange));
 	}
 }

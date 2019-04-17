@@ -28,7 +28,7 @@ public class ActionBubble : MonoBehaviour
         this.Disappear();
     }
 
-    void Disappear()
+    public void Disappear()
     {
         bubbleRenderer = this.GetComponent<SpriteRenderer>();
         bubbleRenderer.color = Color.clear;
@@ -36,23 +36,23 @@ public class ActionBubble : MonoBehaviour
         actionRenderer.color = Color.clear;
     }
 
-    void ShowAction(string action)
+    public void ShowAction(int actionIndex)
     {
-        _Log("Showing action: " + action);
+        _Log("Showing action: " + ActionDict.GetActionName(actionIndex));
 
         bubbleRenderer = this.GetComponent<SpriteRenderer>();
         bubbleRenderer.color = Color.white;
         actionRenderer = actionSprite.GetComponent<SpriteRenderer>();
         actionRenderer.color = Color.white;
-        actionRenderer.sprite = ActionDict.GetActionSprite(action);
-        waitTimeout = WaitAndDisappear(BUBBLE_TIMEOUT_SEC);
-        StartCoroutine(waitTimeout);
+        actionRenderer.sprite = ActionDict.GetActionSprite(actionIndex);
+        //waitTimeout = WaitAndDisappear(BUBBLE_TIMEOUT_SEC);
+        //StartCoroutine(waitTimeout);
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        ShowAction("Watering");
+        // ShowAction("Watering");
     }
 
     // Update is called once per frame

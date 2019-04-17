@@ -1,43 +1,78 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [System.Serializable]
 public class ANN{
-
-	public int numInputs;
-	public int numOutputs;
-	public int numHidden;
-	public int numNPerHidden;
-	public double alpha;
+	private int numInputs;
+	private int numOutputs;
+	private List<int> numNEachLayer = new List<int>();
+    private double alpha;
 	List<Layer> layers = new List<Layer>();
 
-	public ANN(int nI, int nO, int nH, int nPH, double a)
+    public ANN ()
+    {
+        if (numNEachLayer.Count > 0)
+        {
+            for (int i = 0; i < numNEachLayer.Count + 1; i++)
+            {
+                if (i == 0)
+                {
+                    layers.Add(new Layer(numNEachLayer[i], numInputs));
+                    continue;
+                }
+
+                if (i == numNEachLayer.Count)
+                {
+                    layers.Add(new Layer(numOutputs, numNEachLayer[i - 1]));
+                    break;
+                }
+
+                layers.Add(new Layer(numNEachLayer[i], numNEachLayer[i - 1]));
+
+            }
+        }
+        else
+        {
+            layers.Add(new Layer(numOutputs, numInputs));
+        }
+    }
+
+	public ANN(int nI, int nO, List<int> hL, double a)
 	{
 		numInputs = nI;
 		numOutputs = nO;
-		numHidden = nH;
-		numNPerHidden = nPH;
+		numNEachLayer = hL;
 		alpha = a;
 
-		if(numHidden > 0)
-		{
-			layers.Add(new Layer(numNPerHidden, numInputs));
+        if (numNEachLayer.Count > 0)
+        {
+            for (int i = 0; i < numNEachLayer.Count + 1; i++)
+            {
+                if (i == 0)
+                {
+                    layers.Add(new Layer(numNEachLayer[i], numInputs));
+                    continue;
+                }
 
-			for(int i = 0; i < numHidden-1; i++)
-			{
-				layers.Add(new Layer(numNPerHidden, numNPerHidden));
-			}
+                if (i == numNEachLayer.Count)
+                {
+                    layers.Add(new Layer(numOutputs, numNEachLayer[i - 1]));
+                    break;
+                }
 
-			layers.Add(new Layer(numOutputs, numNPerHidden));
-		}
-		else
-		{
-			layers.Add(new Layer(numOutputs, numInputs));
-		}
+                layers.Add(new Layer(numNEachLayer[i], numNEachLayer[i - 1]));
+
+            }
+        }
+        else
+        {
+            layers.Add(new Layer(numOutputs, numInputs));
+        }
 	}
 
-	public List<double> Train(List<double> inputValues, List<double> desiredOutput)
+    public List<double> Train(List<double> inputValues, List<double> desiredOutput)
 	{
 		List<double> outputValues = new List<double>();
 		outputValues = CalcOutput(inputValues, desiredOutput);
@@ -58,7 +93,7 @@ public class ANN{
 		}
 
 		inputs = new List<double>(inputValues);
-		for(int i = 0; i < numHidden + 1; i++)
+		for(int i = 0; i < numNEachLayer.Count + 1; i++)
 		{
 				if(i > 0)
 				{
@@ -80,7 +115,7 @@ public class ANN{
 
 					N -= layers[i].neurons[j].bias;
 
-					if(i == numHidden)
+					if(i == numNEachLayer.Count)
 						layers[i].neurons[j].output = ActivationFunctionO(N);
 					else
 						layers[i].neurons[j].output = ActivationFunction(N);
@@ -105,7 +140,7 @@ public class ANN{
 		}
 
 		inputs = new List<double>(inputValues);
-		for(int i = 0; i < numHidden + 1; i++)
+		for(int i = 0; i < numNEachLayer.Count + 1; i++)
 		{
 				if(i > 0)
 				{
@@ -127,7 +162,7 @@ public class ANN{
 
 					N -= layers[i].neurons[j].bias;
 
-					if(i == numHidden)
+					if(i == numNEachLayer.Count)
 						layers[i].neurons[j].output = ActivationFunctionO(N);
 					else
 						layers[i].neurons[j].output = ActivationFunction(N);
@@ -136,6 +171,7 @@ public class ANN{
 					currentInput = 0;
 				}
 		}
+
 		return outputValues;
 	}
 
@@ -157,9 +193,43 @@ public class ANN{
 		return weightStr;
 	}
 
-	public void LoadWeights(string weightStr)
+    public void SaveWeights()
+    {
+        Debug.Log("Save...");
+        string path = Application.dataPath + "/weights.txt";
+        var sr = File.CreateText(path);
+        string weightStr = "";
+        foreach (Layer l in layers)
+        {
+            foreach (Neuron n in l.neurons)
+            {
+                foreach (double w in n.weights)
+                {
+                    weightStr += w + ",";
+                }
+                weightStr += n.bias + ",";
+            }
+        }
+        sr.WriteLine(weightStr);
+        sr.Close();
+        Debug.Log("Save completed at " + path);
+    }
+
+    public void LoadWeights()
 	{
-		if(weightStr == "") return;
+
+        Debug.Log("Load...");
+        string path = Application.dataPath + "/weights.txt";
+        string weightStr = "";
+        if (File.Exists(path))
+        {
+            var sr = File.OpenText(path);
+            weightStr = sr.ReadLine();
+        }
+        else
+            return;
+
+        if (weightStr == "") return;
 		string[] weightValues = weightStr.Split(',');
 		int w = 0;
 		foreach(Layer l in layers)
@@ -180,11 +250,11 @@ public class ANN{
 	void UpdateWeights(List<double> outputs, List<double> desiredOutput)
 	{
 		double error;
-		for(int i = numHidden; i >= 0; i--)
+		for(int i = numNEachLayer.Count; i >= 0; i--)
 		{
 			for(int j = 0; j < layers[i].numNeurons; j++)
 			{
-				if(i == numHidden)
+				if(i == numNEachLayer.Count)
 				{
 					error = desiredOutput[j] - outputs[j];
 					layers[i].neurons[j].errorGradient = outputs[j] * (1-outputs[j]) * error;
@@ -201,7 +271,7 @@ public class ANN{
 				}	
 				for(int k = 0; k < layers[i].neurons[j].numInputs; k++)
 				{
-					if(i == numHidden)
+					if(i == numNEachLayer.Count)
 					{
 						error = desiredOutput[j] - outputs[j];
 						layers[i].neurons[j].weights[k] += alpha * layers[i].neurons[j].inputs[k] * error;
