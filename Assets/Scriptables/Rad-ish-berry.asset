@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae50642b3d474274e880017a9dcb4457, type: 3}
   m_Name: Rad-ish-berry
   m_EditorClassIdentifier: 
-  bestWaterQuantityAtPlanted: 0
-  bestWaterQuantityAtGrowing: 0
-  durationToDone: 0
-  percentOfPenalty: 0
-  maximumCost: 0
+  minGrowthRate: 0
+  maxGrowthRate: 0
+  waterToGrowth: 0
+  buyingCost: 0
+  maximumSellingCost: 0
+  cropSprite: {fileID: 21300000, guid: 1d5169fe825479aa083fcb566a283d0b, type: 3}
   seedSprite: {fileID: 21300000, guid: 5c637b4ea5870a3a1bfd9c4856c4a246, type: 3}
   growingSprite: {fileID: 21300000, guid: b3f567937e294b997b4ec435f93c3356, type: 3}
   doneSprite: {fileID: 21300000, guid: 587c73eee035923d08e7677ea8672ac1, type: 3}
