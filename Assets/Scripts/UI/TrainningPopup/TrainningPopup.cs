@@ -11,11 +11,6 @@ public class TrainningPopup : MonoBehaviour
     public GaugePanel inputPanel;
     public GaugePanel outputPanel;
 
-    private void Start()
-    {
-        gameObject.SetActive(false);
-    }
-
     public void ActivatePopup (int actionIndex, List<double> states, List<double> qs)
     {
         title.text = actionIndex == 0 ? "Move state" : "Action state";
@@ -41,12 +36,15 @@ public class TrainningPopup : MonoBehaviour
     public void ClickPraise ()
     {
         ActionManager.instance.praise();
-        GameManager.Instance.ResumeGame();
     }
 
     public void ClickPunish ()
     {
         ActionManager.instance.punish();
-        GameManager.Instance.ResumeGame();
+    }
+
+    public void ClosePanel ()
+    {
+        ActionManager.instance.SetTrainingPopup(false);
     }
 }
