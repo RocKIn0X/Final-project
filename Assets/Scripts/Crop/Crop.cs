@@ -19,12 +19,13 @@ public class Crop
     private float waterToGrowth;
     private float maximumCost;
 
-    private float growthRate;
-    private float realCost;
-    private float waterGauge;
-
     public CropAssets asset;
     public CropState state;
+
+    [SerializeField]
+    private float growthRate;
+    [SerializeField]
+    private float realCost;
 
     public Crop ()
     {
@@ -50,7 +51,6 @@ public class Crop
         state = CropState.Seed;
         growthRate = 0f;
         realCost = 0f;
-        waterGauge = 0;
     }
 
     void GetDataFromAsset (CropAssets asset)
@@ -85,13 +85,14 @@ public class Crop
     }
 
     // Run every 1 second (Link to TimeManager)
-    public void CropGrowth()
+    public void CropGrowth(ref float waterAmount)
     {
-        float waterConsumed = waterGauge >= waterToGrowth ? 1f : waterGauge / waterToGrowth;
+        float waterConsumed = waterAmount >= waterToGrowth ? 1f : waterAmount / waterToGrowth;
         float growthValue = minGrowthRate + maxGrowthRate * waterConsumed;
 
         growthRate = Mathf.Clamp(growthRate + growthValue, 0f, 1f);
-        waterGauge = Mathf.Clamp(waterGauge - waterToGrowth, 0f, 1f);
+        waterAmount = Mathf.Clamp(waterAmount - waterToGrowth, 0f, 1f);
+        realCost = maximumCost * growthRate;
 
         if (isChangeState())
         {
@@ -102,13 +103,13 @@ public class Crop
     // increase water guage
     public void WaterCrop(float amount)
     {
-        waterGauge = Mathf.Clamp(waterGauge + amount, 0f, 1f);
+        
     }
 
     // calculate cost of the crop
     public float CalculateCost()
     {
-        return maximumCost * growthRate;
+        return realCost;
     }
 
     public bool HasCrop ()
@@ -156,12 +157,13 @@ public class Crop
         return state;
     }
 
-    public List<double> GetInfo ()
+    public double GetGrowthRate ()
     {
-        List<double> info = new List<double>();
-        info.Add((double)growthRate);
-        info.Add((double)waterGauge);
+        if (HasCrop())
+        {
+            return (double)growthRate;
+        }
 
-        return info;
+        return 0;
     }
 }

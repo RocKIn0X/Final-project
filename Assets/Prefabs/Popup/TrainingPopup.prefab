@@ -1554,6 +1554,7 @@ GameObject:
   - component: {fileID: 4507854226856142537}
   - component: {fileID: 8594966359707331542}
   - component: {fileID: 1130121169}
+  - component: {fileID: 5380351004952856176}
   m_Layer: 11
   m_Name: TrainingPopup
   m_TagString: Untagged
@@ -1639,6 +1640,18 @@ MonoBehaviour:
   title: {fileID: 7425124128753441174}
   inputPanel: {fileID: 1560222264}
   outputPanel: {fileID: 5265480}
+--- !u!225 &5380351004952856176
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5380351004952856175}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5836923409257641853
 GameObject:
   m_ObjectHideFlags: 0
@@ -2604,19 +2617,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 5380351004952856175}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: ResumeGame
+      - m_Target: {fileID: 1130121169}
+        m_MethodName: ClosePanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2868,11 +2870,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5609244667432232163}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2982,6 +2979,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
@@ -3010,11 +3012,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5879921279332303747}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3124,6 +3121,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
@@ -3152,11 +3154,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5806857669016729643}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3266,6 +3263,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
@@ -3294,11 +3296,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7338920016981278826}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3409,8 +3406,19 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!224 &503580439303337836 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 5673959656422086417}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &503580439303337839 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -3423,12 +3431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!224 &503580439303337836 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-    type: 3}
-  m_PrefabInstance: {fileID: 5673959656422086417}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6585034777595412391
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3436,11 +3438,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3619744363975996557}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3550,6 +3547,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
@@ -3578,11 +3580,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7513688934846889604}
     m_Modifications:
-    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_GaugeObject
-      objectReference: {fileID: 0}
     - target: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3692,6 +3689,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415719309058172, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_GaugeObject
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
