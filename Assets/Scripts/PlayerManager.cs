@@ -48,11 +48,7 @@ public class PlayerManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
-        DataManager.Instance.LoadData();
-        SetInventory();
-        SetMoney();
     }
-
     private void Update()
     {
         if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess(); 
