@@ -113,7 +113,7 @@ public class WorkTile : Tile
         {
             PlayerManager.Instance.AddMoney(crop.CalculateCost());
             //Destroy(this.overlayObj);
-            crop = null;
+            crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
         }
     }
