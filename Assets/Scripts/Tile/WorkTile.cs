@@ -97,7 +97,8 @@ public class WorkTile : Tile
         Debug.Log("Water at Work tile");
 
         waterAmount += m.waterAmount;
-        crop.WaterCrop(waterAmount);
+        if (crop != null)
+            crop.WaterCrop(waterAmount);
     }
 
     private void AddCrop(GameObject _crop_obj)
