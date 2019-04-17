@@ -28,6 +28,8 @@ public class BrainCollection
 
     public int CalculateAction(List<double> states)
     {
+        Debug.Log(states[0]);
+
         return brain.CalculateAction(states);
     }
 
