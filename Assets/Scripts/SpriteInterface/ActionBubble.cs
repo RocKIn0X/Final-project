@@ -52,16 +52,4 @@ public class ActionBubble : MonoBehaviour
         //waitTimeout = WaitAndDisappear(BUBBLE_TIMEOUT_SEC);
         //StartCoroutine(waitTimeout);
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // ShowAction("Watering");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
