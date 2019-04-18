@@ -177,14 +177,22 @@ public class MonsterInteraction : MonoBehaviour
     }
 
     #region statusMethod
-    public void SetStatus(int hungry, int tireness)
+    public void SetStatus(float hungry, float tireness, float emotion)
     {
-        status.SetStatus(hungry, tireness);
+        status.hunger += hungry;
+        status.tireness += tireness;
+        status.emotion += emotion;
     }
     
     public void DecreaseStatusOverSecond ()
     {
-        status.SetStatus(hungerDecay, tirenessDecay);
+        float hunger = Mathf.Clamp(status.hunger + hungerDecay, 0f, 100f);
+        float tireness = Mathf.Clamp(status.tireness + tirenessDecay, 0f, 100f);
+
+        bool decreaseEmotion = (hunger < 50 && tireness < 50);
+        float emotion = decreaseEmotion ? Mathf.Clamp(status.emotion + emotionDecay, 0f, 100f) : Mathf.Clamp(status.emotion - emotionDecay, 0f, 100f);
+
+        status.SetStatus(hunger, tireness, emotion);
         if (ui_gaugeArea != null)
         {
             Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
@@ -224,10 +232,12 @@ public class MonsterInteraction : MonoBehaviour
 
         if (tileTarget.typeTile == TypeTile.FoodTile)
         {
+            tileTarget.ActionResult(0, this);
             DisplayBubble(3);
         }
         else if (tileTarget.typeTile == TypeTile.RestTile)
         {
+            tileTarget.ActionResult(0, this);
             DisplayBubble(4);
         }
         else if (tileTarget.typeTile == TypeTile.WorkTile)

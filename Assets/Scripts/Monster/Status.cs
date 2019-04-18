@@ -20,11 +20,11 @@ public class Status
     {
         if (hunger > 50f && tireness > 50f)
         {
-            return 5f;
+            return 1f;
         }
         else
         {
-            return -5f;
+            return -1f;
         }
     }
 
@@ -46,15 +46,11 @@ public class Status
         emotion = Random.Range(0, 100);
     }
 
-    public void SetStatus(float hg, float tn)
+    public void SetStatus(float hg, float tn, float em)
     {
-        hunger += hg;
-        tireness += tn;
-        emotion += CalculateEmotion();
-
-        hunger = Mathf.Clamp(hunger, 0, maxHungry);
-        tireness = Mathf.Clamp(tireness, 0, maxTireness);
-        emotion = Mathf.Clamp(emotion, 0, maxEmotion);
+        hunger = hg;
+        tireness = tn;
+        emotion = em;
     }
 
     public double GetHungryRatio()
