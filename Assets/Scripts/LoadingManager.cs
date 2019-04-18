@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Playables;
+using Cinemachine;
 using UnityEngine.SceneManagement;
 
 public class LoadingManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class LoadingManager : MonoBehaviour
 
     public bool onLoad = false;
     [SerializeField] Image fogFill_image;
+    [SerializeField] List<PlayableAsset> playableAsset = new List<PlayableAsset>();
     private PlayableDirector fade_PlayableDirector;
     //Animator[] fog_animators;
     private AsyncOperation ao;
@@ -52,15 +54,25 @@ public class LoadingManager : MonoBehaviour
     public IEnumerator LoadSceneCoroutine(string sceneName)
     {
         onLoad = true;
+        fade_PlayableDirector.playableAsset = playableAsset[0];
         fade_PlayableDirector.Play();
-        //foreach (Animator fog_animator in fog_animators) fog_animator.SetTrigger("FadeIn");
-        //ao = SceneManager.LoadSceneAsync(sceneName);
-        //ao.allowSceneActivation = false;
-        //while (ao.progress < 0.9f)
-        //{
-        //    yield return null;
-        //}
-        //ao.allowSceneActivation = true;
+        while(fade_PlayableDirector.time < fade_PlayableDirector.duration)
+        {
+            yield return null;
+        }
+        ao = SceneManager.LoadSceneAsync(sceneName);
+        ao.allowSceneActivation = false;
+        while (ao.progress < 0.9f)
+        {
+            yield return null;
+        }
+        ao.allowSceneActivation = true;
+        while (!ao.isDone)
+        {
+            yield return null;
+        }
+        fade_PlayableDirector.playableAsset = playableAsset[1];
+        fade_PlayableDirector.Play();
         yield return 0;
     }
 }
