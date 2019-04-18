@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UI_BuyPanel : MonoBehaviour
 {
+    [SerializeField]CanvasGroup buyPanel_canvasGroup;
     private int currentQuantity;
     private float currentPrice;
     public Image itemDisplay;
@@ -31,18 +32,15 @@ public class UI_BuyPanel : MonoBehaviour
         itemQuantity.text = plantQuantity.ToString();
         int displayPrice = Mathf.RoundToInt(plantCost * plantQuantity);
         itemPrice.text = "$ " + displayPrice.ToString();
-        this.gameObject.SetActive(true);
+        MarketManager.Instance.buyingQuantity = currentQuantity;
+        MarketManager.Instance.totalCost = displayPrice;
+        SetCanvasGroup(isOn: true);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetCanvasGroup(bool isOn)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        buyPanel_canvasGroup.alpha = isOn ? 1 : 0;
+        buyPanel_canvasGroup.blocksRaycasts = isOn;
+        buyPanel_canvasGroup.interactable = isOn;
     }
 }
