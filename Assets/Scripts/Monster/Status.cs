@@ -7,12 +7,9 @@ public class Status
     private float maxTireness;
     private float maxEmotion;
 
-    [SerializeField]
-    private float hungry;
-    [SerializeField]
-    private float tireness;
-    [SerializeField]
-    private float emotion;
+    public float hunger;
+    public float tireness;
+    public float emotion;
 
     public Status()
     {
@@ -21,7 +18,7 @@ public class Status
 
     private float CalculateEmotion ()
     {
-        if (hungry > 50f && tireness > 50f)
+        if (hunger > 50f && tireness > 50f)
         {
             return 5f;
         }
@@ -37,32 +34,32 @@ public class Status
         maxTireness = 100;
         maxEmotion = 100;
 
-        hungry = maxHungry;
+        hunger = maxHungry;
         tireness = maxTireness;
         emotion = maxEmotion;
     }
 
     public void RandomStatus ()
     {
-        hungry = Random.Range(0, 100);
+        hunger = Random.Range(0, 100);
         tireness = Random.Range(0, 100);
         emotion = Random.Range(0, 100);
     }
 
     public void SetStatus(float hg, float tn)
     {
-        hungry += hg;
+        hunger += hg;
         tireness += tn;
         emotion += CalculateEmotion();
 
-        hungry = Mathf.Clamp(hungry, 0, maxHungry);
+        hunger = Mathf.Clamp(hunger, 0, maxHungry);
         tireness = Mathf.Clamp(tireness, 0, maxTireness);
         emotion = Mathf.Clamp(emotion, 0, maxEmotion);
     }
 
     public double GetHungryRatio()
     {
-        return (double)hungry / maxHungry;
+        return (double)hunger / maxHungry;
     }
 
     public double GetEmotionRatio()
