@@ -17,6 +17,6 @@ public class StartSceneManager : MonoBehaviour
 
     public void TouchButton()
     {
-
+        LoadingManager.Instance.LoadScene("Scenes/GameScene");
     }
 }
