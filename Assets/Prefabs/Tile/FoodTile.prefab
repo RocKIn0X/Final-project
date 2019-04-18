@@ -143,7 +143,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab9bc88046f8e90479d00ce66ed99a19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  typeTile: 0
+  behaviorBook:
+    behaviorDict:
+    - behavior: Eat
+      actionIndex: 0
+      statusAmount:
+        hungerAmount: 40
+        tirenessAmount: 0
+        emotionAmount: 15
 --- !u!1 &1391565788252348
 GameObject:
   m_ObjectHideFlags: 0

@@ -436,7 +436,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030493558, y: 0}
+  m_AnchoredPosition: {x: 0.000007594939, y: 0}
   m_SizeDelta: {x: -69.33479, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8238561113552196763
@@ -525,6 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8238561113739505829}
   - component: {fileID: 8238561113739505828}
+  - component: {fileID: 8302040265586441771}
   m_Layer: 5
   m_Name: UI_GaugeArea
   m_TagString: Untagged
@@ -577,6 +578,21 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
   m_ChildControlHeight: 0
+--- !u!114 &8302040265586441771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8238561113739505830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30e530641fa42904a90c4ed99a02bf8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hungerGauge: {fileID: 8238561112294963085}
+  tirenessGauge: {fileID: 4185489119672155046}
+  emotionGauge: {fileID: 4185489118984201209}
 --- !u!1 &8697480217742897563
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,7 +823,7 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7434782898547233870, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: m_AnchorMin.y
       value: 0
@@ -827,36 +843,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2,
-        type: 3}
     - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: gaugeName
       value: Hunger
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2,
-        type: 3}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &8238561112294963085 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 4185489118657845235}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8238561112294963086 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -987,11 +992,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7434782898547233870, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7434782898547233870, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1007,6 +1007,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1020,30 +1025,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0,
-        type: 3}
     - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: gaugeName
       value: Mood
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &4185489118984201209 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8238561112488788871}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4185489118984201210 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
@@ -1174,11 +1174,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7434782898547233870, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7434782898547233870, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1194,6 +1189,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1207,30 +1207,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415720131113857, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041,
-        type: 3}
     - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
         type: 3}
       propertyPath: gaugeName
       value: Energy
       objectReference: {fileID: 0}
-    - target: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
-        type: 3}
-      propertyPath: needIcon
-      value: 
-      objectReference: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9ec03f772bd7ac4db0fdee303e76c3b, type: 3}
+--- !u!114 &4185489119672155046 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5206415719309058174, guid: e9ec03f772bd7ac4db0fdee303e76c3b,
+    type: 3}
+  m_PrefabInstance: {fileID: 8238561112908307416}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fcaa94826977f8b895454fef562e733, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &4185489119672155045 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5206415719309058173, guid: e9ec03f772bd7ac4db0fdee303e76c3b,

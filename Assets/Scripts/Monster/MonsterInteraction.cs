@@ -13,17 +13,27 @@ public class MonsterInteraction : MonoBehaviour
 
     [SerializeField]
     IsometricMovement target;
+
+    [Header("Status field")]
     [SerializeField]
     private Status status;
+    public float hungerDecay;
+    public float tirenessDecay;
+    public float emotionDecay;
+    private UI_GaugeArea ui_gaugeArea;
+
+    [Header("Delay time on each state")]
     [SerializeField]
     private float waitTimeBeforeAction;
     [SerializeField]
     private float timePerAction;
+
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
     public int actionIndex = 0;
 
+    [Header("Checking each state")]
     public bool isArrived = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
@@ -33,37 +43,37 @@ public class MonsterInteraction : MonoBehaviour
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
-    private void Awake()
+    private void OnEnable()
     {
-        status = new Status();
+        GameManager.SecondEvent += DecreaseStatusOverSecond;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.SecondEvent -= DecreaseStatusOverSecond;
     }
 
     private void Start()
     {
+        status = new Status();
+        ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
+        if (ui_gaugeArea != null)
+        {
+            ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
+        }
+        else
+        {
+            Debug.Log("Please attach UI_GaugeArea in Game Scene");
+        }
+
         Init();
         timer = 0f;
 
-        Debug.Log("Monster Start");
-        //stateMachine = new StateMachine<MonsterInteraction>(this);
-        //stateMachine.ChangeState(new MoveState(this));
         StartCoroutine(WaitInitBrain());
     }
 
     private void Update()
     {
-        /*
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            isOnMoveState = true;
-            MoveToTarget();
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            Debug.Log("Pressed A");
-            tileTarget.EatHere();
-        }
-        */
-
         if (isStateMachineRunning)
             stateMachine.Update();
     }
@@ -166,18 +176,34 @@ public class MonsterInteraction : MonoBehaviour
             ActionManager.instance.SetMemory();
     }
 
-    public void SetStatus (int hungry, int tireness)
+    #region statusMethod
+    public void SetStatus(float hungry, float tireness, float emotion)
     {
-        status.SetStatus(hungry, tireness);
+        status.hunger += hungry;
+        status.tireness += tireness;
+        status.emotion += emotion;
     }
+    
+    public void DecreaseStatusOverSecond ()
+    {
+        float hunger = Mathf.Clamp(status.hunger + hungerDecay, 0f, 100f);
+        float tireness = Mathf.Clamp(status.tireness + tirenessDecay, 0f, 100f);
 
-    // Get index from ml
-    /*
-    private int GetActionIndex ()
-    {
-        return;
+        bool decreaseEmotion = (hunger < 50 && tireness < 50);
+        float emotion = decreaseEmotion ? Mathf.Clamp(status.emotion + emotionDecay, 0f, 100f) : Mathf.Clamp(status.emotion - emotionDecay, 0f, 100f);
+
+        status.SetStatus(hunger, tireness, emotion);
+        if (ui_gaugeArea != null)
+        {
+            Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
+            ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
+        }
+        else
+        {
+            Debug.Log("Please attach UI_GaugeArea in Game Scene");
+        }
     }
-    */
+    #endregion
 
     private void Init()
     {
@@ -206,10 +232,12 @@ public class MonsterInteraction : MonoBehaviour
 
         if (tileTarget.typeTile == TypeTile.FoodTile)
         {
+            tileTarget.ActionResult(0, this);
             DisplayBubble(3);
         }
         else if (tileTarget.typeTile == TypeTile.RestTile)
         {
+            tileTarget.ActionResult(0, this);
             DisplayBubble(4);
         }
         else if (tileTarget.typeTile == TypeTile.WorkTile)

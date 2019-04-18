@@ -319,6 +319,26 @@ MonoBehaviour:
     realCost: 0
   waterAmount: 0
   waterDecay: 0.01
+  behaviorBook:
+    behaviorDict:
+    - behavior: Idle
+      actionIndex: 0
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 0
+        emotionAmount: 10
+    - behavior: Harvest
+      actionIndex: 1
+      statusAmount:
+        hungerAmount: -10
+        tirenessAmount: -10
+        emotionAmount: 0
+    - behavior: Water
+      actionIndex: 2
+      statusAmount:
+        hungerAmount: -10
+        tirenessAmount: -10
+        emotionAmount: 0
 --- !u!1 &8182109090045881816
 GameObject:
   m_ObjectHideFlags: 0
