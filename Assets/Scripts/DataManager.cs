@@ -31,11 +31,12 @@ public class DataManager : MonoBehaviour
 
     const string folderName = "BinaryCharacterData";
     const string fileExtension = ".data";
-    [SerializeField] List<CropAssets> allCropAssets = new List<CropAssets>();
+   [SerializeField] List<CropAssets> allCropAssets = new List<CropAssets>();
     Dictionary<string, CropAssets> cropAssetsNameDic = new Dictionary<string, CropAssets>();
     public PlayerData playerData = new PlayerData();
+    public string[] filePaths;
 
-    void Start()
+    void Awake()
     {
         if (instance == null)
         {
@@ -47,6 +48,7 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         InittialData();
+        LoadData();
     }
 
     void InittialData()
@@ -73,14 +75,14 @@ public class DataManager : MonoBehaviour
 
     public void LoadData()
     {
-        string[] filePaths = GetFilePaths();
+        filePaths = GetFilePaths();
 
-        if (filePaths.Length > 0)
-        {
-            playerData = LoadPlayerData(filePaths[0]);
-            PlayerManager.Instance.playerMoney = playerData.playerMoney;
-            ConvertLoadingData();
-        }
+        //if (filePaths.Length > 0)
+        //{
+        //    playerData = LoadPlayerData(filePaths[0]);
+        //    PlayerManager.Instance.playerMoney = playerData.playerMoney;
+        //    ConvertLoadingData();
+        //}
     }
 
     public PlayerData LoadPlayerData(string path)
