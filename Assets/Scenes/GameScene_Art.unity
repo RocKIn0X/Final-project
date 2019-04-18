@@ -1071,7 +1071,7 @@ PrefabInstance:
     - target: {fileID: 1040473587809656722, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000051788476
+      value: -0.000020347688
       objectReference: {fileID: 0}
     - target: {fileID: 4185489118984201209, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
@@ -5677,71 +5677,6 @@ CanvasGroup:
     type: 3}
   m_PrefabInstance: {fileID: 1348346638}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1350115330
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1350115332}
-  - component: {fileID: 1350115331}
-  m_Layer: 0
-  m_Name: IconLibrary
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1350115331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350115330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25dd9e42e2b59f76e8a15f0462c5c1e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  iconDictionary:
-  - iconKey: Food
-    iconSprite: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2, type: 3}
-  - iconKey: Hunger
-    iconSprite: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2, type: 3}
-  - iconKey: Energy
-    iconSprite: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041, type: 3}
-  - iconKey: Bed
-    iconSprite: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041, type: 3}
-  - iconKey: Mood
-    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
-  - iconKey: Work
-    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
-  - iconKey: Water
-    iconSprite: {fileID: 21300000, guid: 2fbd5e84dfde8149b86c6f64bfdb3b5b, type: 3}
-  - iconKey: Harvest
-    iconSprite: {fileID: 21300000, guid: 5f8cc399d7bd7d64b904dff28d8e316f, type: 3}
-  - iconKey: Sleep
-    iconSprite: {fileID: 21300000, guid: 5f8bbb18945198c4c8a39a18fe7d0345, type: 3}
-  - iconKey: Idle
-    iconSprite: {fileID: 21300000, guid: 017f8845fb16a6d4e8eadf111fecea30, type: 3}
-  fallbackIcon: {fileID: 21300024, guid: 2ba30a74b12cdbd4bbc6ddffac7707c2, type: 3}
---- !u!4 &1350115332
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1350115330}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.187628, y: 10.579999, z: -6.1376276}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1352275096
 GameObject:
   m_ObjectHideFlags: 0
@@ -9385,6 +9320,75 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5010129654726833501}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5539022241181403296
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5539022242528241826, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_Name
+      value: IconLibrary
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.187628
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 10.579999
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.1376276
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5539022242528241828, guid: 4ac894553b68213dab5af8fd465cc75a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4ac894553b68213dab5af8fd465cc75a, type: 3}
 --- !u!114 &5768187899852418116 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5768187898297589609, guid: 920fe2f53690a1d908f4b93fbe112ebf,
