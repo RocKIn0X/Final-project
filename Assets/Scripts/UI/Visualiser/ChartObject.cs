@@ -6,89 +6,140 @@ using TMPro;
 
 public class ChartObject : MonoBehaviour
 {
-    public GameObject chartRoot;
+    public GameObject chartPositiveRegion;
+    public GameObject chartNegativeRegion;
+
+    public float BAR_WIDTH = 40f;
+
+    private GameManager gameManager;
     public TextMeshProUGUI scoreText;
     public ChartBar chartBarPrefab;
 
     private Dictionary<int, float> chartData = new Dictionary<int, float>();
 
     public float chartMaxHeight;
-    private float dataMaxValue;
 
-    public float visualMaxProfit = 0;
-    public float visualMaxDeficit = 0;
-    public float latestProfit = 0;
+    private float dataMaxValue;
+    private float visualMaxValue;
+    private float visualMinValue;
+    private int dataLastKey = 1;
 
     public Color barColorPositive;
     public Color barColorNegative;
 
-    public ChartBar AddChartBar (float value)
+    public int dataset = 0;
+
+    public void AddChartBar ()
     {
-        ChartBar bar = (ChartBar)Instantiate(chartBarPrefab, chartRoot.transform);
-        bar.barValue = value;
-        return bar;
+        ChartBar bar = (ChartBar)Instantiate(chartBarPrefab, chartPositiveRegion.transform);
+        bar.GetComponent<RectTransform>().sizeDelta = new Vector2 (BAR_WIDTH, 0f);
+        bar.GetComponent<Image>().color = barColorPositive;
+        bar = (ChartBar)Instantiate(chartBarPrefab, chartNegativeRegion.transform);
+        bar.GetComponent<RectTransform>().sizeDelta = new Vector2 (BAR_WIDTH, 0f);
+        bar.GetComponent<Image>().color = barColorNegative;
+
     }
 
     public void UpdateText()
     {
-        scoreText.text = "This Month Profit:\t" + latestProfit +
-            "\nHighest Profit:\t" + visualMaxProfit +
-            "\nHighest Deficit:\t" + visualMaxDeficit;
+        float finalValue = 0f;
+        if (gameManager == null)
+            gameManager = (GameManager)FindObjectOfType(typeof(GameManager));
+        if (chartData.ContainsKey(gameManager.weekCount))
+            finalValue = chartData[gameManager.weekCount];
+        switch(dataset)
+        {
+            case 0:
+                scoreText.text = "This Month Profit:\t" + finalValue +
+                    "\nHighest Profit:\t" + visualMaxValue +
+                    "\nHighest Deficit:\t" + visualMinValue;
+                break;
+            default :
+                break;
+        }
     }
 
-    public void AddValue(int key, float value)
+    public void ScanMaxMin()
     {
-        latestProfit = value;
-        chartData[key] = value;
-        if (value > visualMaxProfit)
+        dataMaxValue = 0;
+        dataLastKey = 1;
+        foreach (KeyValuePair <int, float> entry in chartData)
         {
-            visualMaxProfit = value;
+            if (entry.Key > dataLastKey)
+                dataLastKey = entry.Key;
+            if (Mathf.Abs(entry.Value) > dataMaxValue)
+                dataMaxValue = Mathf.Abs(entry.Value);
+            if (entry.Value > visualMaxValue)
+                visualMaxValue = entry.Value;
+            if (entry.Value < visualMinValue)
+                visualMinValue = entry.Value;
         }
-        if (value < visualMaxDeficit)
+    }
+
+    public void AdjustValue(int key, float value)
+    {
+        if (! chartData.ContainsKey(key))
         {
-            visualMaxDeficit = value;
+            chartData[key] = value;
+            AddChartBar();
         }
-        if (Mathf.Abs(value) > dataMaxValue)
-            dataMaxValue = Mathf.Abs(value);
-        AddChartBar(value);
-        UpdateChart();
+        else
+        {
+            chartData[key] = chartData[key] + value;
+        }
+        ScanMaxMin();
+        DrawChart();
         UpdateText();
     }
 
-    public void UpdateChart()
+    public void DisplayChart()
     {
-        foreach (Transform child in chartRoot.transform)
+        DrawChart();
+        UpdateText();
+    }
+
+    // Two-sided chart
+    public void DrawChart()
+    {
+        for (int index = 1 ; index <= dataLastKey ; index = index + 1)
         {
-            ChartBar currentBar = child.gameObject.GetComponent<ChartBar>();
-            if (currentBar != null)
+            if (chartPositiveRegion.transform.childCount < index)
+                AddChartBar();
+            if (chartData.ContainsKey(index) == true)
             {
-                float calculatedHeight = chartMaxHeight * (Mathf.Abs(currentBar.barValue) / dataMaxValue);
-                currentBar.SetHeight(calculatedHeight);
-                if (currentBar.barValue < 0)
+                Transform targetBar;
+                float value = chartData[index];
+                if (value >= 0)
                 {
-                    currentBar.SetColor(barColorNegative);
-                    currentBar.SetPositive(false);
+                    targetBar = chartPositiveRegion.transform.GetChild(index - 1);
+                    chartNegativeRegion.transform.GetChild(index - 1).GetComponent<RectTransform>().sizeDelta =
+                        new Vector2 (BAR_WIDTH, 0f);
                 }
                 else
                 {
-                    currentBar.SetColor(barColorPositive);
-                    currentBar.SetPositive(true);
+                    chartPositiveRegion.transform.GetChild(index - 1).GetComponent<RectTransform>().sizeDelta =
+                        new Vector2 (BAR_WIDTH, 0f);
+                    targetBar = chartNegativeRegion.transform.GetChild(index - 1);
                 }
+                targetBar.gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2 (BAR_WIDTH,
+                                                                                            chartMaxHeight * Mathf.Abs(value / dataMaxValue)
+                                                                                            );
             }
         }
     }
 
     private void TestVisualise()
     {
-        int MAX_TEST = 100;
-        for (int index = 0 ; index < MAX_TEST ; index = index + 1)
+        int MAX_TEST = 10;
+        for (int index = 1 ; index <= MAX_TEST ; index = index + 1)
         {
-            AddValue(index, Random.Range(-256f, 512f));
+            AdjustValue(index, Random.Range(-256f, 512f));
         }
     }
 
     void Start()
     {
-        TestVisualise();
+        AdjustValue(1, 0);
+        //TestVisualise();
     }
 }

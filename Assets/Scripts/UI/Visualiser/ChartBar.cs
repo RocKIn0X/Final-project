@@ -8,6 +8,7 @@ public class ChartBar : MonoBehaviour
     private RectTransform barRect;
     private Image barImage;
 
+    public int barKey = 0;
     public float barValue = 0f;
 
     public void SetHeight(float height)
