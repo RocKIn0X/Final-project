@@ -5,7 +5,20 @@ using UnityEngine.UI;
 
 public class UI_GaugeObject : MonoBehaviour
 {
-    public Sprite needIcon;
+    private static bool DEBUG_MODE = false ;
+    private static string DEBUG_NAME = "GaugeObject" ;
+
+    private static void _Log(string text)
+    {
+        if (DEBUG_MODE == true)
+        {
+            Debug.Log("[" + DEBUG_NAME + "] " + text) ;
+        }
+    }
+
+    //public Sprite needIcon;
+    private Sprite needIcon;
+    public string gaugeName;
     public Image needImage;
 
     public Color ColorNeedLevelHigh ;
@@ -18,8 +31,9 @@ public class UI_GaugeObject : MonoBehaviour
     public GameObject gaugeBar;
     public float gaugeMax = 240.0f;
 
-    private float gaugePercent = 100f;
+    public float gaugePercent = 100f;
 
+    public bool isTesting = false;
 
     private bool testIncrease = false;
     private void TestGaugeDisplay()
@@ -34,37 +48,59 @@ public class UI_GaugeObject : MonoBehaviour
             testIncrease = false;
     }
 
+    private IconLibrary iconLib;
+
+    public void SetGaugeIcon(string key)
+    {
+        if (iconLib == null)
+        {
+            iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
+        }
+        gaugeName = key;
+        needIcon = iconLib.GetIcon(gaugeName);
+        RefreshGauge();
+    }
+
+    public void RefreshGauge()
+    {
+        needImage.sprite = needIcon;
+    }
+
     public void SetGaugePercent(float percent)
     {
+        // ** --- Update GaugePercent Value ----- ** //
+        gaugePercent = percent;
+        _Log("Set " + gaugeName + " to " + gaugePercent);
         // ** ----- Resize Gauge ----- ** //
         RectTransform gaugeValue = gaugeBar.GetComponent<RectTransform>();
-        gaugeValue.sizeDelta = new Vector2 (percent * gaugeMax / 100f,
+        gaugeValue.sizeDelta = new Vector2 (gaugePercent * gaugeMax / 100f,
                                             gaugeValue.sizeDelta.y);
         Image gaugeImage = gaugeBar.GetComponent<Image>();
         // ** ----- Set Gauge Colour ----- ** //
-        if (percent >= NeedHighMargin)
+        if (gaugePercent >= NeedHighMargin)
             gaugeImage.color = ColorNeedLevelHigh ;
-        else if (percent >= NeedMedMargin)
+        else if (gaugePercent >= NeedMedMargin)
             gaugeImage.color = ColorNeedLevelMed ;
         else
             gaugeImage.color = ColorNeedLevelLow ;
-        // ** --- Update GaugePercent Value ----- ** //
-        gaugePercent = percent;
     }
 
-        public float GetGaugePercent()
-        {
-            return gaugePercent ;
-        }
+    public float GetGaugePercent()
+    {
+        return gaugePercent ;
+    }
 
-        void Start()
+    void Start()
+    {
+        if (gaugeName != null)
         {
-            needImage.sprite = needIcon;
-            SetGaugePercent(100);
+            SetGaugeIcon(gaugeName);
         }
+    }
 
-        void Update()
-        {
+    void Update()
+    {
+        if (isTesting == true)
             TestGaugeDisplay();
-        }
+    }
 }

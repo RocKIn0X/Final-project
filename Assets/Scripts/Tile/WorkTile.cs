@@ -11,6 +11,8 @@ public class WorkTile : Tile
     public float waterAmount;
     public float waterDecay;
 
+    public StatusAdjustValue behaviorBook;
+
     private void OnEnable()
     {
         GameManager.SecondEvent += CropGrowth;
@@ -21,6 +23,16 @@ public class WorkTile : Tile
     {
         GameManager.SecondEvent -= CropGrowth;
         GameManager.SecondEvent -= DryWaterInTile;
+    }
+
+    private void Start()
+    {
+        InitBehaviorBook();
+    }
+
+    private void InitBehaviorBook()
+    {
+        behaviorBook.InitBook();
     }
 
     public override Vector3 pos
@@ -72,6 +84,11 @@ public class WorkTile : Tile
             // Water
             WaterHere(m);
         }
+
+        float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;
+        float tirenessAmount = behaviorBook.behaviorDictionary[index].tirenessAmount;
+        float emotionAmount = behaviorBook.behaviorDictionary[index].emotionAmount;
+        m.SetStatus(hungerAmount, tirenessAmount, emotionAmount);
     }
 
     public override void EatHere(MonsterInteraction m)
@@ -126,9 +143,10 @@ public class WorkTile : Tile
 
     private List<double> GetInfo()
     {
+        Debug.Log("Get info");
         List<double> info = new List<double>();
 
-        if (crop != null)
+        if (crop.HasCrop())
         {
             info.Add(crop.GetGrowthRate());
             info.Add(waterAmount);

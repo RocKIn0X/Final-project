@@ -21,6 +21,7 @@ public class ActionBubble : MonoBehaviour
     SpriteRenderer actionRenderer;
     SpriteRenderer bubbleRenderer;
     private IEnumerator waitTimeout;
+    private IconLibrary iconLib;
 
     public IEnumerator WaitAndDisappear(float timeout)
     {
@@ -38,26 +39,17 @@ public class ActionBubble : MonoBehaviour
 
     public void ShowAction(int actionIndex)
     {
-        _Log("Showing action: " + ActionDict.GetActionName(actionIndex));
+        string key = ActionDict.GetActionName(actionIndex);
+        _Log("Showing action: " + key);
 
         bubbleRenderer = this.GetComponent<SpriteRenderer>();
         bubbleRenderer.color = Color.white;
         actionRenderer = actionSprite.GetComponent<SpriteRenderer>();
         actionRenderer.color = Color.white;
-        actionRenderer.sprite = ActionDict.GetActionSprite(actionIndex);
+        if (iconLib == null)
+            iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
+        actionRenderer.sprite = iconLib.GetIcon(key);
         //waitTimeout = WaitAndDisappear(BUBBLE_TIMEOUT_SEC);
         //StartCoroutine(waitTimeout);
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        // ShowAction("Watering");
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 }

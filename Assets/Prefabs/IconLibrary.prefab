@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5539022242528241826
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5539022242528241828}
+  - component: {fileID: 5539022242528241827}
+  m_Layer: 0
+  m_Name: IconLibrary
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5539022242528241828
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539022242528241826}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6.187628, y: 10.579999, z: -6.1376276}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5539022242528241827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5539022242528241826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25dd9e42e2b59f76e8a15f0462c5c1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconDictionary:
+  - iconKey: Food
+    iconSprite: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2, type: 3}
+  - iconKey: Hunger
+    iconSprite: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2, type: 3}
+  - iconKey: Energy
+    iconSprite: {fileID: 21300000, guid: f53e51606e590f57c82167285e0a7169, type: 3}
+  - iconKey: Bed
+    iconSprite: {fileID: 21300000, guid: 94fe11a0db2055b3980464b86f883b31, type: 3}
+  - iconKey: Mood
+    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
+  - iconKey: Work
+    iconSprite: {fileID: 21300000, guid: 55b85cc6b983252eca890b370f75ac64, type: 3}
+  - iconKey: Water
+    iconSprite: {fileID: 21300000, guid: faf1912d345a8ea98955120201a3a793, type: 3}
+  - iconKey: Harvest
+    iconSprite: {fileID: 21300000, guid: 55b85cc6b983252eca890b370f75ac64, type: 3}
+  - iconKey: Sleep
+    iconSprite: {fileID: 21300000, guid: 94fe11a0db2055b3980464b86f883b31, type: 3}
+  - iconKey: Idle
+    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
+  - iconKey: Growth
+    iconSprite: {fileID: 21300000, guid: 7781b466c711a2b90a72b124c7371a44, type: 3}
+  - iconKey: Eat
+    iconSprite: {fileID: 21300000, guid: dde78341f21ec76d8b6269103aca80dd, type: 3}
+  fallbackIcon: {fileID: 21300024, guid: 2ba30a74b12cdbd4bbc6ddffac7707c2, type: 3}
