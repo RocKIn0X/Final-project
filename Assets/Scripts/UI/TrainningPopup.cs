@@ -6,6 +6,17 @@ using UnityEngine.UI;
 
 public class TrainningPopup : MonoBehaviour
 {
+    private static bool DEBUG_MODE = true ;
+    private static string DEBUG_NAME = "TrainPopup" ;
+
+    private static void _Log(string text)
+    {
+        if (DEBUG_MODE == true)
+        {
+            Debug.Log("[" + DEBUG_NAME + "] " + text) ;
+        }
+    }
+
     public TextMeshProUGUI title;
 
     public GameObject inputPanel;
@@ -15,24 +26,28 @@ public class TrainningPopup : MonoBehaviour
 
     public struct GaugeAbstract
     {
-        public Sprite gaugeIcon;
+        public string gaugeName;
         public float gaugePercent;
 
-        public GaugeAbstract(Sprite icon, float percent)
+        public GaugeAbstract (string name, float percent=0f)
         {
-            gaugeIcon = icon;
+            gaugeName = name;
             gaugePercent = percent;
+        }
+        public GaugeAbstract (string name, double percent=0)
+        {
+            gaugeName = name;
+            gaugePercent = (float)percent;
         }
     };
 
-    [System.Serializable]
-    public struct FakeIconDict
+    private void SetGaugeData (UI_GaugeObject gaugeObj, GaugeAbstract gaugeAbs)
     {
-        public string iconKey;
-        public Sprite iconSprite;
-    };
-    public List<FakeIconDict> iconDictionary;
-    public Dictionary<string, Sprite> iconDict = new Dictionary<string, Sprite>();
+        _Log("Set " + gaugeAbs.gaugeName + " gauge to " + gaugeAbs.gaugePercent);
+        gaugeObj.SetGaugeIcon(gaugeAbs.gaugeName);
+        gaugeObj.SetGaugePercent(gaugeAbs.gaugePercent);
+        gaugeObj.gameObject.SetActive(true);
+    }
 
     public void SetLayout (List<GaugeAbstract> inputGauges,
                            List<GaugeAbstract> outputGauges,
@@ -47,10 +62,7 @@ public class TrainningPopup : MonoBehaviour
             {
                 if (index < inputGauges.Count)
                 {
-                    childGauge.needIcon = inputGauges[index].gaugeIcon;
-                    childGauge.SetGaugePercent(inputGauges[index].gaugePercent);
-                    childGauge.RefreshGauge();
-                    childGauge.gameObject.SetActive(true);
+                    SetGaugeData(childGauge, inputGauges[index]);
                 }
                 else
                 {
@@ -68,10 +80,7 @@ public class TrainningPopup : MonoBehaviour
             {
                 if (index < outputGauges.Count)
                 {
-                    childGauge.needIcon = outputGauges[index].gaugeIcon;
-                    childGauge.SetGaugePercent(outputGauges[index].gaugePercent);
-                    childGauge.RefreshGauge();
-                    childGauge.gameObject.SetActive(true);
+                    SetGaugeData(childGauge, outputGauges[index]);
                 }
                 else
                 {
@@ -84,18 +93,7 @@ public class TrainningPopup : MonoBehaviour
 
     private GaugeAbstract CreatePair (string iconName, float value)
     {
-        Sprite targetIcon = null;
-        try
-        {
-            targetIcon = iconDict[iconName];
-        }
-        catch
-        {
-            Debug.Log("Key not found in iconDict: " + iconName);
-        }
-        if (targetIcon == null)
-            return new GaugeAbstract(blankSprite, value);
-        return new GaugeAbstract(targetIcon, value);
+        return new GaugeAbstract(iconName, value);
     }
 
     public void ActivatePopup (int actionIndex, List<double> states, List<double> qs)
@@ -108,55 +106,30 @@ public class TrainningPopup : MonoBehaviour
             inputGaugeData.Add(CreatePair("Mood", ((float)states[2] + 0.5f)*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Food", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Bed", ((float)qs[1])*100f));
+            outputGaugeData.Add(CreatePair("Eat", ((float)qs[0])*100f));
+            outputGaugeData.Add(CreatePair("Sleep", ((float)qs[1])*100f));
             outputGaugeData.Add(CreatePair("Work", ((float)qs[2])*100f));
 
             SetLayout(inputGaugeData, outputGaugeData);
         }
         else if (actionIndex == 1) // *** Action
         {
+            //_Log(qs.Count.ToString());
             List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
             inputGaugeData.Add(CreatePair("Water", ((float)states[0])*100f));
             inputGaugeData.Add(CreatePair("Growth", ((float)states[1])*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Water", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Harvest", ((float)qs[1])*100f));
-            outputGaugeData.Add(CreatePair("Idle", ((float)qs[2])*100f));
+            //outputGaugeData.Add(CreatePair("Water", ((float)qs[0])*100f));
+            //outputGaugeData.Add(CreatePair("Harvest", ((float)qs[1])*100f));
+            //outputGaugeData.Add(CreatePair("Idle", ((float)qs[2])*100f));
 
             SetLayout(inputGaugeData, outputGaugeData);
         }
-        ////////////////////////////////////////////////////////////////////
-        // title.text = actionIndex == 0 ? "Move state" : "Action state"; //
-        //                                                                //
-        // List<double> preValueStates = new List<double>();              //
-        // List<double> preValueQS = new List<double>();                  //
-        //                                                                //
-        // foreach (double v in states)                                   //
-        // {                                                              //
-        //     if (actionIndex == 0)                                      //
-        //         preValueStates.Add((v + 0.5f) * 100);                  //
-        //     else                                                       //
-        //         preValueStates.Add(v * 100);                           //
-        // }                                                              //
-        //                                                                //
-        // foreach (double v in qs)                                       //
-        //     preValueQS.Add(v * 100);                                   //
-        ////////////////////////////////////////////////////////////////////
-
-
-
-        //inputPanel.SetAllGauges(actionIndex, preValueStates);
-        //outputPanel.SetAllGauges(actionIndex, preValueQS);
     }
 
     void Start()
     {
-        foreach (FakeIconDict entry in iconDictionary)
-        {
-            iconDict[entry.iconKey] = entry.iconSprite;
-        }
     }
 
     public void ActivateNoTrainPopup()
