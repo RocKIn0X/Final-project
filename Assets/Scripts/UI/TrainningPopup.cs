@@ -116,8 +116,8 @@ public class TrainningPopup : MonoBehaviour
         {
             //_Log(qs.Count.ToString());
             List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
-            inputGaugeData.Add(CreatePair("Water", ((float)states[0])*100f));
-            inputGaugeData.Add(CreatePair("Growth", ((float)states[1])*100f));
+            inputGaugeData.Add(CreatePair("Growth", ((float)states[0])*100f));
+            inputGaugeData.Add(CreatePair("Water", ((float)states[1])*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
             outputGaugeData.Add(CreatePair("Idle", ((float)qs[0])*100f));

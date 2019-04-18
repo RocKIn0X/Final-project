@@ -4,6 +4,18 @@ using UnityEngine;
 
 public class RestTile : Tile
 {
+    public StatusAdjustValue behaviorBook;
+
+    private void Start()
+    {
+        InitBehaviorBook();
+    }
+
+    private void InitBehaviorBook()
+    {
+        behaviorBook.InitBook();
+    }
+
     public override Vector3 pos
     {
         get
@@ -38,7 +50,15 @@ public class RestTile : Tile
 
     public override void ActionResult(int index, MonsterInteraction m)
     {
-        throw new System.NotImplementedException();
+        if (index == 0)
+        {
+            SleepHere(m);
+        }
+
+        float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;
+        float tirenessAmount = behaviorBook.behaviorDictionary[index].tirenessAmount;
+        float emotionAmount = behaviorBook.behaviorDictionary[index].emotionAmount;
+        m.SetStatus(hungerAmount, tirenessAmount, emotionAmount);
     }
 
     public override void EatHere(MonsterInteraction m)
