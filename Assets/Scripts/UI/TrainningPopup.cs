@@ -106,8 +106,8 @@ public class TrainningPopup : MonoBehaviour
             inputGaugeData.Add(CreatePair("Mood", ((float)states[2] + 0.5f)*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Food", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Bed", ((float)qs[1])*100f));
+            outputGaugeData.Add(CreatePair("Eat", ((float)qs[0])*100f));
+            outputGaugeData.Add(CreatePair("Sleep", ((float)qs[1])*100f));
             outputGaugeData.Add(CreatePair("Work", ((float)qs[2])*100f));
 
             SetLayout(inputGaugeData, outputGaugeData);

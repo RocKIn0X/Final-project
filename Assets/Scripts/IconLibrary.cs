@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class IconLibrary : MonoBehaviour
 {
+    private bool isInitialised = false;
+
     private static bool DEBUG_MODE = true ;
     private static string DEBUG_NAME = "IconLibrary" ;
 
@@ -28,6 +30,10 @@ public class IconLibrary : MonoBehaviour
 
     public Sprite GetIcon(string key)
     {
+        if (isInitialised == false)
+        {
+            InitLibrary();
+        }
         if (key == null || key == "")
         {
             _Log("Got empty key");
@@ -48,11 +54,17 @@ public class IconLibrary : MonoBehaviour
             return fallbackIcon;
     }
 
-    void Start()
+    void InitLibrary()
     {
         foreach (FakeIconDict entry in iconDictionary)
         {
             iconDict[entry.iconKey] = entry.iconSprite;
         }
+        isInitialised = true;
+    }
+
+    void Start()
+    {
+        InitLibrary();
     }
 }
