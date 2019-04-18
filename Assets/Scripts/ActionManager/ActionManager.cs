@@ -51,6 +51,7 @@ public class ActionManager : MonoBehaviour
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
 
     #region Reward
+    [Header("Reward")]
     public float idleReward;
     public float praiseReward;
     public float punishReward;
@@ -75,6 +76,7 @@ public class ActionManager : MonoBehaviour
     private List<double> states = new List<double>();
     private CanvasGroup trainingPopupCanvas;
 
+    [Header("Popup prefab")]
     public GameObject trainingPopup;
 
     // Start is called before the first frame update
@@ -177,14 +179,20 @@ public class ActionManager : MonoBehaviour
             // status
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
         }
-        else
+        else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile)
         {
+            Debug.Log("Action index: " + ", type tile: " + TypeTile.WorkTile);
+
             // crop info
             List<double> cropInfo = new List<double>();
             cropInfo.Add(0);
             cropInfo.Add(0);
-            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
-            //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+            //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
+            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+        }
+        else
+        {
+            trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
         }
     }
 

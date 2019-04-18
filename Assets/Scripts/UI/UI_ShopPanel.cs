@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class UI_ShopPanel : MonoBehaviour
 {
-    public UI_BuyPanel buyPanel;
+    [SerializeField] List<UI_ShopShowcase> showcase_List = new List<UI_ShopShowcase>();
 
-    public void BuyingPlant(Sprite plantIcon, float plantCost)
+    private void Start()
     {
-        buyPanel.DisplayItem(plantIcon, plantCost);
-        Debug.Log("Showing plant");
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
+        foreach (UI_ShopShowcase showcase in showcase_List) showcase.UpdateDisplay();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class GameManager : MonoBehaviour
@@ -37,11 +38,23 @@ public class GameManager : MonoBehaviour
     private float secondInAWeek = 10f;
 
     public int weekCount = 0;
-    [SerializeField] private TextMeshProUGUI weekCountText;
+    [SerializeField] TextMeshProUGUI weekCountText;
+    [SerializeField] RectTransform dotCountRect;
+    private int dotCount = 0;
     private float timeCounter = 0f;
     private float timeToStartGame = 1f;
 
     public static bool isGameRunning;
+
+    private void OnEnable()
+    {
+        SecondEvent += UpdateDotCount;
+    }
+
+    private void OnDisable()
+    {
+        SecondEvent -= UpdateDotCount;
+    }
 
     void Awake()
     {
@@ -64,17 +77,27 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        timeCounter += Time.deltaTime;
-        if ((timeCounter / secondInAWeek) > weekCount)
+        if (isGameRunning)
         {
-            UpdateWeekCount();
+            timeCounter += Time.deltaTime;
+            if ((timeCounter / secondInAWeek) > weekCount)
+            {
+                UpdateWeekCount();
+            }
         }
     }
 
-    private void UpdateWeekCount ()
+    private void UpdateWeekCount()
     {
         weekCount++;
-        weekCountText.text = "WEEK " + weekCount.ToString();
+        weekCountText.text = weekCount.ToString();
+    }
+
+    private void UpdateDotCount()
+    {
+        dotCount++;
+        float posY = 80 - ((dotCount % 10) * 10) >= -10 ? 80 - ((dotCount % 10) * 10) : 80;
+        dotCountRect.anchoredPosition = new Vector3(0, posY, 0);
     }
 
     private void CallSecondEvent ()
