@@ -126,9 +126,10 @@ public class WorkTile : Tile
 
     private List<double> GetInfo()
     {
+        Debug.Log("Get info");
         List<double> info = new List<double>();
 
-        if (crop != null)
+        if (crop.HasCrop())
         {
             info.Add(crop.GetGrowthRate());
             info.Add(waterAmount);
