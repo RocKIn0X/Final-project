@@ -49,21 +49,23 @@ MonoBehaviour:
   - iconKey: Hunger
     iconSprite: {fileID: 21300000, guid: 020ea0accee2d352cbb15f018efe6ef2, type: 3}
   - iconKey: Energy
-    iconSprite: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041, type: 3}
+    iconSprite: {fileID: 21300000, guid: f53e51606e590f57c82167285e0a7169, type: 3}
   - iconKey: Bed
-    iconSprite: {fileID: 21300000, guid: 8a848409f7f35331d93749c02baf1041, type: 3}
+    iconSprite: {fileID: 21300000, guid: 94fe11a0db2055b3980464b86f883b31, type: 3}
   - iconKey: Mood
     iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
   - iconKey: Work
-    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
+    iconSprite: {fileID: 21300000, guid: 55b85cc6b983252eca890b370f75ac64, type: 3}
   - iconKey: Water
-    iconSprite: {fileID: 21300000, guid: 2fbd5e84dfde8149b86c6f64bfdb3b5b, type: 3}
+    iconSprite: {fileID: 21300000, guid: faf1912d345a8ea98955120201a3a793, type: 3}
   - iconKey: Harvest
-    iconSprite: {fileID: 21300000, guid: 5f8cc399d7bd7d64b904dff28d8e316f, type: 3}
+    iconSprite: {fileID: 21300000, guid: 55b85cc6b983252eca890b370f75ac64, type: 3}
   - iconKey: Sleep
-    iconSprite: {fileID: 21300000, guid: 5f8bbb18945198c4c8a39a18fe7d0345, type: 3}
+    iconSprite: {fileID: 21300000, guid: 94fe11a0db2055b3980464b86f883b31, type: 3}
   - iconKey: Idle
-    iconSprite: {fileID: 21300000, guid: 017f8845fb16a6d4e8eadf111fecea30, type: 3}
+    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
   - iconKey: Growth
-    iconSprite: {fileID: 21300000, guid: 017f8845fb16a6d4e8eadf111fecea30, type: 3}
+    iconSprite: {fileID: 21300000, guid: 7781b466c711a2b90a72b124c7371a44, type: 3}
+  - iconKey: Eat
+    iconSprite: {fileID: 21300000, guid: dde78341f21ec76d8b6269103aca80dd, type: 3}
   fallbackIcon: {fileID: 21300024, guid: 2ba30a74b12cdbd4bbc6ddffac7707c2, type: 3}

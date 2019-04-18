@@ -8,21 +8,23 @@ public class ActionDict : MonoBehaviour
     public struct ActionDictionary {
         public string actionKey;
         public int actionIndex;
-        public Sprite actionTarget;
+        //public Sprite actionTarget;
     } ;
 
     public List<ActionDictionary> ActionBook = new List <ActionDictionary> ();
 
     //private static Dictionary<string, Sprite> ActualDict = new Dictionary <string, Sprite> ();
-    private static Dictionary<int, Sprite> ActualDict = new Dictionary<int, Sprite>();
+    //private static Dictionary<int, Sprite> ActualDict = new Dictionary<int, Sprite>();
     private static Dictionary<int, string> NameDict = new Dictionary<int, string>();
+
+    private static IconLibrary iconLib;
 
     void PopulateDict()
     {
         foreach (ActionDictionary value in ActionBook) {
-            if (value.actionTarget != null) {
+            if (value.actionKey != null && value.actionIndex != null) {
                 //ActualDict.Add(value.actionKey, value.actionTarget);
-                ActualDict.Add(value.actionIndex, value.actionTarget);
+                //ActualDict.Add(value.actionIndex, value.actionTarget);
                 NameDict.Add(value.actionIndex, value.actionKey);
             }
         }
@@ -35,10 +37,18 @@ public class ActionDict : MonoBehaviour
     }
     */
 
-    public static Sprite GetActionSprite(int index)
-    {
-        return ActionDict.ActualDict[index];
-    }
+    ///////////////////////////////////////////////////////////////////////////
+    // public static Sprite GetActionSprite(int index)                       //
+    // {                                                                     //
+    //     if (iconLib == null)                                              //
+    //     {                                                                 //
+    //         iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary)); //
+    //     }                                                                 //
+    //     string key = GetActionName(index);                                //
+    //     return iconLib.GetIcon(key);                                      //
+    //     //return ActionDict.ActualDict[index];                            //
+    // }                                                                     //
+    ///////////////////////////////////////////////////////////////////////////
 
     public static string GetActionName(int index)
     {
