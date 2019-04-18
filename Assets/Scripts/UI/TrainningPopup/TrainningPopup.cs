@@ -159,6 +159,16 @@ public class TrainningPopup : MonoBehaviour
         }
     }
 
+    public void ActivateNoTrainPopup()
+    {
+        title.text = "Can't train this action!";
+        List<double> noStates = new List<double>();
+        List<double> noQS = new List<double>();
+
+        inputPanel.SetAllGauges(0, noStates);
+        outputPanel.SetAllGauges(0, noQS);
+    }
+
     public void ClickPraise ()
     {
         ActionManager.instance.praise();
