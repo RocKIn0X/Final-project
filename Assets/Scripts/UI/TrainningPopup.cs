@@ -106,9 +106,9 @@ public class TrainningPopup : MonoBehaviour
             inputGaugeData.Add(CreatePair("Mood", ((float)states[2] + 0.5f)*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Eat", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Sleep", ((float)qs[1])*100f));
-            outputGaugeData.Add(CreatePair("Work", ((float)qs[2])*100f));
+            outputGaugeData.Add(CreatePair("Work", ((float)qs[0])*100f));
+            outputGaugeData.Add(CreatePair("Eat", ((float)qs[1])*100f));
+            outputGaugeData.Add(CreatePair("Sleep", ((float)qs[2])*100f));
 
             SetLayout(inputGaugeData, outputGaugeData);
         }
@@ -120,9 +120,9 @@ public class TrainningPopup : MonoBehaviour
             inputGaugeData.Add(CreatePair("Growth", ((float)states[1])*100f));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            //outputGaugeData.Add(CreatePair("Water", ((float)qs[0])*100f));
-            //outputGaugeData.Add(CreatePair("Harvest", ((float)qs[1])*100f));
-            //outputGaugeData.Add(CreatePair("Idle", ((float)qs[2])*100f));
+            outputGaugeData.Add(CreatePair("Idle", ((float)qs[0])*100f));
+            outputGaugeData.Add(CreatePair("Harvest", ((float)qs[1])*100f));
+            outputGaugeData.Add(CreatePair("Water", ((float)qs[2])*100f));
 
             SetLayout(inputGaugeData, outputGaugeData);
         }
@@ -134,12 +134,10 @@ public class TrainningPopup : MonoBehaviour
 
     public void ActivateNoTrainPopup()
     {
-        title.text = "Can't train this action!";
-        List<double> noStates = new List<double>();
-        List<double> noQS = new List<double>();
+        List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
 
-        inputPanel.SetAllGauges(0, noStates);
-        outputPanel.SetAllGauges(0, noQS);
+        List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
+        SetLayout(inputGaugeData, outputGaugeData);
     }
 
     public void ClickPraise ()
