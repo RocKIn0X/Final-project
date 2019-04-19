@@ -24,6 +24,9 @@ public class TrainningPopup : MonoBehaviour
 
     public Sprite blankSprite;
 
+    // Stats
+    private StatCollector statCollector;
+
     public struct GaugeAbstract
     {
         public string gaugeName;
@@ -142,11 +145,19 @@ public class TrainningPopup : MonoBehaviour
 
     public void ClickPraise ()
     {
+        if (statCollector == null)
+            statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
+        statCollector.TrainReward();
+
         ActionManager.instance.praise();
     }
 
     public void ClickPunish ()
     {
+        if (statCollector == null)
+            statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
+        statCollector.TrainPunish();
+
         ActionManager.instance.punish();
     }
 

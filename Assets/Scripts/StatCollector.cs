@@ -7,6 +7,7 @@ public class StatCollector : MonoBehaviour
     private GameManager gameManager;
 
     public ChartObject financialChart;
+    public ChartObject trainChart;
 
     private int GetWeekNo ()
     {
@@ -23,5 +24,15 @@ public class StatCollector : MonoBehaviour
     public void FinanceSpend(float amount)
     {
         financialChart.AdjustValue(GetWeekNo(), - amount);
+    }
+
+    public void TrainReward()
+    {
+        trainChart.AdjustValue(GetWeekNo(), 1);
+    }
+
+    public void TrainPunish()
+    {
+        trainChart.AdjustValue(-GetWeekNo(), 1);
     }
 }
