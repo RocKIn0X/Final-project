@@ -1,21 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Playables;
+using Cinemachine;
 using UnityEngine.SceneManagement;
 
-public class LoadingManager : MonoBehaviour
+public class SceneLoadingManager : MonoBehaviour
 {
-    static LoadingManager instance;
-    public static LoadingManager Instance
+    static SceneLoadingManager instance;
+    public static SceneLoadingManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = GameObject.FindObjectOfType<LoadingManager>();
+                instance = GameObject.FindObjectOfType<SceneLoadingManager>();
                 if (instance == null)
                 {
-                    instance = new GameObject().AddComponent<LoadingManager>();
+                    instance = new GameObject().AddComponent<SceneLoadingManager>();
                 }
             }
             return instance;
@@ -23,7 +26,8 @@ public class LoadingManager : MonoBehaviour
     }
 
     public bool onLoad = false;
-
+    [SerializeField] List<PlayableAsset> playableAsset = new List<PlayableAsset>();
+    private PlayableDirector fade_PlayableDirector;
     private AsyncOperation ao;
 
     private void Awake()
@@ -37,6 +41,7 @@ public class LoadingManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        fade_PlayableDirector = this.GetComponent<PlayableDirector>();
     }
     
     public void LoadScene(string sceneName)
@@ -47,6 +52,12 @@ public class LoadingManager : MonoBehaviour
     public IEnumerator LoadSceneCoroutine(string sceneName)
     {
         onLoad = true;
+        fade_PlayableDirector.playableAsset = playableAsset[0];
+        fade_PlayableDirector.Play();
+        while(fade_PlayableDirector.time < fade_PlayableDirector.duration)
+        {
+            yield return null;
+        }
         ao = SceneManager.LoadSceneAsync(sceneName);
         ao.allowSceneActivation = false;
         while (ao.progress < 0.9f)
@@ -54,6 +65,12 @@ public class LoadingManager : MonoBehaviour
             yield return null;
         }
         ao.allowSceneActivation = true;
+        while (!ao.isDone)
+        {
+            yield return null;
+        }
+        fade_PlayableDirector.playableAsset = playableAsset[1];
+        fade_PlayableDirector.Play();
         yield return 0;
     }
 }
