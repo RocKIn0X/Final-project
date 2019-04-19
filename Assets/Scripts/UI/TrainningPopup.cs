@@ -27,6 +27,8 @@ public class TrainningPopup : MonoBehaviour
     // Stats
     private StatCollector statCollector;
 
+    public bool trainable = false;
+
     public struct GaugeAbstract
     {
         public string gaugeName;
@@ -57,6 +59,13 @@ public class TrainningPopup : MonoBehaviour
                            Sprite targetSprite = null,
                            Sprite actionSprite = null)
     {
+        if (inputGauges == null && outputGauges == null)
+        {
+            trainable = false;
+            return;
+        }
+
+        trainable = true;
         int index = 0;
         foreach (Transform child in inputPanel.transform)
         {
@@ -131,10 +140,6 @@ public class TrainningPopup : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-    }
-
     public void ActivateNoTrainPopup()
     {
         List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
@@ -145,6 +150,9 @@ public class TrainningPopup : MonoBehaviour
 
     public void ClickPraise ()
     {
+        if (trainable == false)
+            return;
+
         if (statCollector == null)
             statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
         statCollector.TrainReward();
@@ -154,6 +162,9 @@ public class TrainningPopup : MonoBehaviour
 
     public void ClickPunish ()
     {
+        if (trainable == false)
+            return;
+
         if (statCollector == null)
             statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
         statCollector.TrainPunish();
