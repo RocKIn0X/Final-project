@@ -37,6 +37,8 @@ public class PlayerManager : MonoBehaviour
     public List<InventoryItem> inventoryItemList = new List<InventoryItem>();
     public Dictionary<CropAssets, int> cropAmountList = new Dictionary<CropAssets, int>();
 
+    private StatCollector statCollector;
+
     void Start()
     {
         if (instance == null)
@@ -51,19 +53,27 @@ public class PlayerManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess(); 
+        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
     }
 
     public void AddMoney(float amount)
     {
         playerMoney += amount;
         SetMoney();
+
+        if (statCollector == null)
+            statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
+        statCollector.FinanceEarn(amount);
     }
     public bool ConsumeMoney(float amount)
     {
         if (playerMoney - amount < 0) return false;
         playerMoney -= amount;
         SetMoney();
+
+        if (statCollector == null)
+            statCollector = (StatCollector)FindObjectOfType(typeof(StatCollector));
+        statCollector.FinanceSpend(amount);
         return true;
     }
     public void SetMoney()
