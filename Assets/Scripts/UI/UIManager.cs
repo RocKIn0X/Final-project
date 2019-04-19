@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
 {
     CanvasGroup uiCanvasGroup;
     [SerializeField] CanvasGroup marketCanvasGroup;
+    [SerializeField] CanvasGroup statCanvasGroup;
 
     public void Start()
     {
@@ -18,6 +19,20 @@ public class UIManager : MonoBehaviour
         marketCanvasGroup.alpha = 1;
         marketCanvasGroup.blocksRaycasts = true;
         marketCanvasGroup.interactable = true;
+    }
+
+    public void OpenStatUI()
+    {
+        statCanvasGroup.alpha = 1;
+        statCanvasGroup.blocksRaycasts = true;
+        statCanvasGroup.interactable = true;
+    }
+
+    public void CloseStatUI()
+    {
+        statCanvasGroup.alpha = 0;
+        statCanvasGroup.blocksRaycasts = false;
+        statCanvasGroup.interactable = false;
     }
 
     public void CloseMarketUI()
