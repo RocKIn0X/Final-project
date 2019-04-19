@@ -30,7 +30,7 @@ public class StartSceneManager : MonoBehaviour
 
     public void CreateNewProfile()
     {
-        if (newProfileName_Input.text != "" && !Regex.IsMatch(newProfileName_Input.text, @"^[a-zA-Z0-9]*$")) return;
+        if (newProfileName_Input.text == string.Empty || !Regex.IsMatch(newProfileName_Input.text, @"^[a-zA-Z0-9]*$")) return;
 
         DataManager.Instance.current_playerData = new PlayerData();
         DataManager.Instance.current_playerData.playerName = newProfileName_Input.text;
@@ -59,5 +59,6 @@ public class StartSceneManager : MonoBehaviour
     {
         touch_Text.text = DataManager.Instance.playerData_dic.Count > 0 ? "Touch To Start" : "Create new profile";
         if (DataManager.Instance.playerData_dic.Count > 0) profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
+        else profileName_Text.alpha = 0;
     }
 }
