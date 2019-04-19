@@ -34,7 +34,7 @@ public class DataManager : MonoBehaviour
    [SerializeField] List<CropAssets> allCropAssets = new List<CropAssets>();
     Dictionary<string, CropAssets> cropAssetsNameDic = new Dictionary<string, CropAssets>();
     public PlayerData playerData = new PlayerData();
-    public string[] filePaths;
+    public List<string> filePaths;
 
     void Awake()
     {
@@ -75,7 +75,7 @@ public class DataManager : MonoBehaviour
 
     public void LoadData()
     {
-        filePaths = GetFilePaths();
+        filePaths = new List<string>(GetFilePaths());
 
         //if (filePaths.Length > 0)
         //{

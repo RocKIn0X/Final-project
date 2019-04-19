@@ -6,19 +6,19 @@ using UnityEngine.Playables;
 using Cinemachine;
 using UnityEngine.SceneManagement;
 
-public class LoadingManager : MonoBehaviour
+public class SceneLoadingManager : MonoBehaviour
 {
-    static LoadingManager instance;
-    public static LoadingManager Instance
+    static SceneLoadingManager instance;
+    public static SceneLoadingManager Instance
     {
         get
         {
             if (instance == null)
             {
-                instance = GameObject.FindObjectOfType<LoadingManager>();
+                instance = GameObject.FindObjectOfType<SceneLoadingManager>();
                 if (instance == null)
                 {
-                    instance = new GameObject().AddComponent<LoadingManager>();
+                    instance = new GameObject().AddComponent<SceneLoadingManager>();
                 }
             }
             return instance;
@@ -26,10 +26,8 @@ public class LoadingManager : MonoBehaviour
     }
 
     public bool onLoad = false;
-    [SerializeField] Image fogFill_image;
     [SerializeField] List<PlayableAsset> playableAsset = new List<PlayableAsset>();
     private PlayableDirector fade_PlayableDirector;
-    //Animator[] fog_animators;
     private AsyncOperation ao;
 
     private void Awake()

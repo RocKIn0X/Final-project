@@ -536,8 +536,8 @@ GameObject:
   - component: {fileID: 274641825373925247}
   - component: {fileID: 274641825373925246}
   - component: {fileID: 274641825373925233}
-  - component: {fileID: 274641825373925232}
   - component: {fileID: 4120017477501115182}
+  - component: {fileID: 274641825373925232}
   m_Layer: 5
   m_Name: LoadingManager
   m_TagString: Untagged
@@ -625,23 +625,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &274641825373925232
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 274641825373925235}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3691b52a6d528b64a840469f66400de1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  onLoad: 0
-  fogFill_image: {fileID: 0}
-  playableAsset:
-  - {fileID: 11400000, guid: 753e58529d1288d47b4e4d49e5b16f29, type: 2}
-  - {fileID: 11400000, guid: 9ca99d13c26dfd440907c19eb23e0bd3, type: 2}
 --- !u!320 &4120017477501115182
 PlayableDirector:
   m_ObjectHideFlags: 0
@@ -687,6 +670,23 @@ PlayableDirector:
     m_References:
     - d511689b55dd328448eaecec4c54cce5: {fileID: 0}
     - c221318849f70d34ab626d59ede7385b: {fileID: 0}
+--- !u!114 &274641825373925232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274641825373925235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3691b52a6d528b64a840469f66400de1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onLoad: 0
+  fogFill_image: {fileID: 0}
+  playableAsset:
+  - {fileID: 11400000, guid: 753e58529d1288d47b4e4d49e5b16f29, type: 2}
+  - {fileID: 11400000, guid: 9ca99d13c26dfd440907c19eb23e0bd3, type: 2}
 --- !u!1 &5125906538592819177
 GameObject:
   m_ObjectHideFlags: 0
