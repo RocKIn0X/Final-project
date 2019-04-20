@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae50642b3d474274e880017a9dcb4457, type: 3}
   m_Name: Malaglow
   m_EditorClassIdentifier: 
-  minGrowthRate: 0
-  maxGrowthRate: 0
-  waterToGrowth: 0
-  buyingCost: 0
-  maximumSellingCost: 0
+  minGrowthRate: 0.003
+  maxGrowthRate: 0.01
+  waterToGrowth: 0.7
+  buyingCost: 500
+  maximumSellingCost: 2000
   cropSprite: {fileID: 21300002, guid: 524321c2dcde2e34aacd8f2782ed9114, type: 3}
   seedSprite: {fileID: 21300004, guid: 524321c2dcde2e34aacd8f2782ed9114, type: 3}
   growingSprite: {fileID: 21300006, guid: 524321c2dcde2e34aacd8f2782ed9114, type: 3}

@@ -56,6 +56,11 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
         cursorImage.enabled = false;
     }
 
+    void OnDisable()
+    {
+        cursorImage.enabled = false;
+    }
+
     public void SetInventory(CropAssets _cropAsset, int _amount)
     {
         cropAsset = _cropAsset;

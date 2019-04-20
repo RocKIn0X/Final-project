@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae50642b3d474274e880017a9dcb4457, type: 3}
   m_Name: Meatshroom
   m_EditorClassIdentifier: 
-  minGrowthRate: 0
-  maxGrowthRate: 3.22
-  waterToGrowth: 0
-  buyingCost: 0
-  maximumSellingCost: 0
+  minGrowthRate: 0.03
+  maxGrowthRate: 0.05
+  waterToGrowth: 0.1
+  buyingCost: 20
+  maximumSellingCost: 30
   cropSprite: {fileID: 21300000, guid: e54e141a4bf6d1c5ba091ad2e6d3f91e, type: 3}
   seedSprite: {fileID: 21300002, guid: e54e141a4bf6d1c5ba091ad2e6d3f91e, type: 3}
   growingSprite: {fileID: 21300004, guid: e54e141a4bf6d1c5ba091ad2e6d3f91e, type: 3}
