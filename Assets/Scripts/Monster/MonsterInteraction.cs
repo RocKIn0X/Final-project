@@ -92,7 +92,7 @@ public class MonsterInteraction : MonoBehaviour
     public IEnumerator MoveState ()
     {
         MoveToTarget();
-        
+
         while (!IsArrivedNow())
         {
             yield return null;
@@ -130,8 +130,29 @@ public class MonsterInteraction : MonoBehaviour
 
     public void DisplayBubble (int index)
     {
-        actionBubble.ShowAction(index);
-        //actionBubble.ShowAction(index);
+        string key = "";
+        switch (index)
+        {
+            case (0) :
+                key = "Idle";
+                break;
+            case (1) :
+                key = "Harvest";
+                break;
+            case (2) :
+                key = "Water";
+                break;
+            case (3) :
+                key = "Eat";
+                break;
+            case (4) :
+                key = "Sleep";
+                break;
+            default :
+                key = "Invalid Index in MonsterInteraction.cs";
+                break;
+        }
+        actionBubble.ShowAction(key);
     }
 
     public void RemoveBubble()
@@ -141,7 +162,7 @@ public class MonsterInteraction : MonoBehaviour
 
     public void EnterMoveState ()
     {
-        actionIndex = 0; 
+        actionIndex = 0;
         isOnMoveState = true;
         StartCoroutine(MoveState());
     }
@@ -183,7 +204,7 @@ public class MonsterInteraction : MonoBehaviour
         status.tireness += tireness;
         status.emotion += emotion;
     }
-    
+
     public void DecreaseStatusOverSecond ()
     {
         float hunger = Mathf.Clamp(status.hunger + hungerDecay, 0f, 100f);
