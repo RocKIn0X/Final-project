@@ -82,6 +82,7 @@ public class DataManager : MonoBehaviour
             PlayerData _playerData = LoadPlayerData(filePath);
             playerData_dic.Add(_playerData.playerName, _playerData);
         }
+        current_playerData = GetPlayerData();
     }
 
     public PlayerData LoadPlayerData(string path)
@@ -122,6 +123,19 @@ public class DataManager : MonoBehaviour
         {
             PlayerManager.Instance.cropAmountList.Add(this.cropAssetsNameDic[cropAsset.Key], cropAsset.Value);
         }
+    }
+
+    private PlayerData GetPlayerData()
+    {
+        string recentPlayer = PlayerPrefs.GetString("RecentPlayer");
+        if (playerData_dic.ContainsKey(recentPlayer)) return playerData_dic[recentPlayer];
+        foreach (KeyValuePair<string, PlayerData> playerData in playerData_dic) return playerData.Value;
+        return new PlayerData();
+    }
+
+    private PlayerData GetPlayerData(string playerName)
+    {
+        return playerData_dic[playerName];
     }
 }
 
