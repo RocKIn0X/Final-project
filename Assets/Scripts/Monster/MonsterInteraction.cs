@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using StateSystem;
 
+[System.Serializable]
+public class MonsterData
+{
+    public Transform transform;
+    public Status status;
+}
+
 public class MonsterInteraction : MonoBehaviour
 {
     public Tile tileTarget;
@@ -31,15 +38,19 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    // state index 0 = move, 1 = action
     public int actionIndex = 0;
 
     [Header("Checking each state")]
     public bool isArrived = false;
+    public bool isThinkAction = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
     public bool isStateMachineRunning = false;
 
     public float timer;
+
+    private MonsterData data;
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
@@ -78,6 +89,24 @@ public class MonsterInteraction : MonoBehaviour
             stateMachine.Update();
     }
 
+    #region initial
+    private void Init()
+    {
+        if (target == null)
+            SetTarget(GetComponent<IsometricMovement>());
+
+        if (target == null)
+            SetTarget(FindObjectOfType<IsometricMovement>());
+    }
+
+    private void SetTarget(IsometricMovement newTarget)
+    {
+        target = newTarget;
+        NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
+    }
+    #endregion
+
+    #region StateMachineFunc
     public IEnumerator WaitInitBrain ()
     {
         while (!ActionManager.instance.isInitBrain)
@@ -111,16 +140,95 @@ public class MonsterInteraction : MonoBehaviour
         }
     }
 
+    private bool IsArrivedNow()
+    {
+        float distance = Vector3.Distance(transform.position, tileTarget.pos);
+
+        if (distance < 0.3f)
+        {
+            isArrived = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private void MoveToTarget()
+    {
+        Vector3 targetPosition = GetTargetPosition();
+        NMAgent.MoveToDestination(targetPosition);
+    }
+
+    private void DoAction()
+    {
+        ActionManager.instance.SetActionIndex(actionIndex);
+
+        if (tileTarget.typeTile == TypeTile.FoodTile)
+        {
+            tileTarget.ActionResult(0, this);
+            DisplayBubble(3);
+        }
+        else if (tileTarget.typeTile == TypeTile.RestTile)
+        {
+            tileTarget.ActionResult(0, this);
+            DisplayBubble(4);
+        }
+        else if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            List<double> info = tileTarget.info;
+
+            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            //int index = Random.Range(0, 3);
+            tileTarget.ActionResult(index, this);
+            DisplayBubble(index);
+        }
+
+        isThinkAction = true;
+    }
+
+    private Vector3 GetTargetPosition()
+    {
+        //status.RandomStatus();
+
+        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
+        Debug.Log("Index: " + index);
+        tileTarget = TileManager.Instance.GetTile(index);
+
+        Vector3 targetPosition = this.transform.position;
+
+        if (tileTarget != null)
+        {
+            targetPosition = tileTarget.pos;
+        }
+
+        return targetPosition;
+    }
+
+    private List<double> GetStatusStates()
+    {
+        List<double> states = new List<double>();
+        states.Add(status.GetHungryRatio() - 0.5f);
+        states.Add(status.GetTirenessRatio() - 0.5f);
+        states.Add(status.GetEmotionRatio() - 0.5f);
+
+        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
+
+        return states;
+    }
+
     public bool IsWaitTime ()
     {
         timer += Time.deltaTime;
 
-        if (isOnMoveState && timer < waitTimeBeforeAction)
+        // On move state
+        if (actionIndex == 0 && timer < waitTimeBeforeAction)
         {
             return false;
         }
 
-        if (isOnActionState && timer < timePerAction)
+        // On action state
+        if (actionIndex == 1 && timer < timePerAction)
         {
             return false;
         }
@@ -190,12 +298,14 @@ public class MonsterInteraction : MonoBehaviour
         RemoveBubble();
 
         isOnActionState = false;
+        isThinkAction = false;
         timer = 0f;
 
         // set reward action state
         if (tileTarget.typeTile == TypeTile.WorkTile)
             ActionManager.instance.SetMemory();
     }
+    #endregion
 
     #region statusMethod
     public void SetStatus(float hungry, float tireness, float emotion)
@@ -226,113 +336,22 @@ public class MonsterInteraction : MonoBehaviour
     }
     #endregion
 
-    private void Init()
+    #region SaveLoad
+    public void SaveMonsterData ()
     {
-        if (target == null)
-            SetTarget(GetComponent<IsometricMovement>());
-
-        if (target == null)
-            SetTarget(FindObjectOfType<IsometricMovement>());
+        data.transform = transform;
+        data.status = status;
     }
 
-    private void SetTarget(IsometricMovement newTarget)
+    public void LoadMonsterData (MonsterData data)
     {
-        target = newTarget;
-        NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
+        //transform = data.transform;
     }
 
-    private void MoveToTarget ()
-    {
-        Vector3 targetPosition = GetTargetPosition();
-        NMAgent.MoveToDestination(targetPosition);
-    }
-
-    private void DoAction ()
-    {
-        ActionManager.instance.SetActionIndex(actionIndex);
-
-        if (tileTarget.typeTile == TypeTile.FoodTile)
-        {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(3);
-        }
-        else if (tileTarget.typeTile == TypeTile.RestTile)
-        {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(4);
-        }
-        else if (tileTarget.typeTile == TypeTile.WorkTile)
-        {
-            List<double> info = tileTarget.info;
-
-            int index = ActionManager.instance.CalculateAction(actionIndex, info);
-            //int index = Random.Range(0, 3);
-            tileTarget.ActionResult(index, this);
-            DisplayBubble(index);
-        }
-    }
-
-    private Vector3 GetTargetPosition ()
-    {
-        //status.RandomStatus();
-
-        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
-        Debug.Log("Index: " + index);
-        tileTarget = TileManager.Instance.GetTile(index);
-
-        Vector3 targetPosition = this.transform.position;
-
-        if (tileTarget != null)
-        {
-            targetPosition = tileTarget.pos;
-        }
-
-        return targetPosition;
-    }
-
-    private List<double> GetStatusStates ()
-    {
-        List<double> states = new List<double>();
-        states.Add(status.GetHungryRatio() - 0.5f);
-        states.Add(status.GetTirenessRatio() - 0.5f);
-        states.Add(status.GetEmotionRatio() - 0.5f);
-
-        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
-
-        return states;
-    }
+    #endregion
 
     private int GetRandomActionIndex ()
     {
         return (int)Random.Range(0, 5);
-    }
-
-    private bool IsArrivedNow ()
-    {
-        float distance = Vector3.Distance(transform.position, tileTarget.pos);
-
-        if (distance < 0.3f)
-        {
-            isArrived = true;
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        //Debug.Log("Hit something");
-        //tileTarget = col.gameObject;
-        //isArrived = true;
-    }
-
-    private void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject == tileTarget)
-        {
-            tileTarget = null;
-        }
     }
 }
