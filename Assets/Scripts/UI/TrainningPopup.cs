@@ -22,10 +22,18 @@ public class TrainningPopup : MonoBehaviour
     public GameObject inputPanel;
     public GameObject outputPanel;
 
+    public Image targetImage;
+    public Image actionImage;
+
+    public Sprite foodSprite;
+    public Sprite bedSprite;
+    public Sprite noPlantSprite;
     public Sprite blankSprite;
 
-    // Stats
+    // Auto-resolves GameObjects
     private StatCollector statCollector;
+    private IconLibrary iconLib;
+    private TileManager tileManager;
 
     public bool trainable = false;
 
@@ -59,48 +67,51 @@ public class TrainningPopup : MonoBehaviour
                            Sprite targetSprite = null,
                            Sprite actionSprite = null)
     {
+        targetImage.sprite = targetSprite != null ? targetSprite : targetImage.sprite;
+        actionImage.sprite = actionSprite != null ? actionSprite : actionImage.sprite;
+
         if (inputGauges == null && outputGauges == null)
         {
             trainable = false;
-            return;
-        }
-
-        trainable = true;
-        int index = 0;
-        foreach (Transform child in inputPanel.transform)
-        {
-            UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
-            if (childGauge != null)
-            {
-                if (index < inputGauges.Count)
-                {
-                    SetGaugeData(childGauge, inputGauges[index]);
-                }
-                else
-                {
-                    childGauge.gameObject.SetActive(false);
-                }
-                index = index + 1;
+                return;
             }
-        }
 
-        index = 0;
-        foreach (Transform child in outputPanel.transform)
-        {
-            UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
-            if (childGauge != null)
+            trainable = true;
+            int index = 0;
+            foreach (Transform child in inputPanel.transform)
             {
-                if (index < outputGauges.Count)
+                UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
+                if (childGauge != null)
                 {
-                    SetGaugeData(childGauge, outputGauges[index]);
+                    if (index < inputGauges.Count)
+                    {
+                        SetGaugeData(childGauge, inputGauges[index]);
+                    }
+                    else
+                    {
+                        childGauge.gameObject.SetActive(false);
+                    }
+                    index = index + 1;
                 }
-                else
-                {
-                    childGauge.gameObject.SetActive(false);
-                }
-                index = index + 1;
             }
-        }
+
+            index = 0;
+            foreach (Transform child in outputPanel.transform)
+            {
+                UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
+                if (childGauge != null)
+                {
+                    if (index < outputGauges.Count)
+                    {
+                        SetGaugeData(childGauge, outputGauges[index]);
+                    }
+                    else
+                    {
+                        childGauge.gameObject.SetActive(false);
+                    }
+                    index = index + 1;
+                }
+            }
     }
 
     private GaugeAbstract CreatePair (string iconName, float value)
@@ -108,35 +119,101 @@ public class TrainningPopup : MonoBehaviour
         return new GaugeAbstract(iconName, value);
     }
 
+    private Sprite GetTileSprite()
+    {
+        if (tileManager == null)
+            tileManager = (TileManager)FindObjectOfType(typeof(TileManager));
+        Tile targetTile = tileManager.tileTarget;
+
+        switch (targetTile.typeTile)
+        {
+            case TypeTile.FoodTile :
+                return foodSprite;
+            case TypeTile.RestTile :
+                return bedSprite;
+            case TypeTile.WorkTile :
+                Crop tileCrop = targetTile.gameObject.GetComponent<WorkTile>().crop;
+                return tileCrop == null ? noPlantSprite : tileCrop.GetSprite() ;
+            default :
+                return null;
+        }
+    }
+
     public void ActivatePopup (int actionIndex, List<double> states, List<double> qs)
     {
+        Sprite targetSprite = GetTileSprite();
         if (actionIndex == 0) // *** Move
         {
+            List<string> key = new List<string>();
+            key.Add("Hunger");
+            key.Add("Energy");
+            key.Add("Mood");
+
             List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
-            inputGaugeData.Add(CreatePair("Hunger", ((float)states[0] + 0.5f)*100f));
-            inputGaugeData.Add(CreatePair("Energy", ((float)states[1] + 0.5f)*100f));
-            inputGaugeData.Add(CreatePair("Mood", ((float)states[2] + 0.5f)*100f));
+            int index = 0;
+            foreach (double value in states)
+            {
+                inputGaugeData.Add(CreatePair(key[index], ((float)states[index] + 0.5f)*100f));
+                index = index + 1;
+            }
+
+            key.Clear();
+
+            key.Add("Work");
+            key.Add("Eat");
+            key.Add("Sleep");
+
+            if (iconLib == null)
+                iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Work", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Eat", ((float)qs[1])*100f));
-            outputGaugeData.Add(CreatePair("Sleep", ((float)qs[2])*100f));
-
-            SetLayout(inputGaugeData, outputGaugeData);
+            int maxValueIndex = 0;
+            index = 0;
+            foreach (double value in qs)
+            {
+                outputGaugeData.Add(CreatePair(key[index], ((float)qs[index])*100f));
+                if (qs[index] > qs[maxValueIndex])
+                    maxValueIndex = index;
+                index = index + 1;
+            }
+            Sprite actionSprite = iconLib.GetIcon(key[maxValueIndex]);
+            SetLayout(inputGaugeData, outputGaugeData, targetSprite, actionSprite);
         }
         else if (actionIndex == 1) // *** Action
         {
-            //_Log(qs.Count.ToString());
+            List<string> key = new List<string>();
+            key.Add("Growth");
+            key.Add("Water");
+
             List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
-            inputGaugeData.Add(CreatePair("Growth", ((float)states[0])*100f));
-            inputGaugeData.Add(CreatePair("Water", ((float)states[1])*100f));
+            int index = 0;
+            foreach (double value in states)
+            {
+                inputGaugeData.Add(CreatePair(key[index], ((float)states[index])*100f));
+                index = index + 1;
+            }
+
+            key.Clear();
+
+            key.Add("Idle");
+            key.Add("Harvest");
+            key.Add("Water");
+
+            if (iconLib == null)
+                iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
 
             List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
-            outputGaugeData.Add(CreatePair("Idle", ((float)qs[0])*100f));
-            outputGaugeData.Add(CreatePair("Harvest", ((float)qs[1])*100f));
-            outputGaugeData.Add(CreatePair("Water", ((float)qs[2])*100f));
-
-            SetLayout(inputGaugeData, outputGaugeData);
+            int maxValueIndex = 0;
+            index = 0;
+            foreach (double value in qs)
+            {
+                outputGaugeData.Add(CreatePair(key[index], ((float)qs[index])*100f));
+                if (qs[index] > qs[maxValueIndex])
+                    maxValueIndex = index;
+                index = index + 1;
+            }
+            Sprite actionSprite = iconLib.GetIcon(key[maxValueIndex]);
+            SetLayout(inputGaugeData, outputGaugeData, targetSprite, actionSprite);
         }
     }
 
