@@ -61,6 +61,7 @@ public class SceneLoadingManager : MonoBehaviour
         {
             yield return null;
         }
+        loadingGaugeValue.fillAmount = 0;
         ao = SceneManager.LoadSceneAsync(sceneName);
         ao.allowSceneActivation = false;
         while (ao.progress < 0.9f)
@@ -75,8 +76,9 @@ public class SceneLoadingManager : MonoBehaviour
             yield return null;
         }
         PlayerManager.Instance.InitialPlayerData();
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(1f);
         loadingGaugeValue.fillAmount = 1f;
+        yield return new WaitForSeconds(1f);
         fade_PlayableDirector.playableAsset = playableAsset[1];
         fade_PlayableDirector.Play();
         SetActiveTransitionCanvas(isOn: false);

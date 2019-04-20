@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 4120017477501115182}
   - component: {fileID: 274641825373925232}
   m_Layer: 5
-  m_Name: LoadingManager
+  m_Name: SceneLoadingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -710,7 +710,7 @@ PlayableDirector:
   m_GameObject: {fileID: 274641825373925235}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 9ca99d13c26dfd440907c19eb23e0bd3, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 753e58529d1288d47b4e4d49e5b16f29, type: 2}
   m_InitialState: 0
   m_WrapMode: 0
   m_DirectorUpdateMode: 2
@@ -742,6 +742,8 @@ PlayableDirector:
     value: {fileID: 6604215734834473943}
   - key: {fileID: 114461177019875942, guid: 9ca99d13c26dfd440907c19eb23e0bd3, type: 2}
     value: {fileID: 6740697960436166713}
+  - key: {fileID: 114751174333610544, guid: 753e58529d1288d47b4e4d49e5b16f29, type: 2}
+    value: {fileID: 802931390645546358}
   m_ExposedReferences:
     m_References:
     - d511689b55dd328448eaecec4c54cce5: {fileID: 0}
@@ -835,7 +837,7 @@ MonoBehaviour:
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 0
-  m_FillAmount: 1
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0

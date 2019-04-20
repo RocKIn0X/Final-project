@@ -1105,7 +1105,7 @@ PrefabInstance:
     - target: {fileID: 274641825373925235, guid: 8ead6499035f0d649a0afeeec7c8e39f,
         type: 3}
       propertyPath: m_Name
-      value: LoadingManager
+      value: SceneLoadingManager
       objectReference: {fileID: 0}
     - target: {fileID: 274641825373925244, guid: 8ead6499035f0d649a0afeeec7c8e39f,
         type: 3}
