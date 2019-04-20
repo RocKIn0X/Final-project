@@ -86,8 +86,11 @@ public class PlayerManager : MonoBehaviour
         int i = 0;
         foreach (KeyValuePair<CropAssets, int> cropAsset in cropAmountList)
         {
-            inventoryItemList[i].gameObject.SetActive(true);
-            inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            if (cropAsset.Value > 0)
+            {
+                inventoryItemList[i].gameObject.SetActive(true);
+                inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            }
         }
         for (int j = i; j < inventoryItemList.Capacity; j++)
         {
