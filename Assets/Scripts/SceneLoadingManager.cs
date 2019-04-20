@@ -27,6 +27,8 @@ public class SceneLoadingManager : MonoBehaviour
 
     public bool onLoad = false;
     [SerializeField] List<PlayableAsset> playableAsset = new List<PlayableAsset>();
+    [SerializeField] CanvasGroup transition_CanvasGroup;
+    [SerializeField] Image loadingGaugeValue;
     private PlayableDirector fade_PlayableDirector;
     private AsyncOperation ao;
 
@@ -52,6 +54,7 @@ public class SceneLoadingManager : MonoBehaviour
     public IEnumerator LoadSceneCoroutine(string sceneName)
     {
         onLoad = true;
+        SetActiveTransitionCanvas(isOn: true);
         fade_PlayableDirector.playableAsset = playableAsset[0];
         fade_PlayableDirector.Play();
         while(fade_PlayableDirector.time < fade_PlayableDirector.duration)
@@ -62,15 +65,28 @@ public class SceneLoadingManager : MonoBehaviour
         ao.allowSceneActivation = false;
         while (ao.progress < 0.9f)
         {
+            loadingGaugeValue.fillAmount = (0.7f) * ao.progress; 
             yield return null;
         }
+        loadingGaugeValue.fillAmount = 0.9f;
         ao.allowSceneActivation = true;
         while (!ao.isDone)
         {
             yield return null;
         }
+        PlayerManager.Instance.InitialPlayerData();
+        yield return new WaitForSeconds(2.0f);
+        loadingGaugeValue.fillAmount = 1f;
         fade_PlayableDirector.playableAsset = playableAsset[1];
         fade_PlayableDirector.Play();
+        SetActiveTransitionCanvas(isOn: false);
         yield return 0;
+    }
+
+    private void SetActiveTransitionCanvas(bool isOn)
+    {
+        transition_CanvasGroup.alpha = isOn ? 1 : 0;
+        transition_CanvasGroup.blocksRaycasts = isOn;
+        transition_CanvasGroup.interactable = isOn;
     }
 }

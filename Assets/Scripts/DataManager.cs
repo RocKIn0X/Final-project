@@ -107,7 +107,7 @@ public class DataManager : MonoBehaviour
         ConvertSavingData();
     }
 
-    private void ConvertSavingData()
+    public void ConvertSavingData()
     {
         current_playerData.cropAmountNameList.Clear();
         foreach (KeyValuePair<CropAssets, int> cropAsset in PlayerManager.Instance.cropAmountList)
@@ -116,7 +116,7 @@ public class DataManager : MonoBehaviour
         }
     }
 
-    private void ConvertLoadingData()
+    public void ConvertLoadingData()
     {
         foreach (KeyValuePair<string, int> cropAsset in current_playerData.cropAmountNameList)
         {
