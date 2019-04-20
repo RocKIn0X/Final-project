@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using StateSystem;
 
 [System.Serializable]
@@ -51,6 +52,7 @@ public class MonsterInteraction : MonoBehaviour
     public float timer;
 
     private MonsterData data;
+    private Animator animator;
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
@@ -66,6 +68,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Start()
     {
+        animator = this.GetComponent<Animator>();
         LoadMonsterData();
   
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
@@ -86,6 +89,9 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (NMAgent.vHorizontalMovement.magnitude > 0) animator.SetTrigger("Moving");
+        animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
+        animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
             stateMachine.Update();
     }

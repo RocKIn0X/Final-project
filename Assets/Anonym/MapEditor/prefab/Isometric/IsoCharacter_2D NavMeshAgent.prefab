@@ -141,7 +141,6 @@ GameObject:
   - component: {fileID: 195572413177619986}
   - component: {fileID: 114818780237719200}
   - component: {fileID: 1900639392}
-  - component: {fileID: 1900639391}
   - component: {fileID: 1900639394}
   - component: {fileID: 1900639393}
   m_Layer: 12
@@ -336,21 +335,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &1900639391
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635368766303630}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 0c1efbf408b809f40865c5b1a617f6b4, type: 2}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1900639394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,6 +363,7 @@ MonoBehaviour:
   NMAgent: {fileID: 0}
   actionIndex: 0
   isArrived: 0
+  isThinkAction: 0
   isOnMoveState: 0
   isOnActionState: 0
   isStateMachineRunning: 0
@@ -406,11 +391,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4482732341630444}
     m_Modifications:
-    - target: {fileID: 41945390325693792, guid: 41c86a29161fca1408f10a3a869882a5,
-        type: 3}
-      propertyPath: m_Name
-      value: ActionBubble
-      objectReference: {fileID: 0}
     - target: {fileID: 41945390325693795, guid: 41c86a29161fca1408f10a3a869882a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -465,6 +445,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 41945390325693792, guid: 41c86a29161fca1408f10a3a869882a5,
+        type: 3}
+      propertyPath: m_Name
+      value: ActionBubble
       objectReference: {fileID: 0}
     - target: {fileID: 41945389596635945, guid: 41c86a29161fca1408f10a3a869882a5,
         type: 3}
