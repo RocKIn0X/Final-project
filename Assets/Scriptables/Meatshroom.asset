@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Meatshroom
   m_EditorClassIdentifier: 
   minGrowthRate: 0
-  maxGrowthRate: 0
+  maxGrowthRate: 3.22
   waterToGrowth: 0
   buyingCost: 0
   maximumSellingCost: 0
