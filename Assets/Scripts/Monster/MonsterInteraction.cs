@@ -7,7 +7,7 @@ using StateSystem;
 [System.Serializable]
 public class MonsterData
 {
-    public Transform transform;
+    public Vector3 position;
     public Status status;
 }
 
@@ -66,7 +66,8 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Start()
     {
-        status = new Status();
+        LoadMonsterData();
+  
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
         {
@@ -293,7 +294,7 @@ public class MonsterInteraction : MonoBehaviour
         DoAction();
     }
 
-    public void EndAction ()
+    public void ExitAction ()
     {
         RemoveBubble();
 
@@ -304,6 +305,8 @@ public class MonsterInteraction : MonoBehaviour
         // set reward action state
         if (tileTarget.typeTile == TypeTile.WorkTile)
             ActionManager.instance.SetMemory();
+
+        SaveMonsterData();
     }
     #endregion
 
@@ -339,15 +342,25 @@ public class MonsterInteraction : MonoBehaviour
     #region SaveLoad
     public void SaveMonsterData ()
     {
-        data.transform = transform;
+        data.position = transform.position;
         data.status = status;
+        DataManager.Instance.SaveMonsterData(data);
     }
 
-    public void LoadMonsterData (MonsterData data)
+    public void LoadMonsterData ()
     {
-        //transform = data.transform;
+        if (DataManager.Instance.current_monsterData != null)
+        {
+            data = DataManager.Instance.current_monsterData;
+            transform.position = data.position;
+            status = data.status;
+        }
+        else
+        {
+            status = new Status();
+            data = new MonsterData();
+        }
     }
-
     #endregion
 
     private int GetRandomActionIndex ()

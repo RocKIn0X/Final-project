@@ -30,6 +30,7 @@ public class DataManager : MonoBehaviour
     }
 
     public PlayerData current_playerData = new PlayerData();
+    public MonsterData current_monsterData = new MonsterData();
     public Dictionary<string, PlayerData> playerData_dic = new Dictionary<string, PlayerData>();
 
     const string folderName = "BinaryCharacterData";
@@ -106,6 +107,11 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.SetString("RecentPlayer", current_playerData.playerName);
         current_playerData.playerMoney = PlayerManager.Instance.playerMoney;
         ConvertSavingData();
+    }
+
+    public void SaveMonsterData(MonsterData data)
+    {
+        current_monsterData = data;
     }
 
     public void ConvertSavingData()

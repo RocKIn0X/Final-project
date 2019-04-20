@@ -42,6 +42,6 @@ public class ActionState : State<MonsterInteraction>
 
     public override void ExitState()
     {
-        owner.EndAction();
+        owner.ExitAction();
     }
 }
