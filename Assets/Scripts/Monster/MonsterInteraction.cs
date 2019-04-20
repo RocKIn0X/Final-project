@@ -75,7 +75,8 @@ public class MonsterInteraction : MonoBehaviour
     private void Update()
     {
         if (isStateMachineRunning)
-            stateMachine.Update();
+            if (stateMachine != null)
+                stateMachine.Update();
     }
 
     public IEnumerator WaitInitBrain ()
