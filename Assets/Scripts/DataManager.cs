@@ -29,12 +29,13 @@ public class DataManager : MonoBehaviour
         }
     }
 
+    public PlayerData current_playerData = new PlayerData();
+    public Dictionary<string, PlayerData> playerData_dic = new Dictionary<string, PlayerData>();
+
     const string folderName = "BinaryCharacterData";
     const string fileExtension = ".data";
    [SerializeField] List<CropAssets> allCropAssets = new List<CropAssets>();
     Dictionary<string, CropAssets> cropAssetsNameDic = new Dictionary<string, CropAssets>();
-    public PlayerData playerData = new PlayerData();
-    public List<string> filePaths;
 
     void Awake()
     {
@@ -48,7 +49,6 @@ public class DataManager : MonoBehaviour
             Destroy(this.gameObject);
         }
         InittialData();
-        LoadData();
     }
 
     void InittialData()
@@ -57,6 +57,7 @@ public class DataManager : MonoBehaviour
         {
             cropAssetsNameDic.Add(cropAsset.name, cropAsset);
         }
+        LoadData();
     }
 
     public void SaveData()
@@ -65,24 +66,23 @@ public class DataManager : MonoBehaviour
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
         if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
 
-        string dataPath = Path.Combine(folderPath, PlayerManager.Instance.playerName + fileExtension);
+        string dataPath = Path.Combine(folderPath, current_playerData.playerName + fileExtension);
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
         {
-            binaryFormatter.Serialize(fileStream, playerData);
+            binaryFormatter.Serialize(fileStream, current_playerData);
         }
     }
 
     public void LoadData()
     {
-        filePaths = new List<string>(GetFilePaths());
-
-        //if (filePaths.Length > 0)
-        //{
-        //    playerData = LoadPlayerData(filePaths[0]);
-        //    PlayerManager.Instance.playerMoney = playerData.playerMoney;
-        //    ConvertLoadingData();
-        //}
+        string[] filePaths = GetFilePaths();
+        foreach (string filePath in filePaths)
+        {
+            PlayerData _playerData = LoadPlayerData(filePath);
+            playerData_dic.Add(_playerData.playerName, _playerData);
+        }
+        current_playerData = GetPlayerData();
     }
 
     public PlayerData LoadPlayerData(string path)
@@ -98,37 +98,51 @@ public class DataManager : MonoBehaviour
     public string[] GetFilePaths()
     {
         string folderPath = Path.Combine(Application.persistentDataPath, folderName);
-
-        return Directory.GetFiles(folderPath, fileExtension);
+        return Directory.GetFiles(folderPath, "*"+fileExtension);
     }
 
     public void SavePlayerData()
     {
-        playerData.playerMoney = PlayerManager.Instance.playerMoney;
+        PlayerPrefs.SetString("RecentPlayer", current_playerData.playerName);
+        current_playerData.playerMoney = PlayerManager.Instance.playerMoney;
         ConvertSavingData();
     }
 
-    private void ConvertSavingData()
+    public void ConvertSavingData()
     {
-        playerData.cropAmountNameList.Clear();
+        current_playerData.cropAmountNameList.Clear();
         foreach (KeyValuePair<CropAssets, int> cropAsset in PlayerManager.Instance.cropAmountList)
         {
-            playerData.cropAmountNameList.Add(cropAsset.Key.name, cropAsset.Value);
+            current_playerData.cropAmountNameList.Add(cropAsset.Key.name, cropAsset.Value);
         }
     }
 
-    private void ConvertLoadingData()
+    public void ConvertLoadingData()
     {
-        foreach (KeyValuePair<string, int> cropAsset in playerData.cropAmountNameList)
+        foreach (KeyValuePair<string, int> cropAsset in current_playerData.cropAmountNameList)
         {
             PlayerManager.Instance.cropAmountList.Add(this.cropAssetsNameDic[cropAsset.Key], cropAsset.Value);
         }
+    }
+
+    private PlayerData GetPlayerData()
+    {
+        string recentPlayer = PlayerPrefs.GetString("RecentPlayer");
+        if (playerData_dic.ContainsKey(recentPlayer)) return playerData_dic[recentPlayer];
+        foreach (KeyValuePair<string, PlayerData> playerData in playerData_dic) return playerData.Value;
+        return new PlayerData();
+    }
+
+    private PlayerData GetPlayerData(string playerName)
+    {
+        return playerData_dic[playerName];
     }
 }
 
 [System.Serializable]
 public class PlayerData
 {
-    public float playerMoney;
+    public string playerName = "";
+    public float playerMoney = 0;
     public Dictionary<string, int> cropAmountNameList = new Dictionary<string, int>();
 }
