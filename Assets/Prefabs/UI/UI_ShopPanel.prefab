@@ -522,7 +522,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 505245748029515801}
   m_HandleRect: {fileID: 7064280775262041994}
   m_Direction: 2
-  m_Value: 0.9999978
+  m_Value: 0.99999744
   m_Size: 0.799881
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -1876,6 +1876,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5612131527740596764, guid: f9609f6af5f810b75b79cc1acb82453d,
+        type: 3}
+      propertyPath: cropAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 9000095f868a616b3b732cb5d8f4c7ea,
+        type: 2}
     - target: {fileID: 3389215860973413760, guid: f9609f6af5f810b75b79cc1acb82453d,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -2086,6 +2092,12 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5612131527740596764, guid: f9609f6af5f810b75b79cc1acb82453d,
+        type: 3}
+      propertyPath: cropAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: d67e2b9ff5169dc4e8086904adfc203e,
+        type: 2}
     - target: {fileID: 3389215860973413760, guid: f9609f6af5f810b75b79cc1acb82453d,
         type: 3}
       propertyPath: m_FontData.m_FontSize
@@ -2296,11 +2308,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3389215860973413760, guid: f9609f6af5f810b75b79cc1acb82453d,
-        type: 3}
-      propertyPath: m_Name
-      value: UI_Showcase (3)
-      objectReference: {fileID: 0}
     - target: {fileID: 763242446483282625, guid: f9609f6af5f810b75b79cc1acb82453d,
         type: 3}
       propertyPath: m_SizeDelta.y
@@ -2315,6 +2322,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3389215860973413760, guid: f9609f6af5f810b75b79cc1acb82453d,
+        type: 3}
+      propertyPath: m_Name
+      value: UI_Showcase (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9609f6af5f810b75b79cc1acb82453d, type: 3}

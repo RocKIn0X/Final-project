@@ -43,7 +43,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3066594b144d0da4ba780822148dfa17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  current_playerData:
+    playerName: 
+    playerMoney: 0
   allCropAssets:
   - {fileID: 11400000, guid: b10364af973412e42b906895ad3dff76, type: 2}
-  playerData:
-    playerMoney: 0
+  - {fileID: 11400000, guid: 9000095f868a616b3b732cb5d8f4c7ea, type: 2}
+  - {fileID: 11400000, guid: d67e2b9ff5169dc4e8086904adfc203e, type: 2}
