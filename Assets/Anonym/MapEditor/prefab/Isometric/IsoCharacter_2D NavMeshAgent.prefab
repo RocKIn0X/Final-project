@@ -114,7 +114,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 2ba30a74b12cdbd4bbc6ddffac7707c2, type: 3}
   m_Color: {r: 1.4186997, g: 1.4188515, b: 1.4190011, a: 1}
   m_FlipX: 0
@@ -368,11 +368,12 @@ MonoBehaviour:
   actionBubble: {fileID: 8385674587514240587}
   target: {fileID: 0}
   status:
-    hungry: 100
+    hunger: 100
     tireness: 100
     emotion: 100
   hungerDecay: -0.5
   tirenessDecay: -0.5
+  emotionDecay: 0
   waitTimeBeforeAction: 2
   timePerAction: 5
   NMAgent: {fileID: 0}
@@ -464,6 +465,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 41945389596635945, guid: 41c86a29161fca1408f10a3a869882a5,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 41945390325693805, guid: 41c86a29161fca1408f10a3a869882a5,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41c86a29161fca1408f10a3a869882a5, type: 3}
