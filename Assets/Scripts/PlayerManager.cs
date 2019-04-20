@@ -105,4 +105,12 @@ public class PlayerManager : MonoBehaviour
             ActionManager.instance.CallTrainningPopup();
         }
     }
+
+    public void InitialPlayerData()
+    {
+        PlayerData playerData = DataManager.Instance.current_playerData;
+        playerName = playerData.playerName;
+        playerMoney = playerData.playerMoney;
+        DataManager.Instance.ConvertLoadingData();
+    }
 }
