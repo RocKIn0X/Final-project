@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WorkTile : Tile
 {
+    private UI_TextNotif notifManager;
+
     public bool isWatered;
     public GameObject overlayObj;
     public Crop crop;
@@ -126,9 +128,13 @@ public class WorkTile : Tile
 
     private void HarvestCrop()
     {
-        if (this.overlayObj != null && crop != null)
+        if (this.overlayObj != null && crop != null && crop.HasCrop())
         {
-            PlayerManager.Instance.AddMoney(crop.CalculateCost());
+            float moneyReceive = crop.CalculateCost();
+            if (notifManager == null)
+                notifManager = (UI_TextNotif)FindObjectOfType(typeof(UI_TextNotif));
+            notifManager.Notify("Got $ " + moneyReceive + "from selling ", crop.asset.cropSprite);
+            PlayerManager.Instance.AddMoney(moneyReceive);
             //Destroy(this.overlayObj);
             crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
@@ -169,10 +175,10 @@ public class WorkTile : Tile
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
         }
     }
-    
+
     public void PlantFromPlayer(CropAssets cropAsset)
     {
-        if (PlayerManager.Instance.cropAmountList.ContainsKey(cropAsset) 
+        if (PlayerManager.Instance.cropAmountList.ContainsKey(cropAsset)
             && PlayerManager.Instance.cropAmountList[cropAsset] > 0
             && !crop.HasCrop())
         {

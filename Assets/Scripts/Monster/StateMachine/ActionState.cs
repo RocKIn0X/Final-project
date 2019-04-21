@@ -25,7 +25,8 @@ public class ActionState : State<MonsterInteraction>
         owner.isOnActionState = true;
 
         // calculate action from action manager
-        owner.MonsterAction();
+        if (!owner.isThinkAction)
+            owner.MonsterAction();
     }
 
     public override void ExecuteState()
@@ -41,6 +42,6 @@ public class ActionState : State<MonsterInteraction>
 
     public override void ExitState()
     {
-        owner.EndAction();
+        owner.ExitAction();
     }
 }
