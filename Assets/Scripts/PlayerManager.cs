@@ -62,9 +62,9 @@ public class PlayerManager : MonoBehaviour
             case RuntimePlatform.Android:
                 if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
                 {
-                    if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId) && Input.GetMouseButtonDown(0)) InputProcess();
+                    if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId)) InputProcess();
                 }
-                 break;
+                break;
 
             case RuntimePlatform.WindowsEditor:
                 if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
