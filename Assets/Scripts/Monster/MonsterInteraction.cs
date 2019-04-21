@@ -93,7 +93,8 @@ public class MonsterInteraction : MonoBehaviour
         animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
         animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
-            stateMachine.Update();
+            if (stateMachine != null)
+                stateMachine.Update();
     }
 
     #region initial

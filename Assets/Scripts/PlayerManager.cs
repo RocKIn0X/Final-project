@@ -86,12 +86,15 @@ public class PlayerManager : MonoBehaviour
         int i = 0;
         foreach (KeyValuePair<CropAssets, int> cropAsset in cropAmountList)
         {
-            inventoryItemList[i].gameObject.SetActive(true);
-            inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            if (cropAsset.Value > 0)
+            {
+                inventoryItemList[i].gameObject.SetActive(true);
+                inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            }
         }
         for (int j = i; j < inventoryItemList.Capacity; j++)
         {
-            inventoryItemList[i].gameObject.SetActive(false);
+            inventoryItemList[j].gameObject.SetActive(false);
         }
         DataManager.Instance.SaveData();
     }
@@ -112,5 +115,7 @@ public class PlayerManager : MonoBehaviour
         playerName = playerData.playerName;
         playerMoney = playerData.playerMoney;
         DataManager.Instance.ConvertLoadingData();
+        SetInventory();
+        SetMoney();
     }
 }
