@@ -57,7 +57,19 @@ public class PlayerManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
+        switch (Application.platform)
+        {
+            case RuntimePlatform.Android:
+                if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+                {
+                    if (EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId) && Input.GetMouseButtonDown(0)) InputProcess();
+                }
+                 break;
+
+            case RuntimePlatform.WindowsEditor:
+                if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
+                break;
+        }
     }
 
     public void AddMoney(float amount)
