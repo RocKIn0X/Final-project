@@ -220,7 +220,7 @@ namespace Anonym.Isometric
         }
 
         [SerializeField]
-        protected Vector3 vHorizontalMovement;
+        public Vector3 vHorizontalMovement;
 
         [SerializeField]
         protected Vector3 vDestinationCoordinates;

@@ -3,9 +3,9 @@
 [System.Serializable]
 public class Status
 {
-    private float maxHungry;
-    private float maxTireness;
-    private float maxEmotion;
+    private static float maxHungry = 100;
+    private static float maxTireness = 100;
+    private static float maxEmotion = 100;
 
     public float hunger;
     public float tireness;
@@ -30,10 +30,6 @@ public class Status
 
     public void Reset ()
     {
-        maxHungry = 100;
-        maxTireness = 100;
-        maxEmotion = 100;
-
         hunger = maxHungry;
         tireness = maxTireness;
         emotion = maxEmotion;

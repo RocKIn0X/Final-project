@@ -1070,7 +1070,7 @@ PrefabInstance:
     - target: {fileID: 1040473587809656722, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000014704699
+      value: 0.000004749485
       objectReference: {fileID: 0}
     - target: {fileID: 6637874977267234093, guid: 48b4c4aed2e9da1e9ab5a7084dbd2f06,
         type: 3}
@@ -1386,7 +1386,7 @@ PrefabInstance:
     - target: {fileID: 4405984567353807858, guid: 4575ca6246c5c03e3bf209f3305c5a3c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000023382323
+      value: -0.0000538999
       objectReference: {fileID: 0}
     - target: {fileID: 2874788714162632990, guid: 4575ca6246c5c03e3bf209f3305c5a3c,
         type: 3}
@@ -1486,7 +1486,7 @@ PrefabInstance:
     - target: {fileID: 3463503222966933772, guid: 4575ca6246c5c03e3bf209f3305c5a3c,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.0000681704
+      value: 0.00019024071
       objectReference: {fileID: 0}
     - target: {fileID: 3085154107557704672, guid: 4575ca6246c5c03e3bf209f3305c5a3c,
         type: 3}
@@ -1587,12 +1587,12 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 1122785618}
+      objectReference: {fileID: 1062986164}
     - target: {fileID: 8802733296579502382, guid: 4575ca6246c5c03e3bf209f3305c5a3c,
         type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1122785618}
+      objectReference: {fileID: 1062986164}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4575ca6246c5c03e3bf209f3305c5a3c, type: 3}
 --- !u!114 &199525609 stripped
@@ -5055,7 +5055,7 @@ MonoBehaviour:
   _ISOBasis: {fileID: 0}
   ISOListForBackup: 
   _vIso2DScaleMultiplier: {x: 1, y: 1, z: 1}
---- !u!21 &1122785618
+--- !u!21 &1062986164
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
@@ -8857,6 +8857,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI_TopBar
       objectReference: {fileID: 0}
+    - target: {fileID: 5596931624438481044, guid: 920fe2f53690a1d908f4b93fbe112ebf,
+        type: 3}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5596931624438481044, guid: 920fe2f53690a1d908f4b93fbe112ebf,
+        type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1657666526033647766, guid: 920fe2f53690a1d908f4b93fbe112ebf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8978,16 +8988,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5768187898297589609, guid: 920fe2f53690a1d908f4b93fbe112ebf,
-        type: 3}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5596931624438481044, guid: 920fe2f53690a1d908f4b93fbe112ebf,
-        type: 3}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5596931624438481044, guid: 920fe2f53690a1d908f4b93fbe112ebf,
         type: 3}
       propertyPath: m_isInputParsingRequired
       value: 1
