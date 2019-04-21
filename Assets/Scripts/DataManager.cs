@@ -61,6 +61,20 @@ public class DataManager : MonoBehaviour
         LoadData();
     }
 
+    public void CreateNewData()
+    {
+        PlayerPrefs.SetString("RecentPlayer", current_playerData.playerName);
+        string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+        string dataPath = Path.Combine(folderPath, current_playerData.playerName + fileExtension);
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
+        {
+            binaryFormatter.Serialize(fileStream, current_playerData);
+        } 
+    }
+
     public void SaveData()
     {
         SavePlayerData();
@@ -78,6 +92,7 @@ public class DataManager : MonoBehaviour
     public void LoadData()
     {
         string[] filePaths = GetFilePaths();
+        playerData_dic.Clear();
         foreach (string filePath in filePaths)
         {
             PlayerData _playerData = LoadPlayerData(filePath);

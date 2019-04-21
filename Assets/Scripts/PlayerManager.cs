@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -31,9 +32,12 @@ public class PlayerManager : MonoBehaviour
 
     public string playerName = "Testing01";
     public float playerMoney;
+    public Image cursorImage;
     public CropAssets cropAsset_selectToPlant;
+
     [SerializeField] TextMeshProUGUI playerMoneyText;
     [Header("Inventory")]
+
     public List<InventoryItem> inventoryItemList = new List<InventoryItem>();
     public Dictionary<CropAssets, int> cropAmountList = new Dictionary<CropAssets, int>();
 
