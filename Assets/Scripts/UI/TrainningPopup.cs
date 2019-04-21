@@ -133,7 +133,7 @@ public class TrainningPopup : MonoBehaviour
                 return bedSprite;
             case TypeTile.WorkTile :
                 Crop tileCrop = targetTile.gameObject.GetComponent<WorkTile>().crop;
-                return tileCrop == null ? noPlantSprite : tileCrop.GetSprite() ;
+                return tileCrop.GetSprite() == null ? noPlantSprite : tileCrop.GetSprite() ;
             default :
                 return null;
         }
