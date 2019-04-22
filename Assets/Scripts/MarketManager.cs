@@ -51,6 +51,7 @@ public class MarketManager : MonoBehaviour
         buyingCropAssets = _buyingCropAssets;
         buyPanel.DisplayItem(buyingCropAssets.cropSprite,
                              buyingCropAssets.buyingCost * buyingCropAssets.priceMultiplier);
+        buyPanel.GetComponent<Animator>().SetTrigger("Active");
     }
 
     public void BuyItem()
