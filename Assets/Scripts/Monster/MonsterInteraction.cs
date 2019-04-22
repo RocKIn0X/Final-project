@@ -2,7 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using StateSystem;
+
+[System.Serializable]
+public class MonsterData
+{
+    public Vector3 position;
+    public Status status;
+}
+
+[System.Serializable]
+public enum MonsterCondition
+{
+    Normal,
+    Hungry,
+    Tired
+}
 
 public class MonsterInteraction : MonoBehaviour
 {
@@ -15,11 +31,14 @@ public class MonsterInteraction : MonoBehaviour
     IsometricMovement target;
 
     [Header("Status field")]
+    public MonsterCondition condition;
     [SerializeField]
     private Status status;
     public float hungerDecay;
     public float tirenessDecay;
     public float emotionDecay;
+    public float hungerMinimum = 10f;
+    public float tirenessMinimum = 10f;
     private UI_GaugeArea ui_gaugeArea;
 
     [Header("Delay time on each state")]
@@ -31,15 +50,20 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    // state index 0 = move, 1 = action
     public int actionIndex = 0;
 
     [Header("Checking each state")]
     public bool isArrived = false;
+    public bool isThinkAction = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
     public bool isStateMachineRunning = false;
 
     public float timer;
+
+    private MonsterData data;
+    private Animator animator;
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
@@ -55,7 +79,10 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Start()
     {
-        status = new Status();
+        animator = this.GetComponent<Animator>();
+        //LoadMonsterData();
+        condition = MonsterCondition.Normal;
+  
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
         {
@@ -74,10 +101,32 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (NMAgent.vHorizontalMovement.magnitude > 0) animator.SetTrigger("Moving");
+        animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
+        animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
-            stateMachine.Update();
+            if (stateMachine != null)
+                stateMachine.Update();
     }
 
+    #region initial
+    private void Init()
+    {
+        if (target == null)
+            SetTarget(GetComponent<IsometricMovement>());
+
+        if (target == null)
+            SetTarget(FindObjectOfType<IsometricMovement>());
+    }
+
+    private void SetTarget(IsometricMovement newTarget)
+    {
+        target = newTarget;
+        NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
+    }
+    #endregion
+
+    #region StateMachineFunc
     public IEnumerator WaitInitBrain ()
     {
         while (!ActionManager.instance.isInitBrain)
@@ -111,16 +160,127 @@ public class MonsterInteraction : MonoBehaviour
         }
     }
 
+    private bool IsArrivedNow()
+    {
+        float distance = Vector3.Distance(transform.position, tileTarget.pos);
+
+        if (distance < 0.3f)
+        {
+            isArrived = true;
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool isNormalCondition ()
+    {
+        if (status.hunger < hungerMinimum)
+        {
+            condition = MonsterCondition.Hungry;
+            return false;
+        }
+        
+        if (status.tireness < tirenessMinimum)
+        {
+            condition = MonsterCondition.Tired;
+            return false;
+        }
+
+        return true;
+    }
+
+    private void MoveToTarget()
+    {
+        if (isNormalCondition())
+        {
+            Vector3 targetPosition = GetTargetPosition();
+            NMAgent.MoveToDestination(targetPosition);
+        }
+        else
+        {
+            if (condition == MonsterCondition.Hungry)
+            {
+                // if tile here equal work tile
+                    // if tile has crop
+                        // eat crop
+                        // change to move state again
+                // else
+                    // tile target equal food tile
+                    // move to food tile
+            }
+            else if (condition == MonsterCondition.Tired)
+            {
+                // sleep here
+                // change to move state
+            }
+        }
+    }
+
+    private void DoAction()
+    {
+        ActionManager.instance.SetActionIndex(actionIndex);
+
+        if (tileTarget.typeTile == TypeTile.FoodTile)
+        {
+            tileTarget.ActionResult(0, this);
+            DisplayBubble(3);
+        }
+        else if (tileTarget.typeTile == TypeTile.RestTile)
+        {
+            tileTarget.ActionResult(0, this);
+            DisplayBubble(4);
+        }
+        else if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            List<double> info = tileTarget.info;
+
+            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            tileTarget.ActionResult(index, this);
+            DisplayBubble(index);
+        }
+
+        isThinkAction = true;
+    }
+
+    private Vector3 GetTargetPosition()
+    {
+        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
+        tileTarget = TileManager.Instance.GetTile(index);
+
+        Vector3 targetPosition = this.transform.position;
+
+        if (tileTarget != null)
+        {
+            targetPosition = tileTarget.pos;
+        }
+
+        return targetPosition;
+    }
+
+    private List<double> GetStatusStates()
+    {
+        List<double> states = new List<double>();
+        states.Add(status.GetHungryRatio() - 0.5f);
+        states.Add(status.GetTirenessRatio() - 0.5f);
+        states.Add(status.GetEmotionRatio() - 0.5f);
+
+        return states;
+    }
+
     public bool IsWaitTime ()
     {
         timer += Time.deltaTime;
 
-        if (isOnMoveState && timer < waitTimeBeforeAction)
+        // On move state
+        if (actionIndex == 0 && timer < waitTimeBeforeAction)
         {
             return false;
         }
 
-        if (isOnActionState && timer < timePerAction)
+        // On action state
+        if (actionIndex == 1 && timer < timePerAction)
         {
             return false;
         }
@@ -185,17 +345,21 @@ public class MonsterInteraction : MonoBehaviour
         DoAction();
     }
 
-    public void EndAction ()
+    public void ExitAction ()
     {
         RemoveBubble();
 
         isOnActionState = false;
+        isThinkAction = false;
         timer = 0f;
 
         // set reward action state
         if (tileTarget.typeTile == TypeTile.WorkTile)
             ActionManager.instance.SetMemory();
+
+        SaveMonsterData();
     }
+    #endregion
 
     #region statusMethod
     public void SetStatus(float hungry, float tireness, float emotion)
@@ -216,7 +380,6 @@ public class MonsterInteraction : MonoBehaviour
         status.SetStatus(hunger, tireness, emotion);
         if (ui_gaugeArea != null)
         {
-            Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
             ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
         }
         else
@@ -226,113 +389,32 @@ public class MonsterInteraction : MonoBehaviour
     }
     #endregion
 
-    private void Init()
+    #region SaveLoad
+    public void SaveMonsterData ()
     {
-        if (target == null)
-            SetTarget(GetComponent<IsometricMovement>());
-
-        if (target == null)
-            SetTarget(FindObjectOfType<IsometricMovement>());
+        data.position = transform.position;
+        data.status = status;
+        DataManager.Instance.SaveMonsterData(data);
     }
 
-    private void SetTarget(IsometricMovement newTarget)
+    public void LoadMonsterData ()
     {
-        target = newTarget;
-        NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
-    }
-
-    private void MoveToTarget ()
-    {
-        Vector3 targetPosition = GetTargetPosition();
-        NMAgent.MoveToDestination(targetPosition);
-    }
-
-    private void DoAction ()
-    {
-        ActionManager.instance.SetActionIndex(actionIndex);
-
-        if (tileTarget.typeTile == TypeTile.FoodTile)
+        if (DataManager.Instance.current_monsterData != null)
         {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(3);
+            data = DataManager.Instance.current_monsterData;
+            transform.position = data.position;
+            status = data.status;
         }
-        else if (tileTarget.typeTile == TypeTile.RestTile)
+        else
         {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(4);
-        }
-        else if (tileTarget.typeTile == TypeTile.WorkTile)
-        {
-            List<double> info = tileTarget.info;
-
-            int index = ActionManager.instance.CalculateAction(actionIndex, info);
-            //int index = Random.Range(0, 3);
-            tileTarget.ActionResult(index, this);
-            DisplayBubble(index);
+            status = new Status();
+            data = new MonsterData();
         }
     }
-
-    private Vector3 GetTargetPosition ()
-    {
-        //status.RandomStatus();
-
-        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
-        Debug.Log("Index: " + index);
-        tileTarget = TileManager.Instance.GetTile(index);
-
-        Vector3 targetPosition = this.transform.position;
-
-        if (tileTarget != null)
-        {
-            targetPosition = tileTarget.pos;
-        }
-
-        return targetPosition;
-    }
-
-    private List<double> GetStatusStates ()
-    {
-        List<double> states = new List<double>();
-        states.Add(status.GetHungryRatio() - 0.5f);
-        states.Add(status.GetTirenessRatio() - 0.5f);
-        states.Add(status.GetEmotionRatio() - 0.5f);
-
-        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
-
-        return states;
-    }
+    #endregion
 
     private int GetRandomActionIndex ()
     {
         return (int)Random.Range(0, 5);
-    }
-
-    private bool IsArrivedNow ()
-    {
-        float distance = Vector3.Distance(transform.position, tileTarget.pos);
-
-        if (distance < 0.3f)
-        {
-            isArrived = true;
-
-            return true;
-        }
-
-        return false;
-    }
-
-    private void OnTriggerEnter(Collider col)
-    {
-        //Debug.Log("Hit something");
-        //tileTarget = col.gameObject;
-        //isArrived = true;
-    }
-
-    private void OnTriggerExit(Collider col)
-    {
-        if (col.gameObject == tileTarget)
-        {
-            tileTarget = null;
-        }
     }
 }

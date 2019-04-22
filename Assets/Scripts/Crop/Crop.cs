@@ -103,13 +103,13 @@ public class Crop
     // increase water guage
     public void WaterCrop(float amount)
     {
-        
+
     }
 
     // calculate cost of the crop
     public float CalculateCost()
     {
-        return realCost;
+        return (int)realCost * asset.priceMultiplier;
     }
 
     public bool HasCrop ()

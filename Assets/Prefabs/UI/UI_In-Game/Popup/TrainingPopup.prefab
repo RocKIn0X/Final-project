@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 681718355756288088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6305168229730195672}
   m_RootOrder: 0
@@ -1036,6 +1036,11 @@ MonoBehaviour:
   title: {fileID: 7425124128753441174}
   inputPanel: {fileID: 6240747033409452472}
   outputPanel: {fileID: 7452540611674434488}
+  targetImage: {fileID: 8053763593540847239}
+  actionImage: {fileID: 8859753672726901611}
+  foodSprite: {fileID: 21300000, guid: 2748b69483cf48348b0c7a9c2340d87d, type: 3}
+  bedSprite: {fileID: 21300000, guid: a02ac985dd3fd5946a390be823375738, type: 3}
+  noPlantSprite: {fileID: 21300000, guid: fd88d8491e4db624184cc631d943510b, type: 3}
   blankSprite: {fileID: 21300024, guid: 2ba30a74b12cdbd4bbc6ddffac7707c2, type: 3}
   trainable: 0
 --- !u!225 &5380351004952856176
