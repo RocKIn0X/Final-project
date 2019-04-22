@@ -88,7 +88,6 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
             cropImage.color = Color.clear;
         else
             cropImage.color = Color.white;
-        PlayerManager.Instance.cursorImage.sprite = _cropAsset.cropSprite;
         seedAmountText.text = amount.ToString();
     }
 }
