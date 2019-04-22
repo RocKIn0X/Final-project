@@ -133,7 +133,7 @@ public class WorkTile : Tile
             float moneyReceive = crop.CalculateCost();
             if (notifManager == null)
                 notifManager = (UI_TextNotif)FindObjectOfType(typeof(UI_TextNotif));
-            notifManager.Notify("Got $ " + moneyReceive + "from selling ", crop.asset.cropSprite);
+            notifManager.Notify("Got $ " + moneyReceive + " from selling ", crop.asset.cropSprite);
             PlayerManager.Instance.AddMoney(moneyReceive);
             //Destroy(this.overlayObj);
             crop = new Crop(null);

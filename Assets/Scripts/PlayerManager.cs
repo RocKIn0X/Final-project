@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour
 
     private StatCollector statCollector;
 
+    private TrainningPopup popup;
+
     void Start()
     {
         if (instance == null)
@@ -117,6 +119,15 @@ public class PlayerManager : MonoBehaviour
     }
     private void InputProcess()
     {
+
+        if (popup == null)
+            popup = (TrainningPopup)FindObjectOfType(typeof(TrainningPopup));
+        if (popup.trainable == false)
+        {
+            Debug.Log("Not Trainable");
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         LayerMask layerMask = LayerMask.GetMask("Monster");
         RaycastHit[] hits = Physics.RaycastAll(ray, 1000, layerMask);
