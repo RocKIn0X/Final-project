@@ -357,7 +357,7 @@ public class MonsterInteraction : MonoBehaviour
         if (tileTarget.typeTile == TypeTile.WorkTile)
             ActionManager.instance.SetMemory();
 
-        SaveMonsterData();
+        //SaveMonsterData();
     }
     #endregion
 
