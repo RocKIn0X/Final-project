@@ -109,7 +109,7 @@ public class Crop
     // calculate cost of the crop
     public float CalculateCost()
     {
-        return (int)realCost * asset.priceMultiplier;
+        return Mathf.RoundToInt(realCost * asset.priceMultiplier);
     }
 
     public bool HasCrop ()

@@ -145,12 +145,36 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   behaviorBook:
     behaviorDict:
-    - behavior: Eat
+    - behavior: Idle
       actionIndex: 0
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 5
+        emotionAmount: 5
+    - behavior: Harvest
+      actionIndex: 1
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 0
+        emotionAmount: 0
+    - behavior: Water
+      actionIndex: 2
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 0
+        emotionAmount: 0
+    - behavior: Eat
+      actionIndex: 3
       statusAmount:
         hungerAmount: 40
         tirenessAmount: 0
         emotionAmount: 15
+    - behavior: Sleep
+      actionIndex: 4
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 20
+        emotionAmount: -15
 --- !u!1 &1391565788252348
 GameObject:
   m_ObjectHideFlags: 0
