@@ -71,20 +71,26 @@ public class WorkTile : Tile
 
     public override void ActionResult(int index, MonsterInteraction m)
     {
-        if (index == 0)
+        switch(index)
         {
-            // Idle
-            Debug.Log("Idle");
-        }
-        else if (index == 1)
-        {
-            // Harvest
-            HarvestHere(m);
-        }
-        else if (index == 2)
-        {
-            // Water
-            WaterHere(m);
+            case (0):
+                Debug.Log("Idle");
+                break;
+            case (1):
+                HarvestHere(m);
+                break;
+            case (2):
+                WaterHere(m);
+                break;
+            case (3):
+                EatHere(m);
+                break;
+            case (4):
+                SleepHere(m);
+                break;
+            default:
+                Debug.Log("Index ERROR");
+                break;
         }
 
         float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;
@@ -96,6 +102,7 @@ public class WorkTile : Tile
     public override void EatHere(MonsterInteraction m)
     {
         Debug.Log("Eat at Work tile");
+        EatCrop();
     }
     public override void HarvestHere(MonsterInteraction m)
     {
@@ -136,6 +143,15 @@ public class WorkTile : Tile
             notifManager.Notify("Got $ " + moneyReceive + " from selling ", crop.asset.cropSprite);
             PlayerManager.Instance.AddMoney(moneyReceive);
             //Destroy(this.overlayObj);
+            crop = new Crop(null);
+            this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
+        }
+    }
+
+    private void EatCrop()
+    {
+        if (this.overlayObj != null && crop != null && crop.HasCrop())
+        {
             crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
         }
