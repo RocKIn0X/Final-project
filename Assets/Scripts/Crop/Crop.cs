@@ -109,7 +109,7 @@ public class Crop
     // calculate cost of the crop
     public float CalculateCost()
     {
-        return realCost * asset.priceMultiplier;
+        return (int)realCost * asset.priceMultiplier;
     }
 
     public bool HasCrop ()
