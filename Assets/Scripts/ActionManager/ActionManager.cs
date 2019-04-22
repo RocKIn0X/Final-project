@@ -203,7 +203,10 @@ public class ActionManager : MonoBehaviour
         trainingPopupCanvas.interactable = isOn;
 
         if (isOn)
+        {
             GameManager.Instance.PauseGame();
+            trainingPopupCanvas.GetComponent<Animator>().SetTrigger("Active");
+        }
         else
             GameManager.Instance.ResumeGame();
     }
