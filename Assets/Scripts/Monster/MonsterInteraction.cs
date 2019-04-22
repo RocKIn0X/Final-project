@@ -12,6 +12,14 @@ public class MonsterData
     public Status status;
 }
 
+[System.Serializable]
+public enum MonsterCondition
+{
+    Normal,
+    Hungry,
+    Tired
+}
+
 public class MonsterInteraction : MonoBehaviour
 {
     public Tile tileTarget;
@@ -23,11 +31,14 @@ public class MonsterInteraction : MonoBehaviour
     IsometricMovement target;
 
     [Header("Status field")]
+    public MonsterCondition condition;
     [SerializeField]
     private Status status;
     public float hungerDecay;
     public float tirenessDecay;
     public float emotionDecay;
+    public float hungerMinimum = 10f;
+    public float tirenessMinimum = 10f;
     private UI_GaugeArea ui_gaugeArea;
 
     [Header("Delay time on each state")]
@@ -69,7 +80,8 @@ public class MonsterInteraction : MonoBehaviour
     private void Start()
     {
         animator = this.GetComponent<Animator>();
-        LoadMonsterData();
+        //LoadMonsterData();
+        condition = MonsterCondition.Normal;
   
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
@@ -162,10 +174,48 @@ public class MonsterInteraction : MonoBehaviour
         return false;
     }
 
+    private bool isNormalCondition ()
+    {
+        if (status.hunger < hungerMinimum)
+        {
+            condition = MonsterCondition.Hungry;
+            return false;
+        }
+        
+        if (status.tireness < tirenessMinimum)
+        {
+            condition = MonsterCondition.Tired;
+            return false;
+        }
+
+        return true;
+    }
+
     private void MoveToTarget()
     {
-        Vector3 targetPosition = GetTargetPosition();
-        NMAgent.MoveToDestination(targetPosition);
+        if (isNormalCondition())
+        {
+            Vector3 targetPosition = GetTargetPosition();
+            NMAgent.MoveToDestination(targetPosition);
+        }
+        else
+        {
+            if (condition == MonsterCondition.Hungry)
+            {
+                // if tile here equal work tile
+                    // if tile has crop
+                        // eat crop
+                        // change to move state again
+                // else
+                    // tile target equal food tile
+                    // move to food tile
+            }
+            else if (condition == MonsterCondition.Tired)
+            {
+                // sleep here
+                // change to move state
+            }
+        }
     }
 
     private void DoAction()
@@ -187,7 +237,6 @@ public class MonsterInteraction : MonoBehaviour
             List<double> info = tileTarget.info;
 
             int index = ActionManager.instance.CalculateAction(actionIndex, info);
-            //int index = Random.Range(0, 3);
             tileTarget.ActionResult(index, this);
             DisplayBubble(index);
         }
@@ -197,10 +246,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private Vector3 GetTargetPosition()
     {
-        //status.RandomStatus();
-
         int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
-        Debug.Log("Index: " + index);
         tileTarget = TileManager.Instance.GetTile(index);
 
         Vector3 targetPosition = this.transform.position;
@@ -219,8 +265,6 @@ public class MonsterInteraction : MonoBehaviour
         states.Add(status.GetHungryRatio() - 0.5f);
         states.Add(status.GetTirenessRatio() - 0.5f);
         states.Add(status.GetEmotionRatio() - 0.5f);
-
-        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
 
         return states;
     }
@@ -336,7 +380,6 @@ public class MonsterInteraction : MonoBehaviour
         status.SetStatus(hunger, tireness, emotion);
         if (ui_gaugeArea != null)
         {
-            Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
             ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
         }
         else
