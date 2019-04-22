@@ -34,14 +34,15 @@ public class StartSceneManager : MonoBehaviour
 
         DataManager.Instance.current_playerData = new PlayerData();
         DataManager.Instance.current_playerData.playerName = newProfileName_Input.text;
-        DataManager.Instance.SaveData();
+        DataManager.Instance.current_playerData.playerMoney = 1000;
+        DataManager.Instance.CreateNewData();
         DataManager.Instance.LoadData();
         SetStartUI();
         SetActiveNewProfilePopup(isOn: false);
         SetActiveUI(isOn: true);
     }
 
-    private void SetActiveNewProfilePopup(bool isOn)
+    public void SetActiveNewProfilePopup(bool isOn)
     {
         SetActiveUI(isOn: false);
         newProfile_CanvasGroup.alpha = isOn ? 1 : 0;
@@ -58,7 +59,11 @@ public class StartSceneManager : MonoBehaviour
     private void SetStartUI()
     {
         touch_Text.text = DataManager.Instance.playerData_dic.Count > 0 ? "Touch To Start" : "Create new profile";
-        if (DataManager.Instance.playerData_dic.Count > 0) profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
+        if (DataManager.Instance.playerData_dic.Count > 0)
+        {
+            profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
+            profileName_Text.alpha = 1;
+        }
         else profileName_Text.alpha = 0;
     }
 }

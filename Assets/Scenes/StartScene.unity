@@ -1558,6 +1558,41 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 608253713}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActiveNewProfilePopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5846298883293534939, guid: 88c433c57f5615648bccc8b3a4271389,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88c433c57f5615648bccc8b3a4271389, type: 3}
 --- !u!222 &7738448773174987694

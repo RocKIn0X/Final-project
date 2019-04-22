@@ -30,6 +30,7 @@ public class DataManager : MonoBehaviour
     }
 
     public PlayerData current_playerData = new PlayerData();
+    public MonsterData current_monsterData = new MonsterData();
     public Dictionary<string, PlayerData> playerData_dic = new Dictionary<string, PlayerData>();
 
     const string folderName = "BinaryCharacterData";
@@ -60,6 +61,20 @@ public class DataManager : MonoBehaviour
         LoadData();
     }
 
+    public void CreateNewData()
+    {
+        PlayerPrefs.SetString("RecentPlayer", current_playerData.playerName);
+        string folderPath = Path.Combine(Application.persistentDataPath, folderName);
+        if (!Directory.Exists(folderPath)) Directory.CreateDirectory(folderPath);
+
+        string dataPath = Path.Combine(folderPath, current_playerData.playerName + fileExtension);
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        using (FileStream fileStream = File.Open(dataPath, FileMode.OpenOrCreate))
+        {
+            binaryFormatter.Serialize(fileStream, current_playerData);
+        } 
+    }
+
     public void SaveData()
     {
         SavePlayerData();
@@ -77,6 +92,7 @@ public class DataManager : MonoBehaviour
     public void LoadData()
     {
         string[] filePaths = GetFilePaths();
+        playerData_dic.Clear();
         foreach (string filePath in filePaths)
         {
             PlayerData _playerData = LoadPlayerData(filePath);
@@ -106,6 +122,11 @@ public class DataManager : MonoBehaviour
         PlayerPrefs.SetString("RecentPlayer", current_playerData.playerName);
         current_playerData.playerMoney = PlayerManager.Instance.playerMoney;
         ConvertSavingData();
+    }
+
+    public void SaveMonsterData(MonsterData data)
+    {
+        current_monsterData = data;
     }
 
     public void ConvertSavingData()
