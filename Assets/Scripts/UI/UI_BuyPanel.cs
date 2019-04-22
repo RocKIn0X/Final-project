@@ -54,5 +54,6 @@ public class UI_BuyPanel : MonoBehaviour
         buyPanel_canvasGroup.alpha = isOn ? 1 : 0;
         buyPanel_canvasGroup.blocksRaycasts = isOn;
         buyPanel_canvasGroup.interactable = isOn;
+        if (isOn) buyPanel_canvasGroup.GetComponent<Animator>().SetTrigger("Active");
     }
 }
