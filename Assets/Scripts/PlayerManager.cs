@@ -66,6 +66,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
 
+            case RuntimePlatform.LinuxEditor:
             case RuntimePlatform.WindowsEditor:
                 if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
                 break;

@@ -13,6 +13,7 @@ public class CropAssets : ScriptableObject
     [Header("Price")]
     public float buyingCost;
     public float maximumSellingCost;
+    public float priceMultiplier = 1.0f;
 
     [Header("Sprite for each state")]
     public Sprite cropSprite;
