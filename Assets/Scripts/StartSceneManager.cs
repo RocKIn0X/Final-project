@@ -10,6 +10,7 @@ public class StartSceneManager : MonoBehaviour
 {
     [SerializeField] CanvasGroup UI_CanvasGroup;
     [SerializeField] TextMeshProUGUI profileName_Text;
+    [SerializeField] TextMeshProUGUI playAs_Text;
     [SerializeField] TextMeshProUGUI touch_Text;
     [SerializeField] TMP_InputField newProfileName_Input;
     [SerializeField] CanvasGroup newProfile_CanvasGroup;
@@ -48,6 +49,7 @@ public class StartSceneManager : MonoBehaviour
         newProfile_CanvasGroup.alpha = isOn ? 1 : 0;
         newProfile_CanvasGroup.blocksRaycasts = isOn;
         newProfile_CanvasGroup.interactable = isOn;
+        if(isOn) newProfile_CanvasGroup.GetComponent<Animator>().SetTrigger("Active");
     }
     private void SetActiveUI(bool isOn)
     {
@@ -63,7 +65,12 @@ public class StartSceneManager : MonoBehaviour
         {
             profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
             profileName_Text.alpha = 1;
+            playAs_Text.alpha = 1;
         }
-        else profileName_Text.alpha = 0;
+        else
+        {
+            profileName_Text.alpha = 0;
+            playAs_Text.alpha = 0;
+        }
     }
 }
