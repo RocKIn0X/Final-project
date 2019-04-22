@@ -43,6 +43,8 @@ public class PlayerManager : MonoBehaviour
 
     private StatCollector statCollector;
 
+    private TrainningPopup popup;
+
     void Start()
     {
         if (instance == null)

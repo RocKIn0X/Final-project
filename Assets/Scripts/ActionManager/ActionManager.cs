@@ -10,14 +10,14 @@ public class BrainCollection
 
     // ANN
     [Header("[ANN parameters]")]
-    public int numInputs;
+        public int numInputs;
     public int numOutputs;
     public List<int> numNEachLayer;
     public double alpha;
 
     // Reinforcement
     [Header("[Reinforcement parameters]")]
-    public float discount;
+        public float discount;
 
     private MonsterBrain brain;
 
@@ -48,6 +48,7 @@ public class BrainCollection
 public class ActionManager : MonoBehaviour
 {
     public bool isInitBrain = false;
+    public bool isTrainable = true;
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
 
     #region Reward
@@ -172,12 +173,11 @@ public class ActionManager : MonoBehaviour
 
     public void CallTrainningPopup()
     {
-        SetTrainingPopup(true);
-
         if (actionIndex == 0)
         {
             // status
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+            isTrainable = true;
         }
         else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile)
         {
@@ -189,15 +189,25 @@ public class ActionManager : MonoBehaviour
             cropInfo.Add(0);
             //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+            isTrainable = true;
         }
         else
         {
             trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            isTrainable = false;
         }
+
+        SetTrainingPopup(true);
     }
 
     public void SetTrainingPopup(bool isOn)
     {
+        if (isTrainable == false)
+        {
+            // TODO Play Untrainable SFX
+            return ;
+        }
+
         trainingPopupCanvas.alpha = isOn ? 1 : 0;
         trainingPopupCanvas.blocksRaycasts = isOn;
         trainingPopupCanvas.interactable = isOn;

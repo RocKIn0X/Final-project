@@ -26,6 +26,7 @@ public class MonsterInteraction : MonoBehaviour
     public float waterAmount;
 
     public ActionBubble actionBubble;
+    private MoveMarker moveMarker;
 
     [SerializeField]
     IsometricMovement target;
@@ -82,7 +83,7 @@ public class MonsterInteraction : MonoBehaviour
         animator = this.GetComponent<Animator>();
         //LoadMonsterData();
         condition = MonsterCondition.Normal;
-  
+
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
         {
@@ -146,6 +147,10 @@ public class MonsterInteraction : MonoBehaviour
         {
             yield return null;
         }
+
+        //if (moveMarker == null)
+        //    moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+        //moveMarker.Disappear();
     }
 
     public IEnumerator ActionState ()
@@ -181,7 +186,7 @@ public class MonsterInteraction : MonoBehaviour
             condition = MonsterCondition.Hungry;
             return false;
         }
-        
+
         if (status.tireness < tirenessMinimum)
         {
             condition = MonsterCondition.Tired;
@@ -254,6 +259,9 @@ public class MonsterInteraction : MonoBehaviour
         if (tileTarget != null)
         {
             targetPosition = tileTarget.pos;
+            if (moveMarker == null)
+                moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+            moveMarker.SetMarker(tileTarget);
         }
 
         return targetPosition;
