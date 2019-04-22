@@ -1,0 +1,26 @@
+V1.1.4
+Bug Fix 0005: Fixed a bug with muting the SFXManager
+
+V1.1.3
+Bug Fix 0004: Fixed styling error in empty lists
+
+V1.1.2
+Bug Fix 0003: Fixed SFX volume being odd on unpause
+Addition 0007: Added realtime voice counts to inspectors
+Addition 0008: SFXManager and MusicManager now support global muting
+
+V1.1.1
+Bug Fix 0001: Fixed an array of issues with playlists
+Bug Fix 0002: Fixed a bug where inspectors would throw a null ref exception after any script recompiles
+Addition 0006: SFXManager sync corrector stage 1
+
+V1.1.0
+Addition 0001: Polyphony limiting stage 1
+Addition 0002: Transition sync corrector stage 1
+Addition 0003: MusicManager inspector
+Addition 0004: SFXManager inspector
+Addition 0005: PlaylistManager inspector
+Addition 0006: Preview buttons added to inspectors
+
+V1.0.0
+Initial Release
