@@ -45,7 +45,7 @@ public class StartSceneManager : MonoBehaviour
 
     public void SetActiveNewProfilePopup(bool isOn)
     {
-        SetActiveUI(isOn: false);
+        SetActiveUI(isOn: !isOn);
         newProfile_CanvasGroup.alpha = isOn ? 1 : 0;
         newProfile_CanvasGroup.blocksRaycasts = isOn;
         newProfile_CanvasGroup.interactable = isOn;

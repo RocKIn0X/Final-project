@@ -13,8 +13,18 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
     [SerializeField] Image cropImage;
     [SerializeField] TextMeshProUGUI seedAmountText;
 
+    void Start ()
+    {
+        if (cropImage.sprite == null)
+            cropImage.color = Color.clear;
+    }
+
     public void OnPointerDown(PointerEventData pointerEventData)
     {
+        if (cropAsset == null)
+        {
+            return;
+        }
         PlayerManager.Instance.cursorImage.enabled = true;
         PlayerManager.Instance.cropAsset_selectToPlant = this.cropAsset;
         PlayerManager.Instance.cursorImage.sprite = PlayerManager.Instance.cropAsset_selectToPlant.cropSprite;
@@ -22,9 +32,13 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
         RectTransformUtility.ScreenPointToLocalPointInRectangle(PopupCanvase.transform as RectTransform, Input.mousePosition, PopupCanvase.worldCamera, out pos);
         PlayerManager.Instance.cursorImage.transform.position = PopupCanvase.transform.TransformPoint(pos);
     }
-    
+
     public void OnBeginDrag(PointerEventData data)
     {
+        if (cropAsset == null)
+        {
+            return;
+        }
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(PopupCanvase.transform as RectTransform, Input.mousePosition, PopupCanvase.worldCamera, out pos);
         PlayerManager.Instance.cursorImage.transform.position = PopupCanvase.transform.TransformPoint(pos);
@@ -39,6 +53,10 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
 
     public void OnDrag(PointerEventData data)
     {
+        if (cropAsset == null)
+        {
+            return;
+        }
         Vector2 pos;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(PopupCanvase.transform as RectTransform, Input.mousePosition, PopupCanvase.worldCamera, out pos);
         PlayerManager.Instance.cursorImage.transform.position = PopupCanvase.transform.TransformPoint(pos);
@@ -66,7 +84,10 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
         cropAsset = _cropAsset;
         amount = _amount;
         cropImage.sprite = _cropAsset.cropSprite;
-        PlayerManager.Instance.cursorImage.sprite = _cropAsset.cropSprite;
+        if (cropImage.sprite == null)
+            cropImage.color = Color.clear;
+        else
+            cropImage.color = Color.white;
         seedAmountText.text = amount.ToString();
     }
 }

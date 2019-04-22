@@ -352,6 +352,7 @@ MonoBehaviour:
   waterAmount: 0.5
   actionBubble: {fileID: 8385674587514240587}
   target: {fileID: 0}
+  condition: 0
   status:
     hunger: 100
     tireness: 100
@@ -359,6 +360,8 @@ MonoBehaviour:
   hungerDecay: -0.5
   tirenessDecay: -0.5
   emotionDecay: 0
+  hungerMinimum: 10
+  tirenessMinimum: 10
   waitTimeBeforeAction: 2
   timePerAction: 5
   NMAgent: {fileID: 0}
