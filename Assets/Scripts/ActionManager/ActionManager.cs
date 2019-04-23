@@ -59,6 +59,12 @@ public class ActionManager : MonoBehaviour
     private float reward;
     #endregion
 
+    #region WaitReward
+    private bool isWaitReward = false;
+    private float waitReward = 0;
+    private TypeTile waitTile;
+    #endregion
+
     #region Singleton Object
     public static ActionManager instance = null;
 
@@ -146,17 +152,63 @@ public class ActionManager : MonoBehaviour
     public void SetActionIndex (int index)
     {
         actionIndex = index;
+        waitReward = 0;
+        if (index == 0 && waitReward != 0)
+        {
+            if (waitTile != TypeTile.WorkTile && waitTile == TileManager.Instance.tileTarget.typeTile)
+            {
+                Debug.Log("Apply waitReward");
+                reward = waitReward;
+            }
+        }
+        isWaitReward = false;
+    }
+
+    public void WaitAndPraise()
+    {
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward >= praiseReward)
+            waitReward = waitReward + praiseReward;
+        else
+            waitReward = waitReward + praiseReward;
+        SetTrainingPopup(false);
+    }
+
+    public void WaitAndPunish()
+    {
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward <= punishReward)
+            waitReward = waitReward + punishReward;
+        else
+            waitReward = waitReward + punishReward;
+        SetTrainingPopup(false);
     }
 
     public void praise ()
     {
-        reward = praiseReward;
+        if (isWaitReward == true)
+        {
+            WaitAndPraise();
+            return;
+        }
+        if (reward >= praiseReward)
+            reward = reward + praiseReward;
+        else
+            reward = praiseReward;
         SetTrainingPopup(false);
     }
 
     public void punish ()
     {
-        reward = punishReward;
+        if (isWaitReward == true)
+        {
+            WaitAndPunish();
+            return;
+        }
+        if (reward <= punishReward)
+            reward = reward + punishReward;
+        else
+            reward = punishReward;
         SetTrainingPopup(false);
     }
 
@@ -193,8 +245,9 @@ public class ActionManager : MonoBehaviour
         }
         else
         {
-            trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
-            isTrainable = false;
+            isWaitReward = true;
+            //trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            //isTrainable = false;
         }
 
         SetTrainingPopup(true);
