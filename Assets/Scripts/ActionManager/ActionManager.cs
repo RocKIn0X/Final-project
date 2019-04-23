@@ -218,7 +218,7 @@ public class ActionManager : MonoBehaviour
 
     public void SetMemory ()
     {
-        Debug.Log("Action index: " + actionIndex);
+        Debug.Log("Action index: " + actionIndex + ", Reward: " + reward);
         brainCollections[actionIndex].SetMemory(states, reward);
     }
 
