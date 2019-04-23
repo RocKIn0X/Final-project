@@ -15,12 +15,12 @@ MonoBehaviour:
   CollapseEditions: 1
   Name: Background
   Intro: {fileID: 8300000, guid: b922ac1b2ea09bf43a3b16e4a0142408, type: 3}
-  IntroVolume: 1
+  IntroVolume: 0.5
   OverlapDuration: 0
   Editions:
   - Name: 
     Soundtrack: {fileID: 8300000, guid: b922ac1b2ea09bf43a3b16e4a0142408, type: 3}
-    SoundtrackVolume: 1
+    SoundtrackVolume: 0.5
     TransitionSound: {fileID: 0}
     TransitionVolume: 1
     KeepPlaybackTime: 0

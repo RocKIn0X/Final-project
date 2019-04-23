@@ -191,6 +191,7 @@ public class ActionManager : MonoBehaviour
 
     public void praise ()
     {
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Praise");
         if (isWaitReward == true)
         {
             WaitAndPraise();
@@ -205,6 +206,7 @@ public class ActionManager : MonoBehaviour
 
     public void punish ()
     {
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Punish");
         if (isWaitReward == true)
         {
             WaitAndPunish();
@@ -266,6 +268,7 @@ public class ActionManager : MonoBehaviour
         if (isTrainable == false)
         {
             // TODO Play Untrainable SFX
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Resist");
             return ;
         }
 

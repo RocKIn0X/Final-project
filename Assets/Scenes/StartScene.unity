@@ -408,20 +408,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5846298882399771629}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &910120207 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2135969252665635366, guid: a632e5ca81378f04bb59c1b72028b621,
-    type: 3}
-  m_PrefabInstance: {fileID: 2135969252366477097}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &910120208
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 910120207}
-  m_Enabled: 1
 --- !u!1 &1201286991
 GameObject:
   m_ObjectHideFlags: 0
@@ -1301,32 +1287,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2135969252665635385, guid: a632e5ca81378f04bb59c1b72028b621,
         type: 3}
-      propertyPath: TrackLibrary.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2135969252665635385, guid: a632e5ca81378f04bb59c1b72028b621,
-        type: 3}
-      propertyPath: Mixer
-      value: 
-      objectReference: {fileID: 24300002, guid: d35383b09b5fddc4d94c1abea01bce08,
-        type: 2}
-    - target: {fileID: 2135969252665635385, guid: a632e5ca81378f04bb59c1b72028b621,
-        type: 3}
-      propertyPath: TrackLibrary.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 84ce9437fa0a476459b2b1937e918bf1,
-        type: 2}
-    - target: {fileID: 2135969252665635385, guid: a632e5ca81378f04bb59c1b72028b621,
-        type: 3}
       propertyPath: CollapseLibrary
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2135969252665635386, guid: a632e5ca81378f04bb59c1b72028b621,
-        type: 3}
-      propertyPath: Mixer
-      value: 
-      objectReference: {fileID: 24300002, guid: 7f5175ff9125bc849b20c089f6aa2841,
-        type: 2}
     - target: {fileID: 2135969252665635387, guid: a632e5ca81378f04bb59c1b72028b621,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -129,6 +129,7 @@ public class WorkTile : Tile
         waterAmount += m.waterAmount;
         if (crop != null)
             crop.WaterCrop(waterAmount);
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Water");
         UpdateStatus(actionIndex, m);
     }
 
@@ -150,6 +151,7 @@ public class WorkTile : Tile
             //Destroy(this.overlayObj);
             crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Sell");
         }
     }
 
@@ -218,6 +220,7 @@ public class WorkTile : Tile
             crop = new Crop(cropAsset);
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
             PlayerManager.Instance.cursorImage.GetComponent<Animator>().SetTrigger("Pressed");
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Plant");
             PlayerManager.Instance.cropAmountList[cropAsset] -= 1;
             PlayerManager.Instance.SetInventory();
         }
