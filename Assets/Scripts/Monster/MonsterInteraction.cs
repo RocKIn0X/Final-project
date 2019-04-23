@@ -232,7 +232,7 @@ public class MonsterInteraction : MonoBehaviour
             {
                 isArrived = true;
             }
-            
+
         }
     }
 
@@ -363,8 +363,8 @@ public class MonsterInteraction : MonoBehaviour
         actionIndex = 0;
         canTrain = true;
         isOnMoveState = true;
-        ActionManager.instance.SetActionIndex(actionIndex);
         StartCoroutine(MoveState());
+        ActionManager.instance.SetActionIndex(actionIndex);
     }
 
     public void ExitMoveState ()
@@ -407,7 +407,7 @@ public class MonsterInteraction : MonoBehaviour
         {
             if (condition == MonsterCondition.Normal) ActionManager.instance.SetMemory();
         }
-            
+
 
         //SaveMonsterData();
     }

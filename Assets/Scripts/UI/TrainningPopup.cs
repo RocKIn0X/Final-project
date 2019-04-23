@@ -248,6 +248,20 @@ public class TrainningPopup : MonoBehaviour
         ActionManager.instance.punish();
     }
 
+    public void UpdatePopup(TypeTile typeTile)
+    {
+        trainable = true;
+        Sprite targetSprite = GetTileSprite();
+        Sprite actionSprite = null;
+        if (iconLib == null)
+            iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
+        if (typeTile == TypeTile.FoodTile)
+            actionSprite = iconLib.GetIcon("Eat");
+        else if (typeTile == TypeTile.RestTile)
+            actionSprite = iconLib.GetIcon("Sleep");
+        SetLayout(null, null, targetSprite, actionSprite);
+    }
+
     public void ClosePanel ()
     {
         ActionManager.instance.SetTrainingPopup(false);
