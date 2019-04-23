@@ -10,6 +10,7 @@ public class StartSceneManager : MonoBehaviour
 {
     [SerializeField] CanvasGroup UI_CanvasGroup;
     [SerializeField] TextMeshProUGUI profileName_Text;
+    [SerializeField] TextMeshProUGUI playAs_Text;
     [SerializeField] TextMeshProUGUI touch_Text;
     [SerializeField] TMP_InputField newProfileName_Input;
     [SerializeField] CanvasGroup newProfile_CanvasGroup;
@@ -34,19 +35,21 @@ public class StartSceneManager : MonoBehaviour
 
         DataManager.Instance.current_playerData = new PlayerData();
         DataManager.Instance.current_playerData.playerName = newProfileName_Input.text;
-        DataManager.Instance.SaveData();
+        DataManager.Instance.current_playerData.playerMoney = 1000;
+        DataManager.Instance.CreateNewData();
         DataManager.Instance.LoadData();
         SetStartUI();
         SetActiveNewProfilePopup(isOn: false);
         SetActiveUI(isOn: true);
     }
 
-    private void SetActiveNewProfilePopup(bool isOn)
+    public void SetActiveNewProfilePopup(bool isOn)
     {
-        SetActiveUI(isOn: false);
+        SetActiveUI(isOn: !isOn);
         newProfile_CanvasGroup.alpha = isOn ? 1 : 0;
         newProfile_CanvasGroup.blocksRaycasts = isOn;
         newProfile_CanvasGroup.interactable = isOn;
+        if(isOn) newProfile_CanvasGroup.GetComponent<Animator>().SetTrigger("Active");
     }
     private void SetActiveUI(bool isOn)
     {
@@ -58,7 +61,16 @@ public class StartSceneManager : MonoBehaviour
     private void SetStartUI()
     {
         touch_Text.text = DataManager.Instance.playerData_dic.Count > 0 ? "Touch To Start" : "Create new profile";
-        if (DataManager.Instance.playerData_dic.Count > 0) profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
-        else profileName_Text.alpha = 0;
+        if (DataManager.Instance.playerData_dic.Count > 0)
+        {
+            profileName_Text.text = PlayerPrefs.GetString("RecentPlayer");
+            profileName_Text.alpha = 1;
+            playAs_Text.alpha = 1;
+        }
+        else
+        {
+            profileName_Text.alpha = 0;
+            playAs_Text.alpha = 0;
+        }
     }
 }

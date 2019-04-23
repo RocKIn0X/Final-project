@@ -37,10 +37,9 @@ public class ActionBubble : MonoBehaviour
         actionRenderer.color = Color.clear;
     }
 
-    public void ShowAction(int actionIndex)
+    public void ShowAction(string actionKey)
     {
-        string key = ActionDict.GetActionName(actionIndex);
-        _Log("Showing action: " + key);
+        _Log("Showing action: " + actionKey);
 
         bubbleRenderer = this.GetComponent<SpriteRenderer>();
         bubbleRenderer.color = Color.white;
@@ -48,8 +47,6 @@ public class ActionBubble : MonoBehaviour
         actionRenderer.color = Color.white;
         if (iconLib == null)
             iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
-        actionRenderer.sprite = iconLib.GetIcon(key);
-        //waitTimeout = WaitAndDisappear(BUBBLE_TIMEOUT_SEC);
-        //StartCoroutine(waitTimeout);
+        actionRenderer.sprite = iconLib.GetIcon(actionKey);
     }
 }

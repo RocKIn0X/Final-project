@@ -50,9 +50,26 @@ public class RestTile : Tile
 
     public override void ActionResult(int index, MonsterInteraction m)
     {
-        if (index == 0)
+        switch (index)
         {
-            SleepHere(m);
+            case (0):
+                Debug.Log("Idle");
+                break;
+            case (1):
+                HarvestHere(m);
+                break;
+            case (2):
+                WaterHere(m);
+                break;
+            case (3):
+                EatHere(m);
+                break;
+            case (4):
+                SleepHere(m);
+                break;
+            default:
+                Debug.Log("Index ERROR");
+                break;
         }
 
         float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;

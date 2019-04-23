@@ -22,7 +22,8 @@ public class MoveState : State<MonsterInteraction>
     public override void EnterState()
     {
         Debug.Log("Enter move state");
-        owner.EnterMoveState();
+        if (!owner.isArrived)
+            owner.EnterMoveState();
     }
 
     public override void ExecuteState()

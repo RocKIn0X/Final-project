@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 
@@ -31,13 +32,18 @@ public class PlayerManager : MonoBehaviour
 
     public string playerName = "Testing01";
     public float playerMoney;
+    public Image cursorImage;
     public CropAssets cropAsset_selectToPlant;
+
     [SerializeField] TextMeshProUGUI playerMoneyText;
     [Header("Inventory")]
+
     public List<InventoryItem> inventoryItemList = new List<InventoryItem>();
     public Dictionary<CropAssets, int> cropAmountList = new Dictionary<CropAssets, int>();
 
     private StatCollector statCollector;
+
+    private TrainningPopup popup;
 
     void Start()
     {
@@ -53,7 +59,20 @@ public class PlayerManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
+        switch (Application.platform)
+        {
+            case RuntimePlatform.Android:
+                if (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began)
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject(Input.touches[0].fingerId)) InputProcess();
+                }
+                break;
+
+            case RuntimePlatform.LinuxEditor:
+            case RuntimePlatform.WindowsEditor:
+                if (!EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(0)) InputProcess();
+                break;
+        }
     }
 
     public void AddMoney(float amount)
@@ -86,12 +105,15 @@ public class PlayerManager : MonoBehaviour
         int i = 0;
         foreach (KeyValuePair<CropAssets, int> cropAsset in cropAmountList)
         {
-            inventoryItemList[i].gameObject.SetActive(true);
-            inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            if (cropAsset.Value > 0)
+            {
+                inventoryItemList[i].gameObject.SetActive(true);
+                inventoryItemList[i++].SetInventory(cropAsset.Key, cropAsset.Value);
+            }
         }
         for (int j = i; j < inventoryItemList.Capacity; j++)
         {
-            inventoryItemList[i].gameObject.SetActive(false);
+            inventoryItemList[j].gameObject.SetActive(false);
         }
         DataManager.Instance.SaveData();
     }
@@ -112,5 +134,7 @@ public class PlayerManager : MonoBehaviour
         playerName = playerData.playerName;
         playerMoney = playerData.playerMoney;
         DataManager.Instance.ConvertLoadingData();
+        SetInventory();
+        SetMoney();
     }
 }

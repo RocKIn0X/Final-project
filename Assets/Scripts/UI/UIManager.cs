@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
         marketCanvasGroup.alpha = 1;
         marketCanvasGroup.blocksRaycasts = true;
         marketCanvasGroup.interactable = true;
+        marketCanvasGroup.GetComponent<Animator>().SetTrigger("Active");
+        GameManager.Instance.PauseGame();
     }
 
     public void OpenStatUI()
@@ -26,6 +28,7 @@ public class UIManager : MonoBehaviour
         statCanvasGroup.alpha = 1;
         statCanvasGroup.blocksRaycasts = true;
         statCanvasGroup.interactable = true;
+        statCanvasGroup.GetComponent<Animator>().SetTrigger("Active");
     }
 
     public void CloseStatUI()
@@ -40,5 +43,6 @@ public class UIManager : MonoBehaviour
         marketCanvasGroup.alpha = 0;
         marketCanvasGroup.blocksRaycasts = false;
         marketCanvasGroup.interactable = false;
+        GameManager.Instance.ResumeGame();
     }
 }

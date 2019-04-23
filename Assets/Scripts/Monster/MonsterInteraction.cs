@@ -2,7 +2,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using StateSystem;
+
+[System.Serializable]
+public class MonsterData
+{
+    public Vector3 position;
+    public Status status;
+}
+
+[System.Serializable]
+public enum MonsterCondition
+{
+    Normal,
+    Hungry,
+    Tired
+}
 
 public class MonsterInteraction : MonoBehaviour
 {
@@ -10,16 +26,20 @@ public class MonsterInteraction : MonoBehaviour
     public float waterAmount;
 
     public ActionBubble actionBubble;
+    private MoveMarker moveMarker;
 
     [SerializeField]
     IsometricMovement target;
 
     [Header("Status field")]
+    public MonsterCondition condition;
     [SerializeField]
     private Status status;
     public float hungerDecay;
     public float tirenessDecay;
     public float emotionDecay;
+    public float hungerMinimum = 10f;
+    public float tirenessMinimum = 10f;
     private UI_GaugeArea ui_gaugeArea;
 
     [Header("Delay time on each state")]
@@ -31,15 +51,21 @@ public class MonsterInteraction : MonoBehaviour
     [SerializeField, HideInInspector]
     IsometricNavMeshAgent NMAgent = null;
 
+    // state index 0 = move, 1 = action
     public int actionIndex = 0;
 
     [Header("Checking each state")]
+    public bool canTrain = true;
     public bool isArrived = false;
+    public bool isThinkAction = false;
     public bool isOnMoveState = false;
     public bool isOnActionState = false;
     public bool isStateMachineRunning = false;
 
     public float timer;
+
+    private MonsterData data;
+    private Animator animator;
 
     public StateMachine<MonsterInteraction> stateMachine { get; set; }
 
@@ -55,7 +81,10 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Start()
     {
-        status = new Status();
+        animator = this.GetComponent<Animator>();
+        //LoadMonsterData();
+        condition = MonsterCondition.Normal;
+
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
         {
@@ -74,137 +103,15 @@ public class MonsterInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (NMAgent.vHorizontalMovement.magnitude > 0) animator.SetTrigger("Moving");
+        animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
+        animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
-            stateMachine.Update();
+            if (stateMachine != null)
+                stateMachine.Update();
     }
 
-    public IEnumerator WaitInitBrain ()
-    {
-        while (!ActionManager.instance.isInitBrain)
-        {
-            yield return null;
-            stateMachine = new StateMachine<MonsterInteraction>(this);
-            stateMachine.ChangeState(new MoveState(this));
-            isStateMachineRunning = true;
-        }
-    }
-
-    public IEnumerator MoveState ()
-    {
-        MoveToTarget();
-        
-        while (!IsArrivedNow())
-        {
-            yield return null;
-        }
-    }
-
-    public IEnumerator ActionState ()
-    {
-        isOnActionState = true;
-
-        // calculate output for action
-        while (timer < 3f)
-        {
-            timer += Time.deltaTime;
-            yield return null;
-        }
-    }
-
-    public bool IsWaitTime ()
-    {
-        timer += Time.deltaTime;
-
-        if (isOnMoveState && timer < waitTimeBeforeAction)
-        {
-            return false;
-        }
-
-        if (isOnActionState && timer < timePerAction)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    public void DisplayBubble (int index)
-    {
-        actionBubble.ShowAction(index);
-        //actionBubble.ShowAction(index);
-    }
-
-    public void RemoveBubble()
-    {
-        actionBubble.Disappear();
-    }
-
-    public void EnterMoveState ()
-    {
-        actionIndex = 0; 
-        isOnMoveState = true;
-        StartCoroutine(MoveState());
-    }
-
-    public void ExitMoveState ()
-    {
-        isArrived = false;
-        isOnMoveState = false;
-        timer = 0f;
-
-        // set reward move state
-        Debug.Log("Action index: " + actionIndex);
-        ActionManager.instance.SetMemory();
-    }
-
-    public void MonsterAction ()
-    {
-        actionIndex = 1;
-        isOnActionState = true;
-        DoAction();
-    }
-
-    public void EndAction ()
-    {
-        RemoveBubble();
-
-        isOnActionState = false;
-        timer = 0f;
-
-        // set reward action state
-        if (tileTarget.typeTile == TypeTile.WorkTile)
-            ActionManager.instance.SetMemory();
-    }
-
-    #region statusMethod
-    public void SetStatus(float hungry, float tireness, float emotion)
-    {
-        status.hunger += hungry;
-        status.tireness += tireness;
-        status.emotion += emotion;
-    }
-    
-    public void DecreaseStatusOverSecond ()
-    {
-        float hunger = Mathf.Clamp(status.hunger + hungerDecay, 0f, 100f);
-        float tireness = Mathf.Clamp(status.tireness + tirenessDecay, 0f, 100f);
-
-        bool decreaseEmotion = (hunger < 50 && tireness < 50);
-        float emotion = decreaseEmotion ? Mathf.Clamp(status.emotion + emotionDecay, 0f, 100f) : Mathf.Clamp(status.emotion - emotionDecay, 0f, 100f);
-
-        status.SetStatus(hunger, tireness, emotion);
-        if (ui_gaugeArea != null)
-        {
-            Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
-            ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
-        }
-        else
-        {
-            Debug.Log("Please attach UI_GaugeArea in Game Scene");
-        }
-    }
-    #endregion
-
+    #region initial
     private void Init()
     {
         if (target == null)
@@ -219,74 +126,47 @@ public class MonsterInteraction : MonoBehaviour
         target = newTarget;
         NMAgent = target == null ? null : target.GetComponent<IsometricNavMeshAgent>();
     }
+    #endregion
 
-    private void MoveToTarget ()
+    #region StateMachineFunc
+    public IEnumerator WaitInitBrain ()
     {
-        Vector3 targetPosition = GetTargetPosition();
-        NMAgent.MoveToDestination(targetPosition);
-    }
-
-    private void DoAction ()
-    {
-        ActionManager.instance.SetActionIndex(actionIndex);
-
-        if (tileTarget.typeTile == TypeTile.FoodTile)
+        while (!ActionManager.instance.isInitBrain)
         {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(3);
-        }
-        else if (tileTarget.typeTile == TypeTile.RestTile)
-        {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(4);
-        }
-        else if (tileTarget.typeTile == TypeTile.WorkTile)
-        {
-            List<double> info = tileTarget.info;
-
-            int index = ActionManager.instance.CalculateAction(actionIndex, info);
-            //int index = Random.Range(0, 3);
-            tileTarget.ActionResult(index, this);
-            DisplayBubble(index);
+            yield return null;
+            stateMachine = new StateMachine<MonsterInteraction>(this);
+            stateMachine.ChangeState(new MoveState(this));
+            isStateMachineRunning = true;
         }
     }
 
-    private Vector3 GetTargetPosition ()
+    public IEnumerator MoveState ()
     {
-        //status.RandomStatus();
+        MoveToTarget();
 
-        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
-        Debug.Log("Index: " + index);
-        tileTarget = TileManager.Instance.GetTile(index);
-
-        Vector3 targetPosition = this.transform.position;
-
-        if (tileTarget != null)
+        while (!IsArrivedNow())
         {
-            targetPosition = tileTarget.pos;
+            yield return null;
         }
 
-        return targetPosition;
+        //if (moveMarker == null)
+        //    moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+        //moveMarker.Disappear();
     }
 
-    private List<double> GetStatusStates ()
+    public IEnumerator ActionState ()
     {
-        List<double> states = new List<double>();
-        states.Add(status.GetHungryRatio() - 0.5f);
-        states.Add(status.GetTirenessRatio() - 0.5f);
-        states.Add(status.GetEmotionRatio() - 0.5f);
+        isOnActionState = true;
 
-        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
-
-        return states;
+        // calculate output for action
+        while (timer < 3f)
+        {
+            timer += Time.deltaTime;
+            yield return null;
+        }
     }
 
-    private int GetRandomActionIndex ()
-    {
-        return (int)Random.Range(0, 5);
-    }
-
-    private bool IsArrivedNow ()
+    private bool IsArrivedNow()
     {
         float distance = Vector3.Distance(transform.position, tileTarget.pos);
 
@@ -300,18 +180,293 @@ public class MonsterInteraction : MonoBehaviour
         return false;
     }
 
-    private void OnTriggerEnter(Collider col)
+    private bool isNormalCondition ()
     {
-        //Debug.Log("Hit something");
-        //tileTarget = col.gameObject;
-        //isArrived = true;
+        if (status.hunger < hungerMinimum)
+        {
+            condition = MonsterCondition.Hungry;
+            return false;
+        }
+
+        if (status.tireness < tirenessMinimum)
+        {
+            condition = MonsterCondition.Tired;
+            return false;
+        }
+
+        return true;
     }
 
-    private void OnTriggerExit(Collider col)
+    private void MoveToTarget()
     {
-        if (col.gameObject == tileTarget)
+        Debug.Log("Move to TARGET");
+
+        if (isNormalCondition())
         {
-            tileTarget = null;
+            Vector3 targetPosition = GetTargetPosition();
+            NMAgent.MoveToDestination(targetPosition);
         }
+        else
+        {
+            canTrain = false;
+
+            if (condition == MonsterCondition.Hungry)
+            {
+                // if tile here equal work tile
+                if (tileTarget.typeTile == TypeTile.WorkTile)
+                {
+                    if (tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop())
+                    {
+                        Debug.Log("Eat");
+                        isArrived = true;
+                    }
+                }
+                else
+                {
+                    // set tile target to be food tile
+                    tileTarget = TileManager.Instance.GetTile(1);
+                    NMAgent.MoveToDestination(tileTarget.pos);
+                }
+            }
+            else if (condition == MonsterCondition.Tired)
+            {
+                isArrived = true;
+            }
+
+        }
+    }
+
+    private void DoAction()
+    {
+        ActionManager.instance.SetActionIndex(actionIndex);
+
+        if (tileTarget.typeTile == TypeTile.FoodTile)
+        {
+            EatImmedietely();
+        }
+        else if (tileTarget.typeTile == TypeTile.RestTile)
+        {
+            RestImmedietely();
+        }
+        else if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            List<double> info = tileTarget.info;
+
+            int index = ActionManager.instance.CalculateAction(actionIndex, info);
+            tileTarget.ActionResult(index, this);
+            DisplayBubble(index);
+        }
+
+        isThinkAction = true;
+    }
+
+    private void EatImmedietely ()
+    {
+        canTrain = false;
+        tileTarget.ActionResult(3, this);
+        DisplayBubble(3);
+        isThinkAction = true;
+    }
+
+    private void RestImmedietely ()
+    {
+        canTrain = false;
+        tileTarget.ActionResult(4, this);
+        DisplayBubble(4);
+        isThinkAction = true;
+    }
+
+    private Vector3 GetTargetPosition()
+    {
+        int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
+        tileTarget = TileManager.Instance.GetTile(index);
+
+        Vector3 targetPosition = this.transform.position;
+
+        if (tileTarget != null)
+        {
+            targetPosition = tileTarget.pos;
+            if (moveMarker == null)
+                moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+            moveMarker.SetMarker(tileTarget);
+        }
+
+        return targetPosition;
+    }
+
+    private List<double> GetStatusStates()
+    {
+        List<double> states = new List<double>();
+        states.Add(status.GetHungryRatio() - 0.5f);
+        states.Add(status.GetTirenessRatio() - 0.5f);
+        states.Add(status.GetEmotionRatio() - 0.5f);
+
+        return states;
+    }
+
+    public bool IsWaitTime ()
+    {
+        timer += Time.deltaTime;
+
+        // On move state
+        if (actionIndex == 0 && timer < waitTimeBeforeAction)
+        {
+            return false;
+        }
+
+        // On action state
+        if (actionIndex == 1 && timer < timePerAction)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    public void DisplayBubble (int index)
+    {
+        string key = "";
+        switch (index)
+        {
+            case (0) :
+                key = "Idle";
+                break;
+            case (1) :
+                key = "Harvest";
+                break;
+            case (2) :
+                key = "Water";
+                break;
+            case (3) :
+                key = "Eat";
+                break;
+            case (4) :
+                key = "Sleep";
+                break;
+            default :
+                key = "Invalid Index in MonsterInteraction.cs";
+                break;
+        }
+        actionBubble.ShowAction(key);
+    }
+
+    public void RemoveBubble()
+    {
+        actionBubble.Disappear();
+    }
+
+    public void EnterMoveState ()
+    {
+        condition = MonsterCondition.Normal;
+        Debug.Log(condition);
+
+        actionIndex = 0;
+        canTrain = true;
+        isOnMoveState = true;
+        StartCoroutine(MoveState());
+        ActionManager.instance.SetActionIndex(actionIndex);
+    }
+
+    public void ExitMoveState ()
+    {
+        Debug.Log("Exit move state");
+        isArrived = false;
+        isOnMoveState = false;
+        timer = 0f;
+
+        moveMarker.Disappear();
+
+        // set reward move state
+        if (condition == MonsterCondition.Normal)
+        {
+            ActionManager.instance.SetMemory();
+        }
+    }
+
+    public void MonsterAction ()
+    {
+        actionIndex = 1;
+        canTrain = true;
+        isOnActionState = true;
+        ActionManager.instance.SetActionIndex(actionIndex);
+        if (condition == MonsterCondition.Normal) DoAction();
+        else if (condition == MonsterCondition.Hungry) EatImmedietely();
+        else if (condition == MonsterCondition.Tired) RestImmedietely();
+    }
+
+    public void ExitAction ()
+    {
+        RemoveBubble();
+
+        isOnActionState = false;
+        isThinkAction = false;
+        timer = 0f;
+
+        // set reward action state
+        if (tileTarget.typeTile == TypeTile.WorkTile)
+        {
+            if (condition == MonsterCondition.Normal) ActionManager.instance.SetMemory();
+        }
+
+
+        //SaveMonsterData();
+    }
+    #endregion
+
+    #region statusMethod
+    public void SetStatus(float hungry, float tireness, float emotion)
+    {
+        status.hunger = Mathf.Clamp(status.hunger + hungry, 0, 100f);
+        status.tireness = Mathf.Clamp(status.tireness + tireness, 0, 100f);
+        status.emotion = Mathf.Clamp(status.emotion + emotion, 0, 100f);
+    }
+
+    public void DecreaseStatusOverSecond ()
+    {
+        float hunger = Mathf.Clamp(status.hunger + hungerDecay, 0f, 100f);
+        float tireness = Mathf.Clamp(status.tireness + tirenessDecay, 0f, 100f);
+
+        bool decreaseEmotion = (hunger < 50 && tireness < 50);
+        float emotion = decreaseEmotion ? Mathf.Clamp(status.emotion + emotionDecay, 0f, 100f) : Mathf.Clamp(status.emotion - emotionDecay, 0f, 100f);
+
+        status.SetStatus(hunger, tireness, emotion);
+        if (ui_gaugeArea != null)
+        {
+            ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
+        }
+        else
+        {
+            Debug.Log("Please attach UI_GaugeArea in Game Scene");
+        }
+    }
+    #endregion
+
+    #region SaveLoad
+    public void SaveMonsterData ()
+    {
+        data.position = transform.position;
+        data.status = status;
+        DataManager.Instance.SaveMonsterData(data);
+    }
+
+    public void LoadMonsterData ()
+    {
+        if (DataManager.Instance.current_monsterData != null)
+        {
+            data = DataManager.Instance.current_monsterData;
+            transform.position = data.position;
+            status = data.status;
+        }
+        else
+        {
+            status = new Status();
+            data = new MonsterData();
+        }
+    }
+    #endregion
+
+    private int GetRandomActionIndex ()
+    {
+        return (int)Random.Range(0, 5);
     }
 }
