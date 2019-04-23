@@ -212,14 +212,12 @@ public class MonsterInteraction : MonoBehaviour
 
             if (condition == MonsterCondition.Hungry)
             {
+                bool hasCrop = tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop();
                 // if tile here equal work tile
-                if (tileTarget.typeTile == TypeTile.WorkTile)
+                if (tileTarget.typeTile == TypeTile.WorkTile && hasCrop)
                 {
-                    if (tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop())
-                    {
-                        Debug.Log("Eat");
-                        isArrived = true;
-                    }
+                    Debug.Log("Eat");
+                    isArrived = true;
                 }
                 else
                 {
