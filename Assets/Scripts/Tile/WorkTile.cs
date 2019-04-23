@@ -200,6 +200,7 @@ public class WorkTile : Tile
         {
             crop = new Crop(cropAsset);
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
+            PlayerManager.Instance.cursorImage.GetComponent<Animator>().SetTrigger("Pressed");
             PlayerManager.Instance.cropAmountList[cropAsset] -= 1;
             PlayerManager.Instance.SetInventory();
         }
