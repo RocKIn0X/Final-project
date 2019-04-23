@@ -5,6 +5,7 @@ using UnityEngine;
 public class WorkTile : Tile
 {
     private UI_TextNotif notifManager;
+    private int actionIndex;
 
     public bool isWatered;
     public GameObject overlayObj;
@@ -71,6 +72,8 @@ public class WorkTile : Tile
 
     public override void ActionResult(int index, MonsterInteraction m)
     {
+        actionIndex = index;
+
         switch(index)
         {
             case (0):
@@ -92,31 +95,32 @@ public class WorkTile : Tile
                 Debug.Log("Index ERROR");
                 break;
         }
-
-        float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;
-        float tirenessAmount = behaviorBook.behaviorDictionary[index].tirenessAmount;
-        float emotionAmount = behaviorBook.behaviorDictionary[index].emotionAmount;
-        m.SetStatus(hungerAmount, tirenessAmount, emotionAmount);
     }
 
     public override void EatHere(MonsterInteraction m)
     {
         Debug.Log("Eat at Work tile");
-        EatCrop();
+        if (EatCrop())
+        {
+            UpdateStatus(actionIndex, m);
+        }
     }
     public override void HarvestHere(MonsterInteraction m)
     {
         Debug.Log("Harvest at Work tile");
 
         HarvestCrop();
+        UpdateStatus(actionIndex, m);
     }
     public override void PlantHere(MonsterInteraction m)
     {
         Debug.Log("Plant at Work tile");
+        UpdateStatus(actionIndex, m);
     }
     public override void SleepHere(MonsterInteraction m)
     {
         Debug.Log("Sleep at Work tile");
+        UpdateStatus(actionIndex, m);
     }
     public override void WaterHere(MonsterInteraction m)
     {
@@ -125,6 +129,7 @@ public class WorkTile : Tile
         waterAmount += m.waterAmount;
         if (crop != null)
             crop.WaterCrop(waterAmount);
+        UpdateStatus(actionIndex, m);
     }
 
     private void AddCrop(GameObject _crop_obj)
@@ -148,13 +153,16 @@ public class WorkTile : Tile
         }
     }
 
-    private void EatCrop()
+    private bool EatCrop()
     {
-        if (this.overlayObj != null && crop != null && crop.HasCrop())
+        if (crop.HasCrop())
         {
             crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
+            return true;
         }
+
+        return false;
     }
 
     private void DryWaterInTile ()
@@ -192,6 +200,15 @@ public class WorkTile : Tile
         }
     }
 
+    private void UpdateStatus (int index, MonsterInteraction m)
+    {
+        float hungerAmount = behaviorBook.behaviorDictionary[index].hungerAmount;
+        float tirenessAmount = behaviorBook.behaviorDictionary[index].tirenessAmount;
+        float emotionAmount = behaviorBook.behaviorDictionary[index].emotionAmount;
+
+        m.SetStatus(hungerAmount, tirenessAmount, emotionAmount);
+    }
+
     public void PlantFromPlayer(CropAssets cropAsset)
     {
         if (PlayerManager.Instance.cropAmountList.ContainsKey(cropAsset)
@@ -200,6 +217,7 @@ public class WorkTile : Tile
         {
             crop = new Crop(cropAsset);
             overlayObj.GetComponent<SpriteRenderer>().sprite = crop.GetSprite();
+            PlayerManager.Instance.cursorImage.GetComponent<Animator>().SetTrigger("Pressed");
             PlayerManager.Instance.cropAmountList[cropAsset] -= 1;
             PlayerManager.Instance.SetInventory();
         }
