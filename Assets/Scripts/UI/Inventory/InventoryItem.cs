@@ -26,6 +26,7 @@ public class InventoryItem : MonoBehaviour, IDragHandler, IPointerUpHandler, IPo
             return;
         }
         PlayerManager.Instance.cursorImage.enabled = true;
+        PlayerManager.Instance.cursorImage.GetComponent<Animator>().SetTrigger("Pressed");
         PlayerManager.Instance.cropAsset_selectToPlant = this.cropAsset;
         PlayerManager.Instance.cursorImage.sprite = PlayerManager.Instance.cropAsset_selectToPlant.cropSprite;
         Vector2 pos;

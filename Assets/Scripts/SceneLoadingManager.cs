@@ -82,6 +82,10 @@ public class SceneLoadingManager : MonoBehaviour
         yield return new WaitForSecondsRealtime(1f);
         fade_PlayableDirector.playableAsset = playableAsset[1];
         fade_PlayableDirector.Play();
+        while (fade_PlayableDirector.time < fade_PlayableDirector.duration)
+        {
+            yield return null;
+        }
         SetActiveTransitionCanvas(isOn: false);
         GameManager.Instance.ResumeGame();
         yield return 0;

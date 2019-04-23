@@ -24,7 +24,11 @@ public class StartSceneManager : MonoBehaviour
     {
         if (!SceneLoadingManager.Instance.onLoad)
         {
-            if (DataManager.Instance.playerData_dic.Count > 0) SceneLoadingManager.Instance.LoadScene("Scenes/GameScene");
+            if (DataManager.Instance.playerData_dic.Count > 0)
+            {
+                SceneLoadingManager.Instance.LoadScene("Scenes/GameScene");
+                UI_CanvasGroup.GetComponent<Animator>().SetTrigger("FadeOut");
+            }
             else SetActiveNewProfilePopup(isOn: true);
         }
     }
