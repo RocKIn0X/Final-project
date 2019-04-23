@@ -10,14 +10,14 @@ public class BrainCollection
 
     // ANN
     [Header("[ANN parameters]")]
-    public int numInputs;
+        public int numInputs;
     public int numOutputs;
     public List<int> numNEachLayer;
     public double alpha;
 
     // Reinforcement
     [Header("[Reinforcement parameters]")]
-    public float discount;
+        public float discount;
 
     private MonsterBrain brain;
 
@@ -48,6 +48,7 @@ public class BrainCollection
 public class ActionManager : MonoBehaviour
 {
     public bool isInitBrain = false;
+    public bool isTrainable = true;
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
 
     #region Reward
@@ -56,6 +57,12 @@ public class ActionManager : MonoBehaviour
     public float praiseReward;
     public float punishReward;
     private float reward;
+    #endregion
+
+    #region WaitReward
+    private bool isWaitReward = false;
+    private float waitReward = 0;
+    private TypeTile waitTile;
     #endregion
 
     #region Singleton Object
@@ -145,17 +152,66 @@ public class ActionManager : MonoBehaviour
     public void SetActionIndex (int index)
     {
         actionIndex = index;
+        if (index == 0 && waitReward != 0)
+        {
+            Debug.Log("Checking waitReward");
+            if (waitTile != TypeTile.WorkTile && waitTile == TileManager.Instance.tileTarget.typeTile)
+            {
+                Debug.Log("Apply waitReward");
+                reward = waitReward;
+            }
+        }
+        waitReward = 0;
+        isWaitReward = false;
+    }
+
+    public void WaitAndPraise()
+    {
+        Debug.Log("WaitingAndPraise");
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward >= praiseReward)
+            waitReward = waitReward + praiseReward;
+        else
+            waitReward = waitReward + praiseReward;
+        SetTrainingPopup(false);
+    }
+
+    public void WaitAndPunish()
+    {
+        Debug.Log("WaitingAndPunish");
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward <= punishReward)
+            waitReward = waitReward + punishReward;
+        else
+            waitReward = waitReward + punishReward;
+        SetTrainingPopup(false);
     }
 
     public void praise ()
     {
-        reward = praiseReward;
+        if (isWaitReward == true)
+        {
+            WaitAndPraise();
+            return;
+        }
+        if (reward >= praiseReward)
+            reward = reward + praiseReward;
+        else
+            reward = praiseReward;
         SetTrainingPopup(false);
     }
 
     public void punish ()
     {
-        reward = punishReward;
+        if (isWaitReward == true)
+        {
+            WaitAndPunish();
+            return;
+        }
+        if (reward <= punishReward)
+            reward = reward + punishReward;
+        else
+            reward = punishReward;
         SetTrainingPopup(false);
     }
 
@@ -172,12 +228,11 @@ public class ActionManager : MonoBehaviour
 
     public void CallTrainningPopup()
     {
-        SetTrainingPopup(true);
-
         if (actionIndex == 0)
         {
             // status
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+            isTrainable = true;
         }
         else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile)
         {
@@ -189,15 +244,27 @@ public class ActionManager : MonoBehaviour
             cropInfo.Add(0);
             //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
             trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+            isTrainable = true;
         }
         else
         {
-            trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            isWaitReward = true;
+            trainingPopup.GetComponent<TrainningPopup>().UpdatePopup(TileManager.Instance.tileTarget.typeTile);
+            //trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            //isTrainable = false;
         }
+
+        SetTrainingPopup(true);
     }
 
     public void SetTrainingPopup(bool isOn)
     {
+        if (isTrainable == false)
+        {
+            // TODO Play Untrainable SFX
+            return ;
+        }
+
         trainingPopupCanvas.alpha = isOn ? 1 : 0;
         trainingPopupCanvas.blocksRaycasts = isOn;
         trainingPopupCanvas.interactable = isOn;

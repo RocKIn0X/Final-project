@@ -35,7 +35,7 @@ public class TrainningPopup : MonoBehaviour
     private IconLibrary iconLib;
     private TileManager tileManager;
 
-    public bool trainable = false;
+    public bool trainable = true;
 
     public struct GaugeAbstract
     {
@@ -72,46 +72,43 @@ public class TrainningPopup : MonoBehaviour
 
         if (inputGauges == null && outputGauges == null)
         {
-            trainable = false;
-                return;
-            }
-
-            trainable = true;
-            int index = 0;
-            foreach (Transform child in inputPanel.transform)
+            return;
+        }
+        int index = 0;
+        foreach (Transform child in inputPanel.transform)
+        {
+            UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
+            if (childGauge != null)
             {
-                UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
-                if (childGauge != null)
+                if (index < inputGauges.Count)
                 {
-                    if (index < inputGauges.Count)
-                    {
-                        SetGaugeData(childGauge, inputGauges[index]);
-                    }
-                    else
-                    {
-                        childGauge.gameObject.SetActive(false);
-                    }
-                    index = index + 1;
+                    SetGaugeData(childGauge, inputGauges[index]);
                 }
+                else
+                {
+                    childGauge.gameObject.SetActive(false);
+                }
+                index = index + 1;
             }
+        }
 
-            index = 0;
-            foreach (Transform child in outputPanel.transform)
+        index = 0;
+        foreach (Transform child in outputPanel.transform)
+        {
+            UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
+            if (childGauge != null)
             {
-                UI_GaugeObject childGauge = child.gameObject.GetComponent<UI_GaugeObject>();
-                if (childGauge != null)
+                if (index < outputGauges.Count)
                 {
-                    if (index < outputGauges.Count)
-                    {
-                        SetGaugeData(childGauge, outputGauges[index]);
-                    }
-                    else
-                    {
-                        childGauge.gameObject.SetActive(false);
-                    }
-                    index = index + 1;
+                    SetGaugeData(childGauge, outputGauges[index]);
                 }
+                else
+                {
+                    childGauge.gameObject.SetActive(false);
+                }
+                index = index + 1;
             }
+        }
     }
 
     private GaugeAbstract CreatePair (string iconName, float value)
@@ -141,6 +138,7 @@ public class TrainningPopup : MonoBehaviour
 
     public void ActivatePopup (int actionIndex, List<double> states, List<double> qs)
     {
+        trainable = true;
         Sprite targetSprite = GetTileSprite();
         if (actionIndex == 0) // *** Move
         {
@@ -219,6 +217,7 @@ public class TrainningPopup : MonoBehaviour
 
     public void ActivateNoTrainPopup()
     {
+        trainable = false;
         List<GaugeAbstract> inputGaugeData = new List<GaugeAbstract>();
 
         List<GaugeAbstract> outputGaugeData = new List<GaugeAbstract>();
@@ -247,6 +246,20 @@ public class TrainningPopup : MonoBehaviour
         statCollector.TrainPunish();
 
         ActionManager.instance.punish();
+    }
+
+    public void UpdatePopup(TypeTile typeTile)
+    {
+        trainable = true;
+        Sprite targetSprite = GetTileSprite();
+        Sprite actionSprite = null;
+        if (iconLib == null)
+            iconLib = (IconLibrary)FindObjectOfType(typeof(IconLibrary));
+        if (typeTile == TypeTile.FoodTile)
+            actionSprite = iconLib.GetIcon("Eat");
+        else if (typeTile == TypeTile.RestTile)
+            actionSprite = iconLib.GetIcon("Sleep");
+        SetLayout(null, null, targetSprite, actionSprite);
     }
 
     public void ClosePanel ()
