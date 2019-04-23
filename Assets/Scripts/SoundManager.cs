@@ -33,11 +33,13 @@ public class SoundManager : MonoBehaviour
         else
         {
             Destroy(this.gameObject);
-        }
+        } 
+    }
+
+    private void Start()
+    {
         musicmanager = this.GetComponent<MusicManager>();
         sfxManager = this.GetComponent<SFXManager>();
         musicmanager.PlayFromLibrary("Background");
     }
-
-
 }
