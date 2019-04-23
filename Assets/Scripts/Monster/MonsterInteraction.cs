@@ -212,14 +212,12 @@ public class MonsterInteraction : MonoBehaviour
 
             if (condition == MonsterCondition.Hungry)
             {
+                bool hasCrop = tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop();
                 // if tile here equal work tile
-                if (tileTarget.typeTile == TypeTile.WorkTile)
+                if (tileTarget.typeTile == TypeTile.WorkTile && hasCrop)
                 {
-                    if (tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop())
-                    {
-                        Debug.Log("Eat");
-                        isArrived = true;
-                    }
+                    Debug.Log("Eat");
+                    isArrived = true;
                 }
                 else
                 {
@@ -232,7 +230,7 @@ public class MonsterInteraction : MonoBehaviour
             {
                 isArrived = true;
             }
-            
+
         }
     }
 
@@ -358,13 +356,12 @@ public class MonsterInteraction : MonoBehaviour
     public void EnterMoveState ()
     {
         condition = MonsterCondition.Normal;
-        Debug.Log(condition);
 
         actionIndex = 0;
         canTrain = true;
         isOnMoveState = true;
-        ActionManager.instance.SetActionIndex(actionIndex);
         StartCoroutine(MoveState());
+        ActionManager.instance.SetActionIndex(actionIndex);
     }
 
     public void ExitMoveState ()
@@ -373,6 +370,8 @@ public class MonsterInteraction : MonoBehaviour
         isArrived = false;
         isOnMoveState = false;
         timer = 0f;
+
+        moveMarker.Disappear();
 
         // set reward move state
         if (condition == MonsterCondition.Normal)
@@ -405,7 +404,7 @@ public class MonsterInteraction : MonoBehaviour
         {
             if (condition == MonsterCondition.Normal) ActionManager.instance.SetMemory();
         }
-            
+
 
         //SaveMonsterData();
     }
