@@ -90,6 +90,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chartPositiveRegion: {fileID: 5588736192707130775}
   chartNegativeRegion: {fileID: 8473414414008138595}
+  chartArea: {fileID: 6608819050495850739}
   BAR_WIDTH: 40
   scoreText: {fileID: 0}
   chartBarPrefab: {fileID: 8804324139147225893, guid: a37baffcff886b050ab53d201ed626fe,
@@ -135,7 +136,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17, y: 20}
+  m_SizeDelta: {x: 0, y: 20}
   m_Pivot: {x: 0, y: 0}
 --- !u!222 &6863757500485275168
 CanvasRenderer:
@@ -253,10 +254,10 @@ RectTransform:
   m_Father: {fileID: 9090188048088437830}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 435.55}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -441.5}
+  m_SizeDelta: {x: 0, y: 441.5}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1876141590700880006
 MonoBehaviour:
@@ -467,7 +468,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9090188048088437830}
-  - component: {fileID: 4243087409205948742}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -492,24 +492,10 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0000071352483, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 883}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &4243087409205948742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6608819050495850739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
 --- !u!1 &6686129631556666012
 GameObject:
   m_ObjectHideFlags: 0
@@ -687,10 +673,10 @@ RectTransform:
   m_Father: {fileID: 9090188048088437830}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 435.55}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 0, y: -441.5}
+  m_SizeDelta: {x: 0, y: 441.5}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &3878814505176225600
 MonoBehaviour:

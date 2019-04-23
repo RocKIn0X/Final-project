@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UI_BuyPanel : MonoBehaviour
 {
     [SerializeField]CanvasGroup buyPanel_canvasGroup;
+    [SerializeField] Image block_Popup;
     private int currentQuantity;
     private float currentPrice;
     private PlayerManager playerManager;
@@ -51,6 +52,7 @@ public class UI_BuyPanel : MonoBehaviour
 
     public void SetCanvasGroup(bool isOn)
     {
+        block_Popup.enabled = isOn;
         buyPanel_canvasGroup.alpha = isOn ? 1 : 0;
         buyPanel_canvasGroup.blocksRaycasts = isOn;
         buyPanel_canvasGroup.interactable = isOn;

@@ -8,6 +8,7 @@ public class ChartObject : MonoBehaviour
 {
     public GameObject chartPositiveRegion;
     public GameObject chartNegativeRegion;
+    public GameObject chartArea;
 
     public float BAR_WIDTH = 40f;
 
@@ -126,7 +127,15 @@ public class ChartObject : MonoBehaviour
             DrawChart();
         else
             DrawDualChart();
+        UpdateChart();
         UpdateText();
+    }
+
+    public void UpdateChart()
+    {
+        RectTransform rect = chartArea.GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(chartPositiveRegion.GetComponent<RectTransform>().sizeDelta.x,
+                                     rect.sizeDelta.y);
     }
 
     // Two Bars - Starts from Middle Zero
