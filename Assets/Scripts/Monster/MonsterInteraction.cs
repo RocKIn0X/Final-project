@@ -374,6 +374,8 @@ public class MonsterInteraction : MonoBehaviour
         isOnMoveState = false;
         timer = 0f;
 
+        moveMarker.Disappear();
+
         // set reward move state
         if (condition == MonsterCondition.Normal)
         {
