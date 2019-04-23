@@ -212,9 +212,8 @@ public class MonsterInteraction : MonoBehaviour
 
             if (condition == MonsterCondition.Hungry)
             {
-                bool hasCrop = tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop();
                 // if tile here equal work tile
-                if (tileTarget.typeTile == TypeTile.WorkTile && hasCrop)
+                if (tileTarget.typeTile == TypeTile.WorkTile && tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop())
                 {
                     Debug.Log("Eat");
                     isArrived = true;
@@ -260,7 +259,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private void EatImmedietely ()
     {
-        canTrain = false;
+        //canTrain = false;
         tileTarget.ActionResult(3, this);
         DisplayBubble(3);
         isThinkAction = true;
@@ -268,7 +267,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private void RestImmedietely ()
     {
-        canTrain = false;
+        //canTrain = false;
         tileTarget.ActionResult(4, this);
         DisplayBubble(4);
         isThinkAction = true;
