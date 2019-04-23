@@ -132,4 +132,10 @@ public class GameManager : MonoBehaviour
         isGameRunning = true;
         Time.timeScale = 1f;
     }
+
+    public void PauseButton()
+    {
+        if (isGameRunning) PauseGame();
+        else ResumeGame();
+    }
 }
