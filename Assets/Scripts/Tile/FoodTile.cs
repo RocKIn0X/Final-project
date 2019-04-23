@@ -81,6 +81,7 @@ public class FoodTile : Tile
     public override void EatHere(MonsterInteraction m)
     {
         Debug.Log("Eat at Food tile");
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Eat");
     }
     public override void HarvestHere(MonsterInteraction m)
     {

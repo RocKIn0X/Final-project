@@ -46,6 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35aa14e2bcf133c4384a7b9086726cc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  musicmanager: {fileID: 0}
+  sfxManager: {fileID: 0}
 --- !u!114 &2135969252665635385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87,6 +89,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: adc473af96c2878439a94e6e6e41f2ac, type: 2}
   - {fileID: 11400000, guid: 01b0b88863040204380fca60b06b7cba, type: 2}
   - {fileID: 11400000, guid: 82d0b2e0f99bff4439f7b310501fe66f, type: 2}
+  - {fileID: 11400000, guid: 1b02dfefb5db2b84392359df8560c2a5, type: 2}
+  - {fileID: 11400000, guid: 7b637e2a856078f48a97f6186921dd46, type: 2}
+  - {fileID: 11400000, guid: a65751a62b8fa2649b51e6a1c48652de, type: 2}
   SFXGroupLibrary: []
 --- !u!81 &910120208
 AudioListener:

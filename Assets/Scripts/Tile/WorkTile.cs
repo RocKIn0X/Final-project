@@ -161,6 +161,7 @@ public class WorkTile : Tile
         {
             crop = new Crop(null);
             this.overlayObj.GetComponent<SpriteRenderer>().sprite = null;
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Eat");
             return true;
         }
 

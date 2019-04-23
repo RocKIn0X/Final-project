@@ -1771,11 +1771,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SoundManager
       objectReference: {fileID: 0}
-    - target: {fileID: 2135969252665635385, guid: a632e5ca81378f04bb59c1b72028b621,
-        type: 3}
-      propertyPath: CollapseLibrary
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2135969252665635387, guid: a632e5ca81378f04bb59c1b72028b621,
         type: 3}
       propertyPath: m_LocalPosition.x

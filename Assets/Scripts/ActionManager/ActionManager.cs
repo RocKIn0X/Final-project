@@ -279,10 +279,14 @@ public class ActionManager : MonoBehaviour
 
         if (isOn)
         {
-            GameManager.Instance.PauseGame();
             trainingPopupCanvas.GetComponent<Animator>().SetTrigger("Active");
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("OpenPanel");
+            GameManager.Instance.PauseGame();
         }
         else
+        {
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("ClosePanel");
             GameManager.Instance.ResumeGame();
+        }
     }
 }

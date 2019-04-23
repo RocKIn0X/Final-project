@@ -22,6 +22,7 @@ public class UIManager : MonoBehaviour
         marketCanvasGroup.blocksRaycasts = true;
         marketCanvasGroup.interactable = true;
         marketCanvasGroup.GetComponent<Animator>().SetTrigger("Active");
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("OpenPanel");
         GameManager.Instance.PauseGame();
     }
 
@@ -32,6 +33,7 @@ public class UIManager : MonoBehaviour
         statCanvasGroup.blocksRaycasts = true;
         statCanvasGroup.interactable = true;
         statCanvasGroup.GetComponent<Animator>().SetTrigger("Active");
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("OpenPanel");
         GameManager.Instance.PauseGame();
     }
 
@@ -41,6 +43,7 @@ public class UIManager : MonoBehaviour
         statCanvasGroup.alpha = 0;
         statCanvasGroup.blocksRaycasts = false;
         statCanvasGroup.interactable = false;
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("ClosePanel");
         GameManager.Instance.ResumeGame();
     }
 
@@ -50,6 +53,7 @@ public class UIManager : MonoBehaviour
         marketCanvasGroup.alpha = 0;
         marketCanvasGroup.blocksRaycasts = false;
         marketCanvasGroup.interactable = false;
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("ClosePanel");
         GameManager.Instance.ResumeGame();
     }
 }

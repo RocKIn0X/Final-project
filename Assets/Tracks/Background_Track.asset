@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 104287de7c288421ab9000b53a4fbfd5, type: 3}
   m_Name: Background_Track
   m_EditorClassIdentifier: 
-  CollapseEditions: 1
+  CollapseEditions: 0
   Name: Background
   Intro: {fileID: 8300000, guid: b922ac1b2ea09bf43a3b16e4a0142408, type: 3}
-  IntroVolume: 0.5
-  OverlapDuration: 0
+  IntroVolume: 1
+  OverlapDuration: 2
   Editions:
-  - Name: 
+  - Name: Main Loop
     Soundtrack: {fileID: 8300000, guid: b922ac1b2ea09bf43a3b16e4a0142408, type: 3}
     SoundtrackVolume: 0.5
     TransitionSound: {fileID: 0}
     TransitionVolume: 1
     KeepPlaybackTime: 0
-    FadeLength: 0
+    FadeLength: 1
