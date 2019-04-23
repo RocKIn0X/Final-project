@@ -152,20 +152,22 @@ public class ActionManager : MonoBehaviour
     public void SetActionIndex (int index)
     {
         actionIndex = index;
-        waitReward = 0;
         if (index == 0 && waitReward != 0)
         {
+            Debug.Log("Checking waitReward");
             if (waitTile != TypeTile.WorkTile && waitTile == TileManager.Instance.tileTarget.typeTile)
             {
                 Debug.Log("Apply waitReward");
                 reward = waitReward;
             }
         }
+        waitReward = 0;
         isWaitReward = false;
     }
 
     public void WaitAndPraise()
     {
+        Debug.Log("WaitingAndPraise");
         waitTile = TileManager.Instance.tileTarget.typeTile;
         if (waitReward >= praiseReward)
             waitReward = waitReward + praiseReward;
@@ -176,6 +178,7 @@ public class ActionManager : MonoBehaviour
 
     public void WaitAndPunish()
     {
+        Debug.Log("WaitingAndPunish");
         waitTile = TileManager.Instance.tileTarget.typeTile;
         if (waitReward <= punishReward)
             waitReward = waitReward + punishReward;
@@ -246,6 +249,7 @@ public class ActionManager : MonoBehaviour
         else
         {
             isWaitReward = true;
+            trainingPopup.GetComponent<TrainningPopup>().UpdatePopup(TileManager.Instance.tileTarget.typeTile);
             //trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
             //isTrainable = false;
         }
