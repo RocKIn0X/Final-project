@@ -358,7 +358,6 @@ public class MonsterInteraction : MonoBehaviour
     public void EnterMoveState ()
     {
         condition = MonsterCondition.Normal;
-        Debug.Log(condition);
 
         actionIndex = 0;
         canTrain = true;

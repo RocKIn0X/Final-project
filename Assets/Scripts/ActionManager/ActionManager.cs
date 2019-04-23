@@ -82,6 +82,7 @@ public class ActionManager : MonoBehaviour
     private int actionIndex;
     private List<double> states = new List<double>();
     private CanvasGroup trainingPopupCanvas;
+    private MonsterInteraction monster;
 
     [Header("Popup prefab")]
     public GameObject trainingPopup;
@@ -228,30 +229,32 @@ public class ActionManager : MonoBehaviour
 
     public void CallTrainningPopup()
     {
-        if (actionIndex == 0)
-        {
-            // status
-            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
-            isTrainable = true;
-        }
-        else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile)
-        {
-            Debug.Log("Action index: " + ", type tile: " + TypeTile.WorkTile);
+        if (monster == null)
+            monster = FindObjectOfType<MonsterInteraction>();
 
-            // crop info
-            List<double> cropInfo = new List<double>();
-            cropInfo.Add(0);
-            cropInfo.Add(0);
-            //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
-            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
-            isTrainable = true;
+        if (monster.canTrain)
+        {
+            if (actionIndex == 0 && monster.canTrain)
+            {
+                // status
+                trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+                isTrainable = true;
+            }
+            else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile && monster.canTrain)
+            {
+                Debug.Log("Action index: " + ", type tile: " + TypeTile.WorkTile);
+
+                // crop info
+                trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+                isTrainable = true;
+            }
         }
         else
         {
             isWaitReward = true;
             trainingPopup.GetComponent<TrainningPopup>().UpdatePopup(TileManager.Instance.tileTarget.typeTile);
             //trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
-            //isTrainable = false;
+            isTrainable = false;
         }
 
         SetTrainingPopup(true);
