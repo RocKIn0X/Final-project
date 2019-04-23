@@ -21,9 +21,8 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private MusicManager musicmanager;
-    private SFXManager sfxManager;
-    private PlaylistManager playlistManager;
+    public MusicManager musicmanager;
+    public SFXManager sfxManager;
     private void Awake()
     {
         if (instance == null)
@@ -37,7 +36,6 @@ public class SoundManager : MonoBehaviour
         }
         musicmanager = this.GetComponent<MusicManager>();
         sfxManager = this.GetComponent<SFXManager>();
-        playlistManager = this.GetComponent<PlaylistManager>();
         musicmanager.PlayFromLibrary("Background");
     }
 

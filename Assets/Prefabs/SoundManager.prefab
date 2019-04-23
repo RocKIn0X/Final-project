@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2135969252665635384}
   - component: {fileID: 2135969252665635385}
   - component: {fileID: 2135969252665635386}
+  - component: {fileID: 910120208}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -57,10 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c714dff07c3144d2ba31f5d5947a7013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
+  Mixer: {fileID: 24300002, guid: d35383b09b5fddc4d94c1abea01bce08, type: 2}
   ScenePersistent: 0
   CollapseLibrary: 1
-  TrackLibrary: []
+  TrackLibrary:
+  - {fileID: 11400000, guid: 84ce9437fa0a476459b2b1937e918bf1, type: 2}
 --- !u!114 &2135969252665635386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,9 +75,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba875997bc5c4d85a9b0478acbccfc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 0}
+  Mixer: {fileID: 24300002, guid: 7f5175ff9125bc849b20c089f6aa2841, type: 2}
   ScenePersistent: 0
   CollapseObjectLibrary: 1
   CollapseGroupLibrary: 1
-  SFXObjectLibrary: []
+  SFXObjectLibrary:
+  - {fileID: 11400000, guid: 7184cd6e9b5d6a8408a62ce5ffa3e877, type: 2}
+  - {fileID: 11400000, guid: cc8e013773b05dc488954f925d86c8ee, type: 2}
+  - {fileID: 11400000, guid: a62e525531491814f98ca675e1c5b8f4, type: 2}
+  - {fileID: 11400000, guid: 61f3f64e7daa8ba46a3e574caf4b6d60, type: 2}
+  - {fileID: 11400000, guid: adc473af96c2878439a94e6e6e41f2ac, type: 2}
+  - {fileID: 11400000, guid: 01b0b88863040204380fca60b06b7cba, type: 2}
+  - {fileID: 11400000, guid: 82d0b2e0f99bff4439f7b310501fe66f, type: 2}
   SFXGroupLibrary: []
+--- !u!81 &910120208
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2135969252665635366}
+  m_Enabled: 1
