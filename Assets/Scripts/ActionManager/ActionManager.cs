@@ -82,6 +82,7 @@ public class ActionManager : MonoBehaviour
     private int actionIndex;
     private List<double> states = new List<double>();
     private CanvasGroup trainingPopupCanvas;
+    [SerializeField] Image block_Popup;
 
     [Header("Popup prefab")]
     public GameObject trainingPopup;
@@ -265,6 +266,7 @@ public class ActionManager : MonoBehaviour
             return ;
         }
 
+        block_Popup.enabled = isOn;
         trainingPopupCanvas.alpha = isOn ? 1 : 0;
         trainingPopupCanvas.blocksRaycasts = isOn;
         trainingPopupCanvas.interactable = isOn;
