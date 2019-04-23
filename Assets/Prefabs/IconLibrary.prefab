@@ -63,7 +63,7 @@ MonoBehaviour:
   - iconKey: Sleep
     iconSprite: {fileID: 21300000, guid: 94fe11a0db2055b3980464b86f883b31, type: 3}
   - iconKey: Idle
-    iconSprite: {fileID: 21300000, guid: c7817b62543b466a4b05f35e8f5c2ae0, type: 3}
+    iconSprite: {fileID: 21300000, guid: 97ed52ba7f22db725b72615a9385e5d1, type: 3}
   - iconKey: Growth
     iconSprite: {fileID: 21300000, guid: 7781b466c711a2b90a72b124c7371a44, type: 3}
   - iconKey: Eat
