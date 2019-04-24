@@ -260,7 +260,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private void EatImmedietely ()
     {
-        //canTrain = false;
+        canTrain = false;
         tileTarget.ActionResult(3, this);
         DisplayBubble(3);
         isThinkAction = true;
@@ -268,7 +268,7 @@ public class MonsterInteraction : MonoBehaviour
 
     private void RestImmedietely ()
     {
-        //canTrain = false;
+        canTrain = false;
         tileTarget.ActionResult(4, this);
         DisplayBubble(4);
         isThinkAction = true;
@@ -340,6 +340,7 @@ public class MonsterInteraction : MonoBehaviour
                 break;
             case (4) :
                 key = "Sleep";
+                animator.SetBool("Sleep", true);
                 break;
             default :
                 key = "Invalid Index in MonsterInteraction.cs";
@@ -398,7 +399,7 @@ public class MonsterInteraction : MonoBehaviour
         isOnActionState = false;
         isThinkAction = false;
         timer = 0f;
-
+        animator.SetBool("Sleep", false);
         // set reward action state
         if (tileTarget.typeTile == TypeTile.WorkTile)
         {
