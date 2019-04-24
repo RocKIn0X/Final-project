@@ -142,6 +142,8 @@ public class TrainningPopup : MonoBehaviour
         Sprite targetSprite = GetTileSprite();
         if (actionIndex == 0) // *** Move
         {
+            title.text = "Move State";
+
             List<string> key = new List<string>();
             key.Add("Hunger");
             key.Add("Energy");
@@ -179,6 +181,8 @@ public class TrainningPopup : MonoBehaviour
         }
         else if (actionIndex == 1) // *** Action
         {
+            title.text = "Action State";
+
             List<string> key = new List<string>();
             key.Add("Growth");
             key.Add("Water");
