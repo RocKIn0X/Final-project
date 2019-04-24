@@ -104,6 +104,7 @@ public class MonsterInteraction : MonoBehaviour
     private void Update()
     {
         if (NMAgent.vHorizontalMovement.magnitude > 0) animator.SetTrigger("Moving");
+        Debug.Log(NMAgent.vHorizontalMovement);
         animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
         animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
