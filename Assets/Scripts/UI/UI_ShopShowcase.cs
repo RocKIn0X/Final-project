@@ -5,9 +5,19 @@ using UnityEngine.UI;
 
 public class UI_ShopShowcase : MonoBehaviour
 {
+    [Header("Customise")]
     public Sprite plantLocked;
+
+    [Header("PriceTextColor")]
+    public Color overpriceColor;
+    public Color normalColor;
+    public Color saleColor;
+    public Color lockColor;
+
+    [Header("GameData")]
     public CropAssets cropAsset;
 
+    [Header("GameObjectRef")]
     public Image displayImage;
     public Text displayText;
     public Button buyButton;
@@ -17,13 +27,21 @@ public class UI_ShopShowcase : MonoBehaviour
         if (cropAsset != null)
         {
             displayImage.sprite = cropAsset.cropSprite;
-            displayText.text = cropAsset.name + "\n" + cropAsset.buyingCost.ToString();
+            float priceMultiplier = cropAsset.priceMultiplier;
+            displayText.text = cropAsset.name + "\n" + (cropAsset.buyingCost * priceMultiplier).ToString();
+            if (priceMultiplier > 1.0f)
+                displayText.color = overpriceColor;
+            else if (priceMultiplier < 1.0f)
+                displayText.color = saleColor;
+            else
+                displayText.color = normalColor;
             buyButton.interactable = true;
         }
         else
         {
             displayImage.sprite = plantLocked;
             displayText.text = "Lockberry";
+            displayText.color = lockColor;
             buyButton.interactable = false;
         }
 

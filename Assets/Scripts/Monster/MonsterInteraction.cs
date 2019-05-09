@@ -12,22 +12,34 @@ public class MonsterData
     public Status status;
 }
 
+[System.Serializable]
+public enum MonsterCondition
+{
+    Normal,
+    Hungry,
+    Tired
+}
+
 public class MonsterInteraction : MonoBehaviour
 {
     public Tile tileTarget;
     public float waterAmount;
 
     public ActionBubble actionBubble;
+    private MoveMarker moveMarker;
 
     [SerializeField]
     IsometricMovement target;
 
     [Header("Status field")]
+    public MonsterCondition condition;
     [SerializeField]
     private Status status;
     public float hungerDecay;
     public float tirenessDecay;
     public float emotionDecay;
+    public float hungerMinimum = 10f;
+    public float tirenessMinimum = 10f;
     private UI_GaugeArea ui_gaugeArea;
 
     [Header("Delay time on each state")]
@@ -43,6 +55,7 @@ public class MonsterInteraction : MonoBehaviour
     public int actionIndex = 0;
 
     [Header("Checking each state")]
+    public bool canTrain = true;
     public bool isArrived = false;
     public bool isThinkAction = false;
     public bool isOnMoveState = false;
@@ -69,8 +82,9 @@ public class MonsterInteraction : MonoBehaviour
     private void Start()
     {
         animator = this.GetComponent<Animator>();
-        LoadMonsterData();
-  
+        //LoadMonsterData();
+        condition = MonsterCondition.Normal;
+
         ui_gaugeArea = FindObjectOfType<UI_GaugeArea>();
         if (ui_gaugeArea != null)
         {
@@ -90,6 +104,7 @@ public class MonsterInteraction : MonoBehaviour
     private void Update()
     {
         if (NMAgent.vHorizontalMovement.magnitude > 0) animator.SetTrigger("Moving");
+        Debug.Log(NMAgent.vHorizontalMovement);
         animator.SetFloat("Velocity_x", NMAgent.vHorizontalMovement.x);
         animator.SetFloat("Velocity_z", NMAgent.vHorizontalMovement.z);
         if (isStateMachineRunning)
@@ -134,6 +149,10 @@ public class MonsterInteraction : MonoBehaviour
         {
             yield return null;
         }
+
+        //if (moveMarker == null)
+        //    moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+        //moveMarker.Disappear();
     }
 
     public IEnumerator ActionState ()
@@ -162,10 +181,57 @@ public class MonsterInteraction : MonoBehaviour
         return false;
     }
 
+    private bool isNormalCondition ()
+    {
+        if (status.hunger < hungerMinimum)
+        {
+            condition = MonsterCondition.Hungry;
+            return false;
+        }
+
+        if (status.tireness < tirenessMinimum)
+        {
+            condition = MonsterCondition.Tired;
+            return false;
+        }
+
+        return true;
+    }
+
     private void MoveToTarget()
     {
-        Vector3 targetPosition = GetTargetPosition();
-        NMAgent.MoveToDestination(targetPosition);
+        Debug.Log("Move to TARGET");
+
+        if (isNormalCondition())
+        {
+            Vector3 targetPosition = GetTargetPosition();
+            NMAgent.MoveToDestination(targetPosition);
+        }
+        else
+        {
+            canTrain = false;
+
+            if (condition == MonsterCondition.Hungry)
+            {
+                // if tile here equal work tile
+                if (tileTarget.typeTile == TypeTile.WorkTile && tileTarget.gameObject.GetComponent<WorkTile>().crop.HasCrop())
+                {
+                    Debug.Log("Eat");
+                    isArrived = true;
+                }
+                else
+                {
+                    // set tile target to be food tile
+                    tileTarget = TileManager.Instance.GetTile(1);
+                    NMAgent.MoveToDestination(tileTarget.pos);
+                }
+            }
+            else if (condition == MonsterCondition.Tired)
+            {
+                isArrived = true;
+            }
+
+        }
     }
 
     private void DoAction()
@@ -174,20 +240,17 @@ public class MonsterInteraction : MonoBehaviour
 
         if (tileTarget.typeTile == TypeTile.FoodTile)
         {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(3);
+            EatImmedietely();
         }
         else if (tileTarget.typeTile == TypeTile.RestTile)
         {
-            tileTarget.ActionResult(0, this);
-            DisplayBubble(4);
+            RestImmedietely();
         }
         else if (tileTarget.typeTile == TypeTile.WorkTile)
         {
             List<double> info = tileTarget.info;
 
             int index = ActionManager.instance.CalculateAction(actionIndex, info);
-            //int index = Random.Range(0, 3);
             tileTarget.ActionResult(index, this);
             DisplayBubble(index);
         }
@@ -195,12 +258,25 @@ public class MonsterInteraction : MonoBehaviour
         isThinkAction = true;
     }
 
+    private void EatImmedietely ()
+    {
+        canTrain = false;
+        tileTarget.ActionResult(3, this);
+        DisplayBubble(3);
+        isThinkAction = true;
+    }
+
+    private void RestImmedietely ()
+    {
+        canTrain = false;
+        tileTarget.ActionResult(4, this);
+        DisplayBubble(4);
+        isThinkAction = true;
+    }
+
     private Vector3 GetTargetPosition()
     {
-        //status.RandomStatus();
-
         int index = ActionManager.instance.CalculateAction(0, GetStatusStates());
-        Debug.Log("Index: " + index);
         tileTarget = TileManager.Instance.GetTile(index);
 
         Vector3 targetPosition = this.transform.position;
@@ -208,6 +284,9 @@ public class MonsterInteraction : MonoBehaviour
         if (tileTarget != null)
         {
             targetPosition = tileTarget.pos;
+            if (moveMarker == null)
+                moveMarker = (MoveMarker)FindObjectOfType(typeof(MoveMarker));
+            moveMarker.SetMarker(tileTarget);
         }
 
         return targetPosition;
@@ -219,8 +298,6 @@ public class MonsterInteraction : MonoBehaviour
         states.Add(status.GetHungryRatio() - 0.5f);
         states.Add(status.GetTirenessRatio() - 0.5f);
         states.Add(status.GetEmotionRatio() - 0.5f);
-
-        Debug.Log(states[0] + ", " + states[1] + ", " + states[2]);
 
         return states;
     }
@@ -263,6 +340,7 @@ public class MonsterInteraction : MonoBehaviour
                 break;
             case (4) :
                 key = "Sleep";
+                animator.SetBool("Sleep", true);
                 break;
             default :
                 key = "Invalid Index in MonsterInteraction.cs";
@@ -278,27 +356,40 @@ public class MonsterInteraction : MonoBehaviour
 
     public void EnterMoveState ()
     {
+        condition = MonsterCondition.Normal;
+
         actionIndex = 0;
+        canTrain = true;
         isOnMoveState = true;
         StartCoroutine(MoveState());
+        ActionManager.instance.SetActionIndex(actionIndex);
     }
 
     public void ExitMoveState ()
     {
+        Debug.Log("Exit move state");
         isArrived = false;
         isOnMoveState = false;
         timer = 0f;
 
+        moveMarker.Disappear();
+
         // set reward move state
-        Debug.Log("Action index: " + actionIndex);
-        ActionManager.instance.SetMemory();
+        if (condition == MonsterCondition.Normal)
+        {
+            ActionManager.instance.SetMemory();
+        }
     }
 
     public void MonsterAction ()
     {
         actionIndex = 1;
+        canTrain = true;
         isOnActionState = true;
-        DoAction();
+        ActionManager.instance.SetActionIndex(actionIndex);
+        if (condition == MonsterCondition.Normal) DoAction();
+        else if (condition == MonsterCondition.Hungry) EatImmedietely();
+        else if (condition == MonsterCondition.Tired) RestImmedietely();
     }
 
     public void ExitAction ()
@@ -308,21 +399,24 @@ public class MonsterInteraction : MonoBehaviour
         isOnActionState = false;
         isThinkAction = false;
         timer = 0f;
-
+        animator.SetBool("Sleep", false);
         // set reward action state
         if (tileTarget.typeTile == TypeTile.WorkTile)
-            ActionManager.instance.SetMemory();
+        {
+            if (condition == MonsterCondition.Normal) ActionManager.instance.SetMemory();
+        }
 
-        SaveMonsterData();
+
+        //SaveMonsterData();
     }
     #endregion
 
     #region statusMethod
     public void SetStatus(float hungry, float tireness, float emotion)
     {
-        status.hunger += hungry;
-        status.tireness += tireness;
-        status.emotion += emotion;
+        status.hunger = Mathf.Clamp(status.hunger + hungry, 0, 100f);
+        status.tireness = Mathf.Clamp(status.tireness + tireness, 0, 100f);
+        status.emotion = Mathf.Clamp(status.emotion + emotion, 0, 100f);
     }
 
     public void DecreaseStatusOverSecond ()
@@ -336,7 +430,6 @@ public class MonsterInteraction : MonoBehaviour
         status.SetStatus(hunger, tireness, emotion);
         if (ui_gaugeArea != null)
         {
-            Debug.Log("status: " + status.hunger + ", " + status.tireness + ", " + status.emotion);
             ui_gaugeArea.SetGauge(status.hunger, status.tireness, status.emotion);
         }
         else

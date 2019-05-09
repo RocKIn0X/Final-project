@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI weekCountText;
     [SerializeField] RectTransform dotCountRect;
     private UI_TextNotif notifManager;
+    private UI_ShopPanel uiShopPanel;
     private int dotCount = 0;
     private float timeCounter = 0f;
     private float timeToStartGame = 1f;
@@ -96,6 +97,9 @@ public class GameManager : MonoBehaviour
         if (notifManager == null)
             notifManager = (UI_TextNotif)FindObjectOfType(typeof(UI_TextNotif));
         notifManager.WeekTicks();
+        if (uiShopPanel == null)
+            uiShopPanel = (UI_ShopPanel)FindObjectOfType(typeof(UI_ShopPanel));
+        uiShopPanel.WeekTicks();
     }
 
     private void UpdateDotCount()
@@ -127,5 +131,11 @@ public class GameManager : MonoBehaviour
     {
         isGameRunning = true;
         Time.timeScale = 1f;
+    }
+
+    public void PauseButton()
+    {
+        if (isGameRunning) PauseGame();
+        else ResumeGame();
     }
 }

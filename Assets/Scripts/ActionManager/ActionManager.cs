@@ -10,14 +10,14 @@ public class BrainCollection
 
     // ANN
     [Header("[ANN parameters]")]
-    public int numInputs;
+        public int numInputs;
     public int numOutputs;
     public List<int> numNEachLayer;
     public double alpha;
 
     // Reinforcement
     [Header("[Reinforcement parameters]")]
-    public float discount;
+        public float discount;
 
     private MonsterBrain brain;
 
@@ -48,6 +48,7 @@ public class BrainCollection
 public class ActionManager : MonoBehaviour
 {
     public bool isInitBrain = false;
+    public bool isTrainable = true;
     public List<BrainCollection> brainCollections = new List<BrainCollection>();
 
     #region Reward
@@ -56,6 +57,12 @@ public class ActionManager : MonoBehaviour
     public float praiseReward;
     public float punishReward;
     private float reward;
+    #endregion
+
+    #region WaitReward
+    private bool isWaitReward = false;
+    private float waitReward = 0;
+    private TypeTile waitTile;
     #endregion
 
     #region Singleton Object
@@ -75,6 +82,8 @@ public class ActionManager : MonoBehaviour
     private int actionIndex;
     private List<double> states = new List<double>();
     private CanvasGroup trainingPopupCanvas;
+    [SerializeField] Image block_Popup;
+    private MonsterInteraction monster;
 
     [Header("Popup prefab")]
     public GameObject trainingPopup;
@@ -145,23 +154,74 @@ public class ActionManager : MonoBehaviour
     public void SetActionIndex (int index)
     {
         actionIndex = index;
+        if (index == 0 && waitReward != 0)
+        {
+            Debug.Log("Checking waitReward");
+            if (waitTile != TypeTile.WorkTile && waitTile == TileManager.Instance.tileTarget.typeTile)
+            {
+                Debug.Log("Apply waitReward");
+                reward = waitReward;
+            }
+        }
+        waitReward = 0;
+        isWaitReward = false;
+    }
+
+    public void WaitAndPraise()
+    {
+        Debug.Log("WaitingAndPraise");
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward >= praiseReward)
+            waitReward = waitReward + praiseReward;
+        else
+            waitReward = waitReward + praiseReward;
+        SetTrainingPopup(false);
+    }
+
+    public void WaitAndPunish()
+    {
+        Debug.Log("WaitingAndPunish");
+        waitTile = TileManager.Instance.tileTarget.typeTile;
+        if (waitReward <= punishReward)
+            waitReward = waitReward + punishReward;
+        else
+            waitReward = waitReward + punishReward;
+        SetTrainingPopup(false);
     }
 
     public void praise ()
     {
-        reward = praiseReward;
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Praise");
+        if (isWaitReward == true)
+        {
+            WaitAndPraise();
+            return;
+        }
+        if (reward >= praiseReward)
+            reward = reward + praiseReward;
+        else
+            reward = praiseReward;
         SetTrainingPopup(false);
     }
 
     public void punish ()
     {
-        reward = punishReward;
+        SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Punish");
+        if (isWaitReward == true)
+        {
+            WaitAndPunish();
+            return;
+        }
+        if (reward <= punishReward)
+            reward = reward + punishReward;
+        else
+            reward = punishReward;
         SetTrainingPopup(false);
     }
 
     public void SetMemory ()
     {
-        Debug.Log("Action index: " + actionIndex);
+        Debug.Log("Action index: " + actionIndex + ", Reward: " + reward);
         brainCollections[actionIndex].SetMemory(states, reward);
     }
 
@@ -172,39 +232,61 @@ public class ActionManager : MonoBehaviour
 
     public void CallTrainningPopup()
     {
-        SetTrainingPopup(true);
+        if (monster == null)
+            monster = FindObjectOfType<MonsterInteraction>();
 
-        if (actionIndex == 0)
+        if (monster.canTrain)
         {
-            // status
-            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
-        }
-        else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile)
-        {
-            Debug.Log("Action index: " + ", type tile: " + TypeTile.WorkTile);
+            if (actionIndex == 0 && monster.canTrain)
+            {
+                // status
+                trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+                isTrainable = true;
+            }
+            else if (actionIndex == 1 && TileManager.Instance.tileTarget.typeTile == TypeTile.WorkTile && monster.canTrain)
+            {
+                Debug.Log("Action index: " + ", type tile: " + TypeTile.WorkTile);
 
-            // crop info
-            List<double> cropInfo = new List<double>();
-            cropInfo.Add(0);
-            cropInfo.Add(0);
-            //trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, cropInfo, GetQS());
-            trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+                // crop info
+                trainingPopup.GetComponent<TrainningPopup>().ActivatePopup(actionIndex, states, GetQS());
+                isTrainable = true;
+            }
         }
         else
         {
-            trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            isWaitReward = true;
+            trainingPopup.GetComponent<TrainningPopup>().UpdatePopup(TileManager.Instance.tileTarget.typeTile);
+            //trainingPopup.GetComponent<TrainningPopup>().ActivateNoTrainPopup();
+            isTrainable = false;
         }
+
+        SetTrainingPopup(true);
     }
 
     public void SetTrainingPopup(bool isOn)
     {
+        if (isTrainable == false)
+        {
+            // TODO Play Untrainable SFX
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("Resist");
+            return ;
+        }
+
+        block_Popup.enabled = isOn;
         trainingPopupCanvas.alpha = isOn ? 1 : 0;
         trainingPopupCanvas.blocksRaycasts = isOn;
         trainingPopupCanvas.interactable = isOn;
 
         if (isOn)
+        {
+            trainingPopupCanvas.GetComponent<Animator>().SetTrigger("Active");
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("OpenPanel");
             GameManager.Instance.PauseGame();
+        }
         else
+        {
+            SoundManager.Instance.sfxManager.PlayFromSFXObjectLibrary("ClosePanel");
             GameManager.Instance.ResumeGame();
+        }
     }
 }

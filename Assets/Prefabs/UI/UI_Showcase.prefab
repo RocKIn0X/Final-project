@@ -69,14 +69,14 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: ac36ab3819a5133cd9de8f7b429d9590, type: 3}
     m_FontSize: 32
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 3
-    m_MaxSize: 40
+    m_BestFit: 1
+    m_MinSize: 28
+    m_MaxSize: 36
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'Smogberry
 
@@ -399,10 +399,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   plantLocked: {fileID: 21300000, guid: 422ba018f2b14ff6a94aadccf7088043, type: 3}
-  plantIcon: {fileID: 0}
-  plantName: Lockberry
-  plantCost: 0
-  shopOwner: {fileID: 0}
+  overpriceColor: {r: 0.735849, g: 0, b: 0, a: 1}
+  normalColor: {r: 0.254717, g: 0.254717, b: 0.254717, a: 1}
+  saleColor: {r: 0.25418296, g: 0.6415094, b: 0.39189902, a: 1}
+  lockColor: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
+  cropAsset: {fileID: 0}
   displayImage: {fileID: 181613509099833934}
   displayText: {fileID: 3389215860973413760}
   buyButton: {fileID: 6287439877594402263}

@@ -339,6 +339,18 @@ MonoBehaviour:
         hungerAmount: -10
         tirenessAmount: -10
         emotionAmount: 0
+    - behavior: Eat
+      actionIndex: 3
+      statusAmount:
+        hungerAmount: 20
+        tirenessAmount: 0
+        emotionAmount: 0
+    - behavior: Sleep
+      actionIndex: 4
+      statusAmount:
+        hungerAmount: 0
+        tirenessAmount: 15
+        emotionAmount: -20
 --- !u!1 &8182109090045881816
 GameObject:
   m_ObjectHideFlags: 0
